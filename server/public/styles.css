@@ -1,0 +1,77 @@
+@import url('./reset.css');
+
+:root {
+  --color-black: hsla(0, 0%, 0%, 1);
+  --color-blue-darkest: hsla(221, 51%, 16%, 1);
+  --color-orange: hsla(37, 98%, 53%, 1);
+  --color-grey-light: hsla(0, 0%, 90%, 1);
+  --color-white: hsla(0, 0%, 100%, 1);
+  --font-size-main: 1.6rem;
+
+}
+
+.wrapper {
+  height: 100vh;
+  background-color: var(--color-blue-darkest);
+}
+
+.messages {
+  height: 90vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* mozilla */
+}
+.wrapper::-webkit-scrollbar {
+  display: none; /* Safari and Chrome browsers */
+}
+
+.messages {
+
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 1.6rem;
+  background-color: var(--color-orange);
+  color: var(--color-white);
+  font-size: var(--font-size-main);
+}
+
+.message--mine {
+
+}
+
+.message--theirs {
+
+}
+
+
+.compose {
+  height: 10vh;
+  padding: 2rem;
+  background-color: var(--color-black);
+}
+
+.compose__form {
+  height: 100%;
+}
+
+.compose__input {
+  height: 100%;
+  width: 80%;
+  margin-right: 2em;
+  padding-left: var(--font-size-main);
+  border-radius: 0.5rem;
+  background-color: var(--color-grey-light);
+  font-size: var(--font-size-main);
+}
+
+.button-send {
+  height: 100%;
+  padding: 0 5rem;
+  border: none;
+  border-radius: 2.5rem;
+  background-color: var(--color-orange);
+  color: var(--color-white);
+  font-size: var(--font-size-main);
+}
