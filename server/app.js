@@ -1,9 +1,10 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
-const siServer = require('socket.io').Server;
+const io = require('socket.io').Server;
 
 const router = require('./routes');
+const registerSocketEventHandlers = require('./sockets');
 
 require('dotenv').config();
 const port = process.env.PORT || 3000;
@@ -21,19 +22,9 @@ expressApp.use('/', router);
 
 // 2. create Node HTTP server and pass it the Express instance
 const httpServer = http.createServer(expressApp);
-
 // 3.create socket.io server, and pass it the HTTP server
-const socketIoServer = new siServer(httpServer);
-
+const socketServer = new io(httpServer);
 // 4. declare socket listeners
-socketIoServer.on('connection', (socket) => {
-	// ...do socket things
-  console.log(`connection, socket.id: ${socket.id}`)
-  socket.on('disconnect', (socket) => {
-    console.log(`disconnection, socket.id (should be undefined): ${socket.id}`)
-  })
-});
-
+registerSocketEventHandlers(socketServer);
 // 5. listen to the HTTP server, NOT the Express app
 httpServer.listen(port, () => console.log(`HTTP server started on port:${port}`));
-
