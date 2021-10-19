@@ -1,4 +1,4 @@
-import { getMessages, sendMessage } from './requests.js';
+import { getMessages, sendMessage } from './requests-xhr.js';
 import { showMessages } from './ui.js';
 import { socket } from '/socket.js';
 

@@ -1,4 +1,4 @@
-console.log('initialising socket');
+console.log('initialising socket manager');
 const socket = io();
 
 socket.on('connect', () => {
