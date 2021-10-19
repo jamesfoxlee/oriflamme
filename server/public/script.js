@@ -1,5 +1,6 @@
-import { getMessages, sendMessage } from "./requests.js";
-import { showMessages } from "./ui.js";
+import { getMessages, sendMessage } from './requests.js';
+import { showMessages } from './ui.js';
+import { socket } from '/socket.js';
 
 function addEventListeners () {
   document.querySelector('.button-send').addEventListener('click', async (event) => {
