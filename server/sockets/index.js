@@ -17,6 +17,7 @@ const roomManager = (function RoomManager () {
       return id;
     },
     addToRoom: function (socket, id) {
+      // TODO: limit adding if > 5 players
       const roomId = id || Object.keys(_rooms)[0] || uuidv1();
       console.log(`addToRoom() adding socket to room with roomId: ${roomId}`);
       if (!_rooms[roomId]) {
@@ -38,6 +39,7 @@ function registerSocketEventHandlers (socketServer) {
     console.log(`client connection, socket.id: ${socket.id}`);
     roomManager.addToRoom(socket);
     // TODO: 'disconnecting' event doesn't pass socket to callback, need closure
+    // currently passes reason (string)
     socket.on('disconnecting', socketDisconnecting);
     socket.on('disconnect', socketDisconnect);
   });

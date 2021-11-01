@@ -23,7 +23,12 @@ expressApp.use('/', router);
 // 2. create Node HTTP server and pass it the Express instance
 const httpServer = http.createServer(expressApp);
 // 3.create socket.io server, and pass it the HTTP server
-const socketServer = new io(httpServer);
+const socketServer = new io(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: "*"
+  }
+});
 // 4. declare socket listeners
 registerSocketEventHandlers(socketServer);
 // 5. listen to the HTTP server, NOT the Express app

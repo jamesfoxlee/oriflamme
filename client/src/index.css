@@ -1,0 +1,79 @@
+:root {
+  --size-navbar-height: 80px;
+  --color-black-dark: hsla(0, 0%, 7%, 1);
+  --color-black-charcoal: hsla(0, 0%, 10%, 1);
+  --color-blue-midnight-darkest: hsla(213, 100%, 3%, 1);
+  --color-blue-midnight: hsla(213, 100%, 6%, 1);
+  --color-blue-midnight: hsla(213, 100%, 6%, 1);
+  --color-blue-midnight-washed: hsla(213, 62%, 15%, 1);
+  --color-grey-mid: hsla(0, 0%, 60%, 1);
+  --color-grey-light: hsla(0, 0%, 87%, 1);
+  --color-orange-dark: hsla(27, 96%, 50%, 1);
+  --color-white-off: hsla(0, 0%, 95%, 1);
+  --color-white: hsla(0, 0%, 100%, 1);
+  --font-family-gothic: 'UnifrakturMaguntia', cursive;
+  --font-family-regular: 'Nunito', sans-serif;;
+  --font-size-biggest: 3.2rem;
+  --font-size-bigger: 2.4rem;
+  --font-size-mid: 2rem;
+  --font-size-smaller: 1.6rem;
+  --font-size-smallest: 1.2rem;
+  --font-weight-chunky: 700;
+  --font-weight-regular: 400;
+  --font-weight-light: 300;
+  --layer-1: 1;
+  --layer-2: 2;
+  --layer-3: 3;
+  --layer-4: 4;
+  --layer-5: 5;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--color-white);
+}
+
+html {
+  font-family: var( --font-family-regular);
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+input[type='text'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  background-image: none;
+  background-color: transparent;
+  font-family: var(--font-family-regular);
+}
+
+input:focus {
+  outline:none;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}

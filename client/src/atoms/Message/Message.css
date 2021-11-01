@@ -1,0 +1,16 @@
+.message {
+  padding: 0.5rem;
+  /* border: 1px solid red; */
+}
+
+.message__badge {
+
+}
+
+.message__from {
+  margin-left: 0.5rem;
+}
+
+.message__content {
+  margin-left: 0.5rem;
+}

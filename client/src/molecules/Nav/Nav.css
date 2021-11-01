@@ -1,0 +1,28 @@
+.nav {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--size-navbar-height);
+  z-index: var(--layer-1);
+  background-color: var(--color-blue-midnight-darkest);
+}
+
+.nav__logo {
+  flex: 2 1 0;
+  padding: 0 0 0 2rem;
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-biggest);
+}
+
+.nav__user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 0;
+  justify-self: right ;
+  font-size: var(--font-size-mid);
+}
