@@ -4,7 +4,7 @@ const express = require('express');
 const io = require('socket.io').Server;
 
 const router = require('./routes');
-const registerSocketEventHandlers = require('./sockets');
+const registerConnectionHandlers = require('./sockets');
 
 require('dotenv').config();
 const port = process.env.PORT || 3000;
@@ -30,6 +30,6 @@ const socketServer = new io(httpServer, {
   }
 });
 // 4. declare socket listeners
-registerSocketEventHandlers(socketServer);
+registerConnectionHandlers(socketServer);
 // 5. listen to the HTTP server, NOT the Express app
 httpServer.listen(port, () => console.log(`HTTP server started on port:${port}`));
