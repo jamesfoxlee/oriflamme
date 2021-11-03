@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 
+import './CreateRoom.css';
 import Button from '../../atoms/Button/Button';
 import modalStyles from '../../styles/modal';
 
-import './CreateRoom.css';
+import { UserContext } from '../../context/user.context';
 
 ReactModal.setAppElement('#root');
 
@@ -13,24 +14,26 @@ const FORM_INITIAL_STATE = {
   ownerName: ''
 }
 
-export default function CreateRoom ({ onCreate, show, toggleModal }) {
+export default function CreateRoom({ onSubmit, show, toggleModal }) {
 
   const handleInputChanged = (event, field) => {
     const val = event.target.value;
     const newFormData = { ...formData, [field]: val };
     setFormData(newFormData);
-    let valid = !!newFormData.ownerName;
-    setSubmitDisabled(!valid);
+    setSubmitEnabled(formIsValid());
   }
+
+  const formIsValid = () => !!user.name || !!formData.ownerName;
 
   const handleSubmit = () => {
-    formData.roomName = formData.roomName || `${formData.ownerName}'s game`;
-    onCreate(formData);
-    setFormData({...FORM_INITIAL_STATE});
+    onSubmit(formData);
+    setFormData({ ...FORM_INITIAL_STATE });
   }
 
-  const [formData, setFormData] = useState({...FORM_INITIAL_STATE});
-  const [submitDisabled, setSubmitDisabled] = useState(true);
+  const user = useContext(UserContext);
+
+  const [formData, setFormData] = useState({ ...FORM_INITIAL_STATE });
+  const [submitEnabled, setSubmitEnabled] = useState(formIsValid());
 
   return (
     <ReactModal
@@ -58,7 +61,7 @@ export default function CreateRoom ({ onCreate, show, toggleModal }) {
             <input
               id="roomName"
               className="create-room__input"
-              placeholder="Enter room name (leave blank to generate randomly)"
+              placeholder="Optional"
               type="text"
               value={formData.roomName}
               onChange={(e) => handleInputChanged(e, 'roomName')}
@@ -66,7 +69,7 @@ export default function CreateRoom ({ onCreate, show, toggleModal }) {
           </div>
           <div className="create-room__form-group">
             <Button
-              disabled={submitDisabled}
+              disabled={!submitEnabled}
               onClick={handleSubmit}
               text="Create"
             />

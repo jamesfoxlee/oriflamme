@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 
+import './JoinRoom.css';
 import Button from '../../atoms/Button/Button';
 import modalStyles from '../../styles/modal';
-
-import './JoinRoom.css';
 
 ReactModal.setAppElement('#root');
 

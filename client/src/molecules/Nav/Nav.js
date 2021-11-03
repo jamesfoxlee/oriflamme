@@ -1,12 +1,14 @@
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
 
 import './Nav.css';
 
-export default function Nav (props) {
+import { UserContext } from '../../context/user.context';
 
-  const { name, id } = props.user;
-  const userForDisplay = name || id;
+export default function Nav(props) {
+
+  const [user] = useContext(UserContext);
+  const userForDisplay = user && user.name ? user.name : 'Guest';
 
   return (
     <div className="nav">

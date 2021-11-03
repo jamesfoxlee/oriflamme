@@ -1,4 +1,7 @@
 // singleton
+// we are not using context as we need all the methods to save user name etc
+// service fits needs better
+
 export default (function UserService () {
 
   let _instance;
@@ -19,7 +22,6 @@ export default (function UserService () {
             socketId && _saveId(socketId);
             socketId && (userId = socketId);
           }
-          userName = userName || 'Guest';
           _user = {
             id: userId,
             name: userName
@@ -27,7 +29,7 @@ export default (function UserService () {
         }
         return _user;
       },
-      saveUserName: (name) => {
+      saveName: (name) => {
         if (!localStorage.getItem('user.name')) {
           localStorage.setItem('user.name', name);
         }

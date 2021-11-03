@@ -7,60 +7,68 @@ import Rooms from './organisms/Rooms/Rooms';
 import Loading from './atoms/Loading/Loading';
 // import Error from './atoms/Error/Error';
 
-import { messageHistory, participants } from './services/mocks.service';
 import Socket from './services/socket.service';
-import UserService from './services/user.service';
+import StorageService from './services/storage.service';
+import { UserProvider } from './context/user.context';
 
-const userService = UserService();
+
+const storageService = StorageService();
 let socket;
 
 function App() {
 
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(userService.get());
   const [messages, setMessages] = useState([]);
   const [players, setPlayers] = useState({});
+  const [user, setUser] = useState({ id: null, name: null});
   const [activeRoom, setActiveRoom] = useState(null);
 
   useEffect(() => {
     Socket()
       .then(wrappedSocket => {
         socket = wrappedSocket;
+        const userId = storageService.get('user.id');
+        const userName = storageService.get('user.name');
         const socketId = socket.getSocketId();
-        const userData = userService.get(socketId);
-        setUser(userData);
+        if (!userId) {
+          storageService.set('user.id', socketId)
+        }
+        setUser({
+          id: userId || socketId,
+          name: userName
+        });
         setLoading(false);
       })
       .catch(err => console.log(err))
   }, []);
 
-
-
   return (
     <div className="app" id="app">
-      <Nav user={user} />
-      {
-        loading ?
-          <Loading message={"Connecting"} /> :
-          null
-      }
-      {
-        !loading && !activeRoom ?
-          <Rooms
-            setActiveRoom={setActiveRoom}
-            socket={socket}
-          /> :
-          null
-      }
-      {
-        !loading && activeRoom ?
-            <Messages
-              messages={messages}
-              players={players}
+      <UserProvider value={[user, setUser]}>
+        <Nav />
+        {
+          loading ?
+            <Loading message={"Connecting"} /> :
+            null
+        }
+        {
+          !loading && !activeRoom ?
+            <Rooms
+              setActiveRoom={setActiveRoom}
               socket={socket}
             /> :
-          null
-      }
+            null
+        }
+        {
+          !loading && activeRoom ?
+              <Messages
+                messages={messages}
+                players={players}
+                socket={socket}
+              /> :
+            null
+        }
+      </UserProvider>
     </div>
   );
 }

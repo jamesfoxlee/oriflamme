@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
+import './Rooms.css';
 import CreateRoom from '../../organisms/CreateRoom/CreateRoom';
 import Loading from '../../atoms/Loading/Loading';
 import Button from '../../atoms/Button/Button';
 
-import './Rooms.css';
+import StorageService from '../../services/storage.service';
+import { UserContext } from '../../context/user.context';
+
+const storageService = StorageService();
 
 export default function Rooms ({ setActiveRoom, socket }) {
 
@@ -13,8 +17,19 @@ export default function Rooms ({ setActiveRoom, socket }) {
   }
 
   const handleCreateRoom = (roomData) => {
-    console.log(roomData);
-    socket.createRoom(roomData);
+    if (!user.name) {
+      const newName = roomData.ownerName;
+      storageService.set('user.name', newName);
+      setUser({
+        ...user,
+        name: newName
+      });
+    }
+    socket.createRoom({
+      ownerId: user.id,
+      ownerName: user.name || roomData.ownerName,
+      roomName: roomData.roomName || `${roomData.ownerName}'s game`,
+    });
     handleToggleModal();
   }
 
@@ -26,6 +41,8 @@ export default function Rooms ({ setActiveRoom, socket }) {
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     socket.registerListener('rooms-changed', handleRoomsChanged);
@@ -43,7 +60,7 @@ export default function Rooms ({ setActiveRoom, socket }) {
       {
         showModal ?
           <CreateRoom
-            onCreate={handleCreateRoom}
+            onSubmit={handleCreateRoom}
             show={showModal}
             toggleModal={handleToggleModal}
           /> :
