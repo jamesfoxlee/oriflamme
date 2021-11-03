@@ -2,20 +2,43 @@ import io from 'socket.io-client';
 
 export default function Socket() {
 
-  console.log('Socket.init() initialising socket...');
+  function registerListener (event, handler) {
+    console.log(`Socket.registerListener() event: ${event}`);
+    socket.on(event, handler);
+  }
+
+  function unregisterListener (event) {
+    console.log(`Socket.unregisterListener() event: ${event}`);
+    socket.removeAllListeners(event);
+  }
+
+  function getRooms (cb) {
+    console.log(`Socket.getRooms()`);
+    socket.emit('rooms-get', cb);
+  }
+
+  function sendMessage (message) {
+    console.log(`Socket.sendMessage() message: ${message}`);
+    socket.emit('message-send', message);
+  }
+
+  //----------------------------------------------------------------
+  // INITIALISE SOCKET
+  //----------------------------------------------------------------
+
   const socket = io('http://localhost:19126');
+
   socket.on('connect', () => {
-    console.log(`connected to server, socket.id: ${socket.id}`);
+    console.log(`Socket() connected to server, socket.id: ${socket.id}`)
   });
   socket.on('disconnect', () => {
-    console.log(`disconnected from server, socket.id (should be undefined): ${socket.id}`);
+    console.log(`Socket() disconnected from server`)
   });
 
-  const sendMessage = (message) => {
-    socket.emit('message')
-  }
-
   return {
-    sendMessage,
-  }
+    registerListener,
+    unregisterListener,
+    getRooms,
+    sendMessage
+  };
 }

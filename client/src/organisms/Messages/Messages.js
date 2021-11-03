@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import './Messages.css';
 import Message from '../../atoms/Message/Message';
 
-export default function Messages(props) {
+export default function Messages({ messages, players, socket }) {
 
-  const handleSend = (event) => {
-    event.preventDefault();
-    props.onSendMessage();
-
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
   }
 
-  const { messages, players } = props;
-  console.log(players)
+  const handleMessageSend = (e) => {
+    e.preventDefault();
+    if (message.length) {
+      socket.postMessage(message);
+      setMessage('');
+    }
+  }
+
+  const [message, setMessage] = useState('');
+
   const sortedMessages = [...messages].sort((a, b) => {
     const aDate = new Date(a.timestamp).getTime();
     const bDate = new Date(b.timestamp).getTime();
@@ -36,10 +42,15 @@ export default function Messages(props) {
           })
         }
         <form className="messages__compose" id="message-form" action="">
-          <input className="messages__input" name="" />
+          <input
+            className="messages__input"
+            name="message-input"
+            onChange={handleMessageChange}
+            value={message}
+          />
           <button
             className="messages__send"
-            onClick={handleSend}
+            onClick={handleMessageSend}
             type="submit">
             Send
           </button>

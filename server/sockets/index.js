@@ -1,16 +1,20 @@
-const GameManager = require('../models/game-manager');
+const RoomsManager = require('../models/rooms-manager.model');
+const registerRoomsEventHandlers = require('./rooms.socket');
+const registerGameEventHandlers = require('./game.socket');
 
-const gameManager = GameManager();
+const roomsManager = RoomsManager();
 
 function registerConnectionHandlers (socketServer) {
   // when there is a new connection, register handlers on the socket
   socketServer.on('connection', (socket) => {
     // console.log(`client connection, socket.id: ${socket.id}`);
-    gameManager.addToGame(socket);
+    const gameId = roomsManager.addToRoom(socket);
+
+    registerRoomsEventHandlers(socket, roomsManager);
+    // registerGameEventHandlers(socket, gameManager);
     socket.on('disconnecting', (reason) => {
-      gameManager.removeFromGame(socket);
+      roomsManager.removeFromRoom(socket);
     });
-    // socket.on('disconnect', socketDisconnect);
   });
 
   // DEBUG

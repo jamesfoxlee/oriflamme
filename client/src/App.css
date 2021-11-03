@@ -3,15 +3,9 @@
   height: 100vh;
   overflow: hidden;
   z-index: var(--layer-5);
+  padding-top: var(--size-navbar-height);
   background-color: var(--color-blue-midnight);
 }
-
-.main {
-  width: 100vw;
-  height: 100vh;
-  padding: var(--size-navbar-height);
-}
-
 
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
