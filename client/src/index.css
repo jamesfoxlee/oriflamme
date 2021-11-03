@@ -11,6 +11,9 @@
   --color-orange-dark: hsla(27, 96%, 50%, 1);
   --color-white-off: hsla(0, 0%, 95%, 1);
   --color-white: hsla(0, 0%, 100%, 1);
+  --color-positive: hsla(210, 96%, 40%, 1);
+  --color-cancel: hsla(222, 11%, 54%, 1);
+  --color-destructive: hsla(274, 100%, 75%, 1);
   --font-family-gothic: 'UnifrakturMaguntia', cursive;
   --font-family-regular: 'Nunito', sans-serif;;
   --font-size-biggest: 3.2rem;
@@ -64,7 +67,6 @@ input[type='text'] {
   box-shadow: none;
   border: none;
   background-image: none;
-  background-color: transparent;
   font-family: var(--font-family-regular);
 }
 

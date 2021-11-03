@@ -1,0 +1,43 @@
+.button {
+  display: inline-block;
+  width: 100%;
+  padding: 1rem 3rem;
+  border: 0;
+  border-radius: 0.7rem;
+  color: var(--color-white);
+  /* font-family: $font-base; */
+  font-size: var(--font-size-mid);
+  text-align: center;
+  text-decoration:none;
+  box-shadow: none;
+  cursor:pointer;
+}
+
+.button:active {
+  position:relative;
+  top:1px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+.button:disabled:active {
+  position: static;
+}
+
+.button:not(:disabled):hover {
+  filter: brightness(0.9);
+}
+
+.button--positive {
+  background-color: var(--color-positive);
+}
+
+.button--cancel {
+  background-color:  var(--color-cancel);
+}
+
+.button--destructive {
+  background-color:  var(--color-destructive);
+}

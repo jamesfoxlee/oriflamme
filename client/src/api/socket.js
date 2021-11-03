@@ -12,9 +12,14 @@ export default function Socket() {
     socket.removeAllListeners(event);
   }
 
-  function getRooms (cb) {
+  function getRooms () {
     console.log(`Socket.getRooms()`);
-    socket.emit('rooms-get', cb);
+    socket.emit('rooms-get');
+  }
+
+  function createRoom () {
+    console.log(`Socket.createRoom()`);
+    // socket.emit('rooms-get');
   }
 
   function sendMessage (message) {

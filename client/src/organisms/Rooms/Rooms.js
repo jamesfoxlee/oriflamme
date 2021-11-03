@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
+import CreateRoom from '../../organisms/CreateRoom/CreateRoom';
 import Loading from '../../atoms/Loading/Loading';
+import Button from '../../atoms/Button/Button';
 
 import './Rooms.css';
 
 export default function Rooms ({ setRoom, socket }) {
+
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
+  }
+
+  const handleCreateRoom = (roomData) => {
+    console.log(roomData);
+  }
 
   const handleRoomsChanged = (rooms) => {
     setRooms(rooms);
@@ -13,10 +23,11 @@ export default function Rooms ({ setRoom, socket }) {
 
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     socket.registerListener('rooms-changed', handleRoomsChanged);
-    socket.getRooms(handleRoomsChanged);
+    socket.getRooms();
     // TODO: change to cleanup useEffect to unregister listener
   }, [])
 
@@ -24,7 +35,16 @@ export default function Rooms ({ setRoom, socket }) {
     <div className="rooms">
       {
         loading ?
-          <Loading /> :
+          <Loading message={"Loading rooms"} /> :
+          null
+      }
+      {
+        showModal ?
+          <CreateRoom
+            onCreate={handleCreateRoom}
+            show={showModal}
+            toggleModal={handleToggleModal}
+          /> :
           null
       }
       {
@@ -50,6 +70,7 @@ export default function Rooms ({ setRoom, socket }) {
           </div> :
           null
       }
+      <Button onClick={handleToggleModal} text="New Room"></Button>
     </div>
   );
 }

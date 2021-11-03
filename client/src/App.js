@@ -17,7 +17,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
   const [players, setPlayers] = useState({});
-  const [room, setRoom] = useState(null);
+  const [activeRoom, setActiveRoom] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
@@ -29,7 +29,7 @@ function App() {
 
 
   return (
-    <div className="app">
+    <div className="app" id="app">
       <Nav />
       {
         loading ?
@@ -37,15 +37,15 @@ function App() {
           null
       }
       {
-        !loading && !room ?
+        !loading && !activeRoom ?
           <Rooms
-            setRoom={setRoom}
+            setActiveRoom={setActiveRoom}
             socket={socket}
           /> :
           null
       }
       {
-        !loading && room ?
+        !loading && activeRoom ?
             <Messages
               messages={messages}
               players={players}
