@@ -1,5 +1,9 @@
 import io from 'socket.io-client';
 
+import UserService from './user.service';
+
+const userService = UserService();
+
 export default function Socket() {
 
   function registerListener (event, handler) {
@@ -12,14 +16,18 @@ export default function Socket() {
     socket.removeAllListeners(event);
   }
 
+  function getSocketId () {
+    return socket.id;
+  }
+
   function getRooms () {
     console.log(`Socket.getRooms()`);
     socket.emit('rooms-get');
   }
 
-  function createRoom () {
+  function createRoom (roomData) {
     console.log(`Socket.createRoom()`);
-    // socket.emit('rooms-get');
+    socket.emit('rooms-create', roomData);
   }
 
   function sendMessage (message) {
@@ -35,6 +43,7 @@ export default function Socket() {
 
   socket.on('connect', () => {
     console.log(`Socket() connected to server, socket.id: ${socket.id}`)
+    const user = userService.get(socket.id);
   });
   socket.on('disconnect', () => {
     console.log(`Socket() disconnected from server`)
@@ -43,7 +52,9 @@ export default function Socket() {
   return {
     registerListener,
     unregisterListener,
+    getSocketId,
     getRooms,
+    createRoom,
     sendMessage
   };
 }

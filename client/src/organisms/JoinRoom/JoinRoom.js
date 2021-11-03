@@ -4,16 +4,15 @@ import ReactModal from 'react-modal';
 import Button from '../../atoms/Button/Button';
 import modalStyles from '../../styles/modal';
 
-import './CreateRoom.css';
+import './JoinRoom.css';
 
 ReactModal.setAppElement('#root');
 
 const FORM_INITIAL_STATE = {
-  roomName: '',
-  ownerName: ''
+  playerName: ''
 }
 
-export default function CreateRoom ({ onCreate, show, toggleModal }) {
+export default function JoinRoom ({ onCreate, show, toggleModal }) {
 
   const handleInputChanged = (event, field) => {
     const val = event.target.value;

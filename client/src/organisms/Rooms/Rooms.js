@@ -6,7 +6,7 @@ import Button from '../../atoms/Button/Button';
 
 import './Rooms.css';
 
-export default function Rooms ({ setRoom, socket }) {
+export default function Rooms ({ setActiveRoom, socket }) {
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -14,6 +14,8 @@ export default function Rooms ({ setRoom, socket }) {
 
   const handleCreateRoom = (roomData) => {
     console.log(roomData);
+    socket.createRoom(roomData);
+    handleToggleModal();
   }
 
   const handleRoomsChanged = (rooms) => {

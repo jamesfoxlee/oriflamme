@@ -7,10 +7,13 @@ import Rooms from './organisms/Rooms/Rooms';
 import Loading from './atoms/Loading/Loading';
 // import Error from './atoms/Error/Error';
 
-import { messageHistory, participants } from './api/mocks';
-import Socket from './api/socket';
+import { messageHistory, participants } from './services/mocks.service';
+import Socket from './services/socket.service';
+import UserService from './services/user.service';
 
 const socket = Socket();
+const userService = UserService();
+const user = userService.get(socket.getSocketId());
 
 function App() {
 
