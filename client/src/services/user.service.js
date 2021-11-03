@@ -1,5 +1,3 @@
-import userEvent from "@testing-library/user-event";
-
 // singleton
 export default (function UserService () {
 
@@ -12,17 +10,19 @@ export default (function UserService () {
   const _init = () => {
     let _user;
     return {
-      get: (id) => {
+      get: (socketId) => {
         if (!_user || !_user.id) {
-          let storedId = localStorage.getItem('user.id');
-          let storedName = localStorage.getItem('user.name');
+          let userId = localStorage.getItem('user.id');
+          let userName = localStorage.getItem('user.name');
           // save socket.id as the user.id if there isn't one in localStorage
-          if (!storedId) {
-            id && _saveId(id);
+          if (!userId) {
+            socketId && _saveId(socketId);
+            socketId && (userId = socketId);
           }
+          userName = userName || 'Guest';
           _user = {
-            id: storedId,
-            name: storedName
+            id: userId,
+            name: userName
           }
         }
         return _user;

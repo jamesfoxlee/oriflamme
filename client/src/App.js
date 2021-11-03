@@ -11,32 +11,37 @@ import { messageHistory, participants } from './services/mocks.service';
 import Socket from './services/socket.service';
 import UserService from './services/user.service';
 
-const socket = Socket();
 const userService = UserService();
-const user = userService.get(socket.getSocketId());
+let socket;
 
 function App() {
 
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(userService.get());
   const [messages, setMessages] = useState([]);
   const [players, setPlayers] = useState({});
   const [activeRoom, setActiveRoom] = useState(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setMessages(messageHistory);
-      setPlayers(participants);
-      setLoading(false);
-    }, 1000)
+    Socket()
+      .then(wrappedSocket => {
+        socket = wrappedSocket;
+        const socketId = socket.getSocketId();
+        const userData = userService.get(socketId);
+        setUser(userData);
+        setLoading(false);
+      })
+      .catch(err => console.log(err))
   }, []);
+
 
 
   return (
     <div className="app" id="app">
-      <Nav />
+      <Nav user={user} />
       {
         loading ?
-          <Loading /> :
+          <Loading message={"Connecting"} /> :
           null
       }
       {
