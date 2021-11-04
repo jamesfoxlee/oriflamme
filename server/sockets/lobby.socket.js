@@ -1,25 +1,23 @@
+const SOCKET_CONSTANTS = require('../config/socket.constants');
+const { LOBBY } = SOCKET_CONSTANTS.EVENTS;
+
 module.exports = function registerLobbyHandlers(socket, lobbyManager, socketServer) {
 
-  socket.on('rooms-get', () => {
-    console.log('EVENT(rooms-get)');
-    const rooms = lobbyManager.getRooms();
-    console.log(`sending ${rooms.length} rooms...`);
-    socketServer.to('lobby').emit('rooms-changed', rooms);
+  socket.on(LOBBY.GET_ROOMS, () => {
+    console.log('LOBBY.GET_ROOMS');
+    socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
   });
 
-  socket.on('rooms-create', (roomData) => {
-    console.log('EVENT(rooms-create)');
-    console.log(`socket.id: ${socket.id}`);
-    console.log(roomData);
+  socket.on(LOBBY.CREATE_ROOM, (roomData) => {
+    console.log(LOBBY.CREATE_ROOM);
     const roomId = lobbyManager.createRoom(roomData);
     const player = {
       id: roomData.ownerId,
       name: roomData.ownerName,
     };
     lobbyManager.joinRoom(roomId, socket, player);
-    const rooms = lobbyManager.getRooms();
-    console.log(`sending ${rooms.length} rooms...`);
-    socketServer.to('lobby').emit('rooms-changed', rooms);
+    socket.emit(LOBBY.CREATE_ROOM_SUCCESS, roomId);
+    socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
   });
 
 };

@@ -1,24 +1,28 @@
+const SOCKET_CONSTANTS = require('../config/socket.constants');
 const LobbyManager = require('../models/lobby-manager.model');
 const registerLobbyHandlers = require('./lobby.socket');
 const registerGameEventHandlers = require('./game.socket');
 
+const { CONNECTIVITY } = SOCKET_CONSTANTS.EVENTS;
+
 const lobbyManager = LobbyManager();
 
 function registerConnectionHandlers (socketServer) {
-  // when there is a new connection, register hand                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            lers on the socket
-  socketServer.on('connection', (socket) => {
+
+  socketServer.on(CONNECTIVITY.CONNECTION, (socket) => {
     socket.join('lobby');
     registerLobbyHandlers(socket, lobbyManager, socketServer);
     // registerGameEventHandlers(socket, gameManager);
 
-    socket.on('disconnecting', (reason) => {
+    socket.on(CONNECTIVITY.DISCONNECT, (reason) => {
       socket.leave('lobby');
       lobbyManager.leaveRoom(socket);
+      socketServer.to('lobby').emit('rooms-changed', lobbyManager.getRooms());
     });
   });
 
   // DEBUG
-  socketServer.of("/").adapter.on("connection", (room) => {  console.log(`connection: ${room} was created`);});
+  socketServer.of("/").adapter.on("leave-room", (room) => {  console.log(`${room} was left`);});
   socketServer.of("/").adapter.on("create-room", (room) => {  console.log(`create-room: ${room} was created`);});
 }
 
