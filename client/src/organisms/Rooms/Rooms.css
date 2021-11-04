@@ -8,6 +8,7 @@
 .rooms__list {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex: 4 4 0;
   overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */

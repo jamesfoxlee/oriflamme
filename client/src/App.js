@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 import './App.css';
-import Nav from './molecules/Nav/Nav';
-import Messages from './organisms/Messages/Messages';
+import Game from './views/Game/Game';
 import Rooms from './organisms/Rooms/Rooms';
+import Nav from './molecules/Nav/Nav';
 import Loading from './atoms/Loading/Loading';
 // import Error from './atoms/Error/Error';
 
@@ -17,11 +17,17 @@ let socket;
 
 function App() {
 
-  const [loading, setLoading] = useState(true);
-  const [messages, setMessages] = useState([]);
-  const [players, setPlayers] = useState({});
-  const [user, setUser] = useState({ id: null, name: null});
+  const joinRoom = (roomId) => {
+    setActiveRoom(roomId);
+  }
+
+  const leaveRoom = () => {
+    setActiveRoom(null);
+  }
+
   const [activeRoom, setActiveRoom] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({ id: null, name: null});
 
   useEffect(() => {
     Socket()
@@ -54,16 +60,16 @@ function App() {
         {
           !loading && !activeRoom ?
             <Rooms
-              setActiveRoom={setActiveRoom}
+              joinRoom={joinRoom}
+              leaveRoom={leaveRoom}
               socket={socket}
             /> :
             null
         }
         {
           !loading && activeRoom ?
-              <Messages
-                messages={messages}
-                players={players}
+              <Game
+                activeRoom={activeRoom}
                 socket={socket}
               /> :
             null

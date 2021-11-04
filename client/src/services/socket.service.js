@@ -1,8 +1,16 @@
 import io from 'socket.io-client';
 
+import SOCKET_CONSTANTS from '../config/socket.constants';
+const { CONNECTIVITY, LOBBY, MESSAGE } = SOCKET_CONSTANTS.EVENTS;
+
 export default function Socket() {
 
   return new Promise ((resolve, reject) => {
+
+    function registerOneShotListener (event, handler) {
+      console.log(`Socket.registerOneShotListener() event: ${event}`);
+      socket.once(event, handler);
+    }
 
     function registerListener (event, handler) {
       console.log(`Socket.registerListener() event: ${event}`);
@@ -20,17 +28,17 @@ export default function Socket() {
 
     function getRooms () {
       console.log(`Socket.getRooms()`);
-      socket.emit('rooms-get');
+      socket.emit(LOBBY.GET_ROOMS);
     }
 
     function createRoom (roomData) {
       console.log(`Socket.createRoom()`);
-      socket.emit('rooms-create', roomData);
+      socket.emit(LOBBY.CREATE_ROOM, roomData);
     }
 
     function sendMessage (message) {
       console.log(`Socket.sendMessage() message: ${message}`);
-      socket.emit('message-send', message);
+      socket.emit(MESSAGE.CREATE, message);
     }
 
     //----------------------------------------------------------------
@@ -39,19 +47,19 @@ export default function Socket() {
 
     const socket = io('http://localhost:19126');
 
-    socket.on('connect', () => {
+    socket.on(CONNECTIVITY.CONNECT, () => {
       console.log(`Socket() connected to server, socket.id: ${socket.id}`)
       resolve({
+        registerOneShotListener,
         registerListener,
         unregisterListener,
         getSocketId,
         getRooms,
-        createRoom,
         sendMessage
       })
     });
 
-    socket.on('disconnect', () => {
+    socket.on(CONNECTIVITY.DISCONNECT, () => {
       console.log(`Socket() disconnected from server`)
     });
   });

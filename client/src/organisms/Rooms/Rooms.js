@@ -6,12 +6,15 @@ import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
 import Button from '../../atoms/Button/Button';
 
+import SOCKET_CONSTANTS from '../../config/socket.constants';
 import StorageService from '../../services/storage.service';
 import { UserContext } from '../../context/user.context';
 
+const { LOBBY } = SOCKET_CONSTANTS.EVENTS;
+
 const storageService = StorageService();
 
-export default function Rooms ({ setActiveRoom, socket }) {
+export default function Rooms ({ joinRoom, leaveRoom, socket }) {
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -26,6 +29,12 @@ export default function Rooms ({ setActiveRoom, socket }) {
         name: newName
       });
     }
+    // listen for acknowledgement of room create so we can set it as active
+    socket.registerOneShotListener(
+      LOBBY.CREATE_ROOM_SUCCESS,
+      (roomId) => joinRoom(roomId)
+    );
+    // create the room
     const owner = roomData.ownerName || user.name;
     socket.createRoom({
       ownerId: user.id,
@@ -49,7 +58,7 @@ export default function Rooms ({ setActiveRoom, socket }) {
   const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
-    socket.registerListener('rooms-changed', handleRoomsChanged);
+    socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
     socket.getRooms();
     // TODO: change to cleanup useEffect to unregister listener
   }, [])
@@ -97,4 +106,3 @@ export default function Rooms ({ setActiveRoom, socket }) {
     </div>
   );
 }
-
