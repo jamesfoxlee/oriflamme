@@ -1,0 +1,28 @@
+.room-item {
+  display: flex;
+  padding: 2rem;
+  border: 1px solid red;
+}
+
+.room-item__info {
+  flex: 3 3 0;
+  border: 1px solid red;
+}
+
+.room-item__name {
+
+}
+
+.room-item__smallprint {
+
+}
+
+.room-item__smallprint {
+
+}
+
+.room-item__buttons {
+  flex: 1 1 0;
+  padding: 2rem;
+  border: 1px solid red;
+}

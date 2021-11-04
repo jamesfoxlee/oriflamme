@@ -2,3 +2,7 @@
   width: 100%;
   height: 100%;
 }
+
+.rooms__list {
+  border: 2px solid green;
+}

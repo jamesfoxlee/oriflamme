@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import './Rooms.css';
 import CreateRoom from '../../organisms/CreateRoom/CreateRoom';
+import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
 import Button from '../../atoms/Button/Button';
 
@@ -25,17 +26,20 @@ export default function Rooms ({ setActiveRoom, socket }) {
         name: newName
       });
     }
+    const owner = roomData.ownerName || user.name;
     socket.createRoom({
       ownerId: user.id,
       ownerName: user.name || roomData.ownerName,
-      roomName: roomData.roomName || `${roomData.ownerName}'s game`,
+      roomName: roomData.roomName || `${owner}'s game`,
     });
     handleToggleModal();
   }
 
   const handleRoomsChanged = (rooms) => {
     setRooms(rooms);
-    setLoading(false);
+    if (loading) {
+      setLoading(false);
+    }
   }
 
   const [loading, setLoading] = useState(true);
@@ -77,12 +81,10 @@ export default function Rooms ({ setActiveRoom, socket }) {
             {
               rooms.map((room, idx) => {
                 return (
-                  <div
-                    className="room__item"
+                  <RoomItem
                     key={`room-item-${idx}`}
-                  >
-                    {room.id}
-                  </div>
+                    room={room}
+                  />
                 )
               })
             }

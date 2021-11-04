@@ -30,7 +30,7 @@ export default function CreateRoom({ onSubmit, show, toggleModal }) {
     setFormData({ ...FORM_INITIAL_STATE });
   }
 
-  const user = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const [formData, setFormData] = useState({ ...FORM_INITIAL_STATE });
   const [submitEnabled, setSubmitEnabled] = useState(formIsValid());
