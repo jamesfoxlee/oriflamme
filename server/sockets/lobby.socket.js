@@ -9,14 +9,21 @@ module.exports = function registerLobbyHandlers(socket, lobbyManager, socketServ
   });
 
   socket.on(LOBBY.CREATE_ROOM, (roomData) => {
-    console.log(LOBBY.CREATE_ROOM);
+    console.log('LOBBY.CREATE_ROOM');
     const roomId = lobbyManager.createRoom(roomData);
     const player = {
       id: roomData.ownerId,
       name: roomData.ownerName,
     };
-    lobbyManager.joinRoom(roomId, socket, player);
+    // lobbyManager.joinRoom(roomId, socket, player);
     socket.emit(LOBBY.CREATE_ROOM_SUCCESS, roomId);
+    socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
+  });
+
+  socket.on(LOBBY.JOIN_ROOM, (roomId, player) => {
+    console.log('LOBBY.JOIN_ROOM');
+    console.log(`${player.name} with id: ${player.id} joining room: ${roomId}`);
+    lobbyManager.joinRoom(roomId, socket, player);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
   });
 

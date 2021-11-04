@@ -10,6 +10,7 @@ const EVENTS = {
     GET_ROOMS: 'lobby-get-rooms',
     CREATE_ROOM: 'lobby-create',
     CREATE_ROOM_SUCCESS: 'lobby-create-success',
+    JOIN_ROOM: 'lobby-join-room',
     ROOMS_CHANGED: 'lobby-changed',
   },
   MESSAGE: {

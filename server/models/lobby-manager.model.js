@@ -20,9 +20,9 @@ module.exports = function RoomsManager () {
   };
 
   const createRoom = (roomData) => {
-    console.log('RoomManager.createRoom()')
-    // roomData: { ownerId, ownerName, roomName }
+    console.log('LobbyManager.createRoom()')
     const roomId = uuidv1();
+    // roomData: { ownerId, ownerName, roomName }
     _rooms[roomId] = {
       ...roomData,
       id: roomId,
@@ -34,7 +34,7 @@ module.exports = function RoomsManager () {
 
   const joinRoom = (roomId, socket, player) => {
     // TODO: limit adding if > 5 players
-    console.log('RoomManager.addToRoom()');
+    console.log('LobbyManager.joinRoom()');
     const room = _rooms[roomId];
     socket.join(roomId);
     room.players.push({
@@ -44,17 +44,23 @@ module.exports = function RoomsManager () {
     console.log(`number of players now in room: ${room.players.length}`);
   };
 
-  const leaveRoom = (socket, player) => {
-    console.log(`leaveRoom() for socket.id: ${socket.id}`);
+  const leaveRoom = (roomId) => {
+
+  };
+
+  const leaveAllRooms = (socket) => {
+    console.log(`LobbyManager.leaveAllRooms() for socket.id: ${socket.id}`);
     for (let roomId of socket.rooms) {
       if (roomId !== socket.id) {
+        console.log(`leaving room ${roomId} ...`);
         socket.leave(roomId);
         const room = _rooms[roomId];
         if (room.players.length === 1) {
           delete _rooms[roomId];
         } else {
           console.log(`before removal, number of players in room: ${room.players.length}`);
-          const playerIdx = room.players.find(player => player.socketId === socket.id);
+          const playerIdx = room.players.findIndex(player => player.socketId === socket.id);
+          console.log(`player found in room at index: ${playerIdx}`);
           room.players = room.players.filter((_, idx) => idx !== playerIdx);
           console.log(`player removed, number of players in room: ${room.players.length}`);
         }
@@ -66,6 +72,7 @@ module.exports = function RoomsManager () {
     getRooms,
     createRoom,
     joinRoom,
-    leaveRoom
+    leaveRoom,
+    leaveAllRooms
   }
 };
