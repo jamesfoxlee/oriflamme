@@ -1,8 +1,27 @@
 .rooms {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  width: 70%;
+  height: calc(100vh - var(--size-navbar-height));
+  margin: 0 auto;
 }
 
 .rooms__list {
-  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  flex: 4 4 0;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding: 2rem;
+}
+
+.rooms__list::-webkit-scrollbar {
+  display: none; /* webkit browsers */
+}
+
+.rooms__buttons {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  padding: 2rem;;
 }

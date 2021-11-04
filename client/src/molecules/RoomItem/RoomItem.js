@@ -6,14 +6,17 @@ import Button from '../../atoms/Button/Button';
 export default function RoomItem ({ onClick, room }) {
 
   const { id, ownerName, roomName, players } = room;
+  const numPlayers = players.length;
+  const playersText = ` player${numPlayers > 1 ? 's' : ''}`
 
   return (
     <div className="room-item">
       <div className="room-item__info">
-        <div className="room-item__name">{roomName}</div>
-        <div className="room-item__name">{id}</div>
-        <div className="room-item__player-count">{players.length} players</div>
-        <div className="room-item__name">Created by {ownerName}</div>
+        <div className="room-item__">
+          {roomName} <span className="room-item__smallprint">{id}</span>
+        </div>
+        <div className="room-item__player-count">{numPlayers}{playersText}</div>
+        <div className="room-item__smallprint">Created by {ownerName}</div>
       </div>
       <div className="room-item__buttons">
         <Button

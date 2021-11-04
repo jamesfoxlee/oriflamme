@@ -1,12 +1,17 @@
 .room-item {
   display: flex;
+  margin-bottom: 2rem;
   padding: 2rem;
-  border: 1px solid red;
+  border-radius: 1rem;;
+  background-color: var(--color-blue-midnight-washed);
 }
 
 .room-item__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   flex: 3 3 0;
-  border: 1px solid red;
+  font-size: var(--font-size-mid);
 }
 
 .room-item__name {
@@ -14,15 +19,10 @@
 }
 
 .room-item__smallprint {
-
-}
-
-.room-item__smallprint {
-
+  font-size: var(--font-size-smallest);
 }
 
 .room-item__buttons {
   flex: 1 1 0;
   padding: 2rem;
-  border: 1px solid red;
 }

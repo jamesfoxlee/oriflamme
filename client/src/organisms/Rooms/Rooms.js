@@ -91,7 +91,9 @@ export default function Rooms ({ setActiveRoom, socket }) {
           </div> :
           null
       }
-      <Button onClick={handleToggleModal} text="New Room"></Button>
+      <div className="rooms__buttons">
+        <Button onClick={handleToggleModal} text="New Room"></Button>
+      </div>
     </div>
   );
 }
