@@ -1,19 +1,19 @@
-const RoomsManager = require('../models/rooms-manager.model');
-const registerRoomsEventHandlers = require('./rooms.socket');
+const LobbyManager = require('../models/lobby-manager.model');
+const registerLobbyHandlers = require('./lobby.socket');
 const registerGameEventHandlers = require('./game.socket');
 
-const roomsManager = RoomsManager();
+const lobbyManager = LobbyManager();
 
 function registerConnectionHandlers (socketServer) {
-  // when there is a new connection, register handlers on the socket
+  // when there is a new connection, register hand                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            lers on the socket
   socketServer.on('connection', (socket) => {
-    // console.log(`client connection, socket.id: ${socket.id}`);
-    const gameId = roomsManager.addToRoom(socket);
-
-    registerRoomsEventHandlers(socket, roomsManager);
+    socket.join('lobby');
+    registerLobbyHandlers(socket, lobbyManager, socketServer);
     // registerGameEventHandlers(socket, gameManager);
+
     socket.on('disconnecting', (reason) => {
-      roomsManager.removeFromRoom(socket);
+      socket.leave('lobby');
+      lobbyManager.leaveRoom(socket);
     });
   });
 
