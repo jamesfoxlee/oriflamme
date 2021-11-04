@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './RoomItem.css';
 import Button from '../../atoms/Button/Button';
 
-export default function RoomItem ({ onClick, room }) {
+export default function RoomItem ({ joinRoom, room }) {
 
   const { id, ownerName, roomName, players } = room;
   const numPlayers = players.length;
@@ -20,7 +20,7 @@ export default function RoomItem ({ onClick, room }) {
       </div>
       <div className="room-item__buttons">
         <Button
-          onClick={ () => onClick(room) }
+          onClick={ () => joinRoom(room.id) }
           text="Join"
         />
       </div>

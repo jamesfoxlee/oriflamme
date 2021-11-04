@@ -13,12 +13,12 @@ export default function Socket() {
     }
 
     function registerListener (event, handler) {
-      console.log(`Socket.registerListener() event: ${event}`);
+      console.log(`Socket.registerListener() ${event}`);
       socket.on(event, handler);
     }
 
     function unregisterListener (event) {
-      console.log(`Socket.unregisterListener() event: ${event}`);
+      console.log(`Socket.unregisterListener() ${event}`);
       socket.removeAllListeners(event);
     }
 
@@ -27,17 +27,22 @@ export default function Socket() {
     }
 
     function getRooms () {
-      console.log(`Socket.getRooms()`);
+      console.log(LOBBY.GET_ROOMS);
       socket.emit(LOBBY.GET_ROOMS);
     }
 
     function createRoom (roomData) {
-      console.log(`Socket.createRoom()`);
+      console.log(LOBBY.CREATE_ROOM);
       socket.emit(LOBBY.CREATE_ROOM, roomData);
     }
 
+    function joinRoom (roomId, player) {
+      console.log(LOBBY.JOIN_ROOM);
+      socket.emit(LOBBY.JOIN_ROOM, roomId, player);
+    }
+
     function sendMessage (message) {
-      console.log(`Socket.sendMessage() message: ${message}`);
+      console.log(MESSAGE.CREATE);
       socket.emit(MESSAGE.CREATE, message);
     }
 
@@ -55,6 +60,8 @@ export default function Socket() {
         unregisterListener,
         getSocketId,
         getRooms,
+        createRoom,
+        joinRoom,
         sendMessage
       })
     });

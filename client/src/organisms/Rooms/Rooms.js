@@ -61,6 +61,9 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
     socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
     socket.getRooms();
     // TODO: change to cleanup useEffect to unregister listener
+    return function cleanup () {
+      socket.unregisterListener(LOBBY.ROOMS_CHANGED);
+    }
   }, [])
 
   return (
@@ -92,6 +95,7 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
                 return (
                   <RoomItem
                     key={`room-item-${idx}`}
+                    joinRoom={joinRoom}
                     room={room}
                   />
                 )

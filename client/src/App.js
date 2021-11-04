@@ -18,6 +18,7 @@ let socket;
 function App() {
 
   const joinRoom = (roomId) => {
+    socket.joinRoom(roomId, user);
     setActiveRoom(roomId);
   }
 
