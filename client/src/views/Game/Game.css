@@ -1,3 +1,38 @@
 .game {
+  display: flex;
+}
+
+.game__table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 4 3 0;
+}
+
+.game__opponents {
+  align-self: center;
+  width: 70%;
+  height: calc( (100vh - var(--size-navbar-height)) / 3);
+}
+
+.game__queue {
+  height: calc( (100vh - var(--size-navbar-height)) / 3);
+  border: 1px solid red;
+}
+
+.game__player {
+  align-self: center;
+  width: 100%;
+  height: calc( (100vh - var(--size-navbar-height)) / 3);
+  border: 1px solid red;
+}
+
+.game__sidebar {
+  display: flex;
+  flex: 1 1 0;
+  border: 1px solid green;
+}
+
+.game__messages {
   border: 1px solid red;
 }

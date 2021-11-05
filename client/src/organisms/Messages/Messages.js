@@ -23,6 +23,11 @@ export default function Messages({ messages, players, socket }) {
     const aDate = new Date(a.timestamp).getTime();
     const bDate = new Date(b.timestamp).getTime();
     return aDate - bDate;
+  });
+
+  const playersObj = {};
+  players.forEach(player => {
+    playersObj[player.id] = player;
   })
 
   return (
@@ -31,7 +36,7 @@ export default function Messages({ messages, players, socket }) {
       <div className="messages__list">
         {
           sortedMessages.map((message, idx) => {
-            const messageFrom = players[message.from].handle;
+            const messageFrom = playersObj[message.from].name;
             return (
               <Message
                 message={message}

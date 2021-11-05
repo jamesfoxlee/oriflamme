@@ -70,7 +70,8 @@ function App() {
         {
           !loading && activeRoom ?
               <Game
-                activeRoom={activeRoom}
+                leaveRoom={leaveRoom}
+                roomId={activeRoom}
                 socket={socket}
               /> :
             null
