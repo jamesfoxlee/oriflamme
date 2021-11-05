@@ -12,19 +12,18 @@
 .game__opponents {
   align-self: center;
   width: 70%;
-  height: calc( (100vh - var(--size-navbar-height)) / 3);
+  height: calc( (100vh - var(--size-navbar-height)) * 0.3);
 }
 
 .game__queue {
-  height: calc( (100vh - var(--size-navbar-height)) / 3);
+  height: calc( (100vh - var(--size-navbar-height)) * 0.4);
   border: 1px solid red;
 }
 
 .game__player {
   align-self: center;
   width: 100%;
-  height: calc( (100vh - var(--size-navbar-height)) / 3);
-  border: 1px solid red;
+  height: calc( (100vh - var(--size-navbar-height)) * 0.3);
 }
 
 .game__sidebar {

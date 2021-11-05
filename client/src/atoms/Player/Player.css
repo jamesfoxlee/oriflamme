@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 90%;
+  width: 20rem;
   height: 100%;
   margin: 0 auto;
   background-size: cover;
@@ -17,9 +17,9 @@
   display: flex;
   align-items: center;
   flex: 10 10 0;
+  padding-left: 1rem;
   color: var(--color-white);
   font-size: var(--font-size-bigger);
-  font-weight: var(--font-weight-chunky);
   text-align: center;
 }
 
@@ -28,7 +28,7 @@
   flex: 75 75 0;
 }
 
-.player__score {
+.player__influence {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -51,7 +51,6 @@
 }
 
 .player__discarded-card {
-  filter: brightness(0.9);
-  background-color: var(--color-grey-mid);
   padding: 0.5rem;
+  filter: brightness(0.9);
 }
