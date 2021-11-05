@@ -1,0 +1,24 @@
+.card {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+}
+
+.card__element {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.card__text {
+  padding: 3rem 0.5rem;
+  font-size: var(--font-size-smallest);
+  text-align: center;
+}
+
+.card__name {
+  font-size: var(--font-size-smallest);
+  font-weight: var(--font-weight-chunky);
+}

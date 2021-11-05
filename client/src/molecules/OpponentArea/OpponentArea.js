@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './OpponentArea.css';
 import Player from '../../atoms/Player/Player';
@@ -14,10 +14,9 @@ export default function OpponentArea (props) {
       {
         opponents.map((opponent, idx) => {
           return (
-            <div className="opponent__wrapper">
+            <div className="opponent__wrapper" key={`opponent-${idx}`}>
               <Player
                 cards={cards}
-                key={`opponent-${idx}`}
                 player={opponent}
               />
             </div>

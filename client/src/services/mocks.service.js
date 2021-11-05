@@ -2,44 +2,48 @@ export const gameState = {
   players: [
     {
       id: 'al',
-      color: 'red',
+      color: 'hsla(0, 100%, 55%, 1)',
       discardPile: ['ambush'],
+      hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
+      imageUrl: 'https://i.pinimg.com/originals/9f/0f/b8/9f0fb83b052da2fe53003f26ce1bf0b1.jpg',
       influence: 10,
       name: 'Alan',
-      isOwner: true,
-      imageUrl: 'https://i.pinimg.com/originals/9f/0f/b8/9f0fb83b052da2fe53003f26ce1bf0b1.jpg'
     },
     {
       id: 'be',
-      color: 'purple',
+      color: 'hsla(235, 100%, 48%, 1)',
       discardPile: ['assassinate', 'spy'],
-      name: 'Beatrice',
+      hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
+      imageUrl: 'https://i.pinimg.com/originals/de/ed/59/deed59f7d0312b416c4cfd1fe5bdbeb2.jpg',
       influence: 7,
-      imageUrl: 'https://i.pinimg.com/originals/de/ed/59/deed59f7d0312b416c4cfd1fe5bdbeb2.jpg'
+      name: 'Beatrice',
     },
     {
       id: 'ch',
-      color: 'black',
+      color: 'hsla(0, 0%, 0%, 1)',
       discardPile: [],
-      name: 'Chris',
+      hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
+      imageUrl: 'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',
       influence: 14,
-      imageUrl: 'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg'
+      name: 'Chris',
     },
     {
       id: 'de',
-      color: 'grey',
+      color: 'hsla(333, 0%, 44%, 1)',
       discardPile: [],
-      name: 'Deirdre',
+      hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
+      imageUrl: 'https://i.pinimg.com/originals/4b/32/e0/4b32e059371a41575518199729c7dfaa.jpg',
       influence: 11,
-      imageUrl: 'https://i.pinimg.com/originals/4b/32/e0/4b32e059371a41575518199729c7dfaa.jpg'
+      name: 'Deirdre',
     },
     {
       id: 'ed',
-      color: 'green',
+      color: 'hsla(115, 100%, 24%, 1)',
       discardPile: ['royal_decree'],
-      name: 'Edward',
+      hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
       influence: 6,
-      imageUrl: 'https://i.pinimg.com/736x/cd/0a/48/cd0a4811395c05bf10170e7e15fc3c9b.jpg'
+      imageUrl: 'https://i.pinimg.com/736x/cd/0a/48/cd0a4811395c05bf10170e7e15fc3c9b.jpg',
+      name: 'Edward',
     }
   ],
   queue: {
@@ -52,7 +56,7 @@ export const cards = {
     id: 'ambush',
     name: "Ambush",
     reveal: {
-      ability: "If eliminated by an opponent's character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush",
+      text: "If eliminated by an opponent's character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush",
       then: 'discard',
     },
     activate: null,
@@ -62,7 +66,7 @@ export const cards = {
     name: "Archer",
     reveal: null,
     activate: {
-      ability: "Eliminate the first or last card from the Queue.",
+      text: "Eliminate the first or last card from the Queue.",
       then: null,
     }
   },
@@ -70,7 +74,7 @@ export const cards = {
     id: 'assassinate',
     name: "Assassinate",
     reveal: {
-      ability: "Elimate any card in the Queue. Discard Assassination.",
+      text: "Elimate any card in the Queue. Discard Assassination.",
       then: 'discard',
     },
     activate: null,
@@ -79,7 +83,7 @@ export const cards = {
     id: 'conspiracy',
     name: "Conspiracy",
     reveal: {
-      ability: "Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.",
+      text: "Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.",
       then: 'discard',
     },
     activate: null,
@@ -89,7 +93,7 @@ export const cards = {
     name: "Heir",
     reveal: null,
     activate: {
-      ability: "If there is no other card revealed with the same name, gain 2 influence",
+      text: "If there is no other card revealed with the same name, gain 2 influence",
       then: null,
     },
   },
@@ -98,7 +102,7 @@ export const cards = {
     name: "Lord",
     reveal: null,
     activate: {
-      ability: "Earn 1 influence, plus 1 per adjacent card that is in your family.",
+      text: "Earn 1 influence, plus 1 per adjacent card that is in your family.",
       then: null,
     },
   },
@@ -106,7 +110,7 @@ export const cards = {
     id: 'royal_decree',
     name: "Royal Decree",
     reveal: {
-      ability: "Move a card wherever you want in the Queue. Discard Royal Decree.",
+      text: "Move a card wherever you want in the Queue. Discard Royal Decree.",
       then: 'discard',
     },
     activate: null,
@@ -116,7 +120,7 @@ export const cards = {
     name: "Shapeshifter",
     reveal: null,
     activate: {
-      ability: "Copy the ability of an adjacent revealed character.",
+      text: "Copy the ability of an adjacent revealed character.",
       then: null,
     }
   },
@@ -125,7 +129,7 @@ export const cards = {
     name: "Soldier",
     reveal: null,
     activate: {
-      ability: "Eliminate an adjacent card.",
+      text: "Eliminate an adjacent card.",
       then: null,
     },
   },
@@ -134,7 +138,7 @@ export const cards = {
     name: "Spy",
     reveal: null,
     activate: {
-      ability: "Steal 1 influence from a player who has a card adjacent to your Spy.",
+      text: "Steal 1 influence from a player who has a card adjacent to your Spy.",
       then: null,
     },
   },
