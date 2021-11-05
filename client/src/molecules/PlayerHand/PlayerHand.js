@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './PlayerHand.css';
-import Card from '../Card/Card';
+import Card from '../../organisms/Card/Card';
 
 export default function PlayerHand(props) {
 
@@ -15,7 +15,7 @@ export default function PlayerHand(props) {
         hand.map((cardId, idx) => {
           return (
             <Card
-              canDrag={isPlayerTurn}
+              canPlayCard={isPlayerTurn}
               cardColor={cardColor}
               cardId={cardId}
               key={`player-hand-card-${idx}`}

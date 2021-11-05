@@ -6,18 +6,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 4 3 0;
+  flex: 4 4 0;
 }
 
 .game__opponents {
   align-self: center;
   width: 70%;
-  height: calc( (100vh - var(--size-navbar-height)) * 0.3);
+  height: calc( (100vh - var(--size-navbar-height)) * 0.25);
 }
 
 .game__queue {
-  height: calc( (100vh - var(--size-navbar-height)) * 0.4);
-  border: 1px solid red;
+  height: calc( (100vh - var(--size-navbar-height)) * 0.45);
+  background-color: var(--color-blue-midnight-darkest);
 }
 
 .game__player {
@@ -27,11 +27,14 @@
 }
 
 .game__sidebar {
-  display: flex;
   flex: 1 1 0;
-  border: 1px solid green;
+}
+
+.game__status {
+  height: calc( (100vh - var(--size-navbar-height)) * 0.25);
 }
 
 .game__messages {
-  border: 1px solid red;
+  height: calc( (100vh - var(--size-navbar-height)) * 0.75);
+  padding-left: 0.4rem;
 }

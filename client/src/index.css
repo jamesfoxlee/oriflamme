@@ -1,8 +1,8 @@
 :root {
-  --size-navbar-height: 80px;
+  --size-navbar-height: 60px;
   --color-black-dark: hsla(0, 0%, 7%, 1);
   --color-black-charcoal: hsla(0, 0%, 10%, 1);
-  --color-blue-midnight-darkest: hsla(213, 100%, 3%, 1);
+  --color-blue-midnight-darkest: hsla(213, 100%, 5%, 1);
   --color-blue-midnight: hsla(213, 100%, 8%, 1);
   --color-blue-midnight-washed: hsla(213, 62%, 15%, 1);
   --color-grey-mid: hsla(0, 0%, 60%, 1);
@@ -15,6 +15,7 @@
   --color-destructive: hsla(274, 100%, 75%, 1);
   --font-family-gothic: 'UnifrakturMaguntia', cursive;
   --font-family-regular: 'Nunito', sans-serif;;
+  --font-size-arrows: 5rem;
   --font-size-biggest: 3.2rem;
   --font-size-bigger: 2.4rem;
   --font-size-mid: 2rem;

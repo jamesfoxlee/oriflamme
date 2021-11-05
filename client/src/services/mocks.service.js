@@ -1,4 +1,5 @@
 export const gameState = {
+  phase: 'planning',
   players: [
     {
       id: 'al',
@@ -46,9 +47,10 @@ export const gameState = {
       name: 'Edward',
     }
   ],
-  queue: {
-
-  }
+  queue: [],
+  queueResolutionIndex: 0,
+  round: 2,
+  turnOrder: ['ed', 'al', 'be']
 }
 
 export const cards = {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './PlayerArea.css';
-import PlayerHand from '../../molecules/PlayerHand/PlayerHand';
+import PlayerHand from '../PlayerHand/PlayerHand';
 import Player from '../../atoms/Player/Player';
 
 export default function PlayerArea (props) {

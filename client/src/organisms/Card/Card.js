@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import './Card.css';
@@ -6,11 +6,12 @@ import './Card.css';
 import useHover from '../../hooks/hover.hook';
 import { CardsContext } from '../../context/cards.context';
 
-const HEIGHT_SCALE = 1.86666667;
+// const HEIGHT_SCALE = 1.86666667;
+const HEIGHT_SCALE = 1.5;
 
 export default function Card(props) {
 
-  const { canDrag, cardColor, cardId, scaleFactor, width } = props;
+  const { canPlayCard, cardColor, cardId, scaleFactor, width } = props;
   const height = width * HEIGHT_SCALE;
 
   const noHoverStyles = {
@@ -23,8 +24,7 @@ export default function Card(props) {
 
   const hoverStyles = {
     card: {
-      position: 'relative',
-      bottom: `${width}px`,
+      marginBottom: `${width}px`,
       width: `${width * scaleFactor}px`,
       height: `${height * scaleFactor}px`,
       backgroundColor: cardColor,
@@ -32,24 +32,22 @@ export default function Card(props) {
   };
 
   const [hoverRef, isHovered] = useHover();
-  const cards = useContext(CardsContext);
+  const [cards, onPlayerCardClicked] = useContext(CardsContext);
   const card = cards[cardId];
   const cardAbility = card.activate || card.reveal;
 
   return (
-    <div
-      className="card"
-    >
+    <div className="card">
       <div
         className="card__element"
-        draggable={canDrag}
+        onClick={() => onPlayerCardClicked(card)}
         ref={hoverRef}
         style={isHovered ? hoverStyles.card : noHoverStyles.card}
       >
         {
           isHovered ?
             <div className="card__text">{cardAbility.text}</div> :
-          null
+            null
         }
         <div className="card__name">{card.name}</div>
       </div>
@@ -64,7 +62,6 @@ export default function Card(props) {
 const { bool, number, string } = PropTypes;
 
 Card.propTypes = {
-  canDrag: bool.isRequired,
   cardId: string.isRequired,
   revealed: bool,
   scaleFactor: number,
@@ -74,5 +71,5 @@ Card.propTypes = {
 Card.defaultProps = {
   revealed: false,
   scaleFactor: 1.5,
-  width: 100
+  width: 120
 };

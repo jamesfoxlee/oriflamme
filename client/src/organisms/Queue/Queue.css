@@ -1,0 +1,23 @@
+.queue {
+  display: flex;
+  height: 100%;
+  border: 1px solid red;
+}
+
+.queue__endzone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 3 3 0;
+  padding: 1rem;
+  border: 1px solid red;
+}
+
+.queue__arrow {
+  font-size: var(--font-size-arrows);
+}
+
+.queue__cards {
+  flex: 97 97 0;
+  border: 1px solid red;
+}
