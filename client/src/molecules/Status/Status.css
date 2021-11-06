@@ -1,3 +1,30 @@
 .status {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+}
 
+.status__phase {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-biggest);
+  font-weight: var(--font-weight-chunky);
+}
+
+.status__message {
+  display: flex;
+  align-items: center;
+  flex: 2 2 0;
+  border-radius: 1rem;
+  font-size: var(--font-size-mid);
+  text-align: center;
+}
+
+.status__message--emphasis {
+  font-weight: var(--font-weight-chunky);
 }

@@ -51,6 +51,7 @@ export const gameState = {
   queueResolutionIndex: 0,
   round: 2,
   turnOrder: ['ed', 'al', 'be']
+  // turnOrder: ['al', 'be']
 }
 
 export const cards = {
