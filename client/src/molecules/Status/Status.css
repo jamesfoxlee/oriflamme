@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   flex: 1 1 0;
+  margin-bottom: 1rem;
   font-family: var(--font-family-gothic);
   font-size: var(--font-size-biggest);
   font-weight: var(--font-weight-chunky);

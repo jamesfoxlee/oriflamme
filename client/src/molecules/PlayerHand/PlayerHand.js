@@ -5,7 +5,7 @@ import Card from '../../organisms/Card/Card';
 
 export default function PlayerHand(props) {
 
-  const { cardColor, isPlayerTurn } = props;
+  const { cardColor, handIsActive } = props;
   // TODO: add 'hand' to destructuring once shuffling etc implemented, remove line below
   const hand = props.hand.slice(0,7)
 
@@ -15,7 +15,7 @@ export default function PlayerHand(props) {
         hand.map((cardId, idx) => {
           return (
             <Card
-              canPlayCard={isPlayerTurn}
+              canPlayCard={handIsActive}
               cardColor={cardColor}
               cardId={cardId}
               key={`player-hand-card-${idx}`}

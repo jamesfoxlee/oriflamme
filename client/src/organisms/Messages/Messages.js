@@ -32,7 +32,7 @@ export default function Messages({ messages, players, socket }) {
 
   return (
     <div className="messages">
-      <div className="messages__header"></div>
+      <div className="messages__header">Messages</div>
       <div className="messages__list">
         {
           sortedMessages.map((message, idx) => {

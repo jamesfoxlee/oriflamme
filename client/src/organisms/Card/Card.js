@@ -14,6 +14,18 @@ export default function Card(props) {
   const { canPlayCard, cardColor, cardId, scaleFactor, width } = props;
   const height = width * HEIGHT_SCALE;
 
+  // "METHODS"
+
+  const handleCardClicked = () => {
+    if (canPlayCard) {
+      setSelected(!selected);
+      const value = !selected ? card : null;
+      onPlayerCardClicked(value);
+    }
+  }
+
+  // DYNAMIC STYLES
+
   const noHoverStyles = {
     card: {
       width: `${width}px`,
@@ -31,18 +43,28 @@ export default function Card(props) {
     }
   };
 
+  const selectedStyles = {
+    card: {
+      boxShadow: '0 0 1rem 1rem var(--color-white)',
+    }
+  };
+
   const [hoverRef, isHovered] = useHover();
+  const [selected, setSelected] = useState(false);
   const [cards, onPlayerCardClicked] = useContext(CardsContext);
   const card = cards[cardId];
   const cardAbility = card.activate || card.reveal;
+  const currentHoverStyle = isHovered ? hoverStyles.card : noHoverStyles.card;
+  const currentSelectedStyle = selected ? selectedStyles.card : {};
+  const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
   return (
     <div className="card">
       <div
         className="card__element"
-        onClick={() => onPlayerCardClicked(card)}
+        onClick={() => handleCardClicked(card)}
         ref={hoverRef}
-        style={isHovered ? hoverStyles.card : noHoverStyles.card}
+        style={combinedStyle}
       >
         {
           isHovered ?

@@ -8,7 +8,11 @@
 }
 
 .messages__header {
-
+  padding: 1rem;
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-biggest);
+  font-weight: var(--font-weight-chunky);
+  text-align: center;
 }
 
 .messages__list {

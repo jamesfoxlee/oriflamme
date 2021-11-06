@@ -38,16 +38,14 @@ export default function Game(props) {
     }
   }, [])
 
-  const [user] = useContext(UserContext);
-  // TODO: cards context vs prop drilling
-  // const [cards, setCards] = useState({});
   const [selectedPlayerCard, setSelectedPlayerCard] = useState(null);
+  // TODO: review this
   const [gameState, setGameState] = useState(fixedGameState);
+  const [user] = useContext(UserContext);
   // const [messages, setMessages] = useState({});
-
   // TODO: reference main player by user
+  // TODO: **IMPORTANT** revire everything below, likely temporary!!
   const { players, queue } = gameState;
-
   const opponents = players.slice(0, players.length - 1);
   const player = players[players.length - 1];
 
@@ -56,13 +54,21 @@ export default function Game(props) {
       <CardsProvider value={[cards, onPlayerCardClicked]} >
         <div className="game__table">
           <div className="game__opponents">
-            <OpponentArea cards={cards} opponents={opponents} />
+            <OpponentArea
+              cards={cards}
+              gameState={gameState}
+              opponents={opponents}
+            />
           </div>
           <div className="game__queue">
             <Queue selectedPlayerCard={selectedPlayerCard} />
           </div>
           <div className="game__player">
-            <PlayerArea cards={cards} player={player} />
+            <PlayerArea
+              cards={cards}
+              gameState={gameState}
+              player={player}
+            />
           </div>
         </div>
         <div className="game__sidebar">
