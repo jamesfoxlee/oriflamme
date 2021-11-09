@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import './Card.css';
+import './PlayerCard.css';
 
 import useHover from '../../hooks/hover.hook';
 import { CardsContext } from '../../context/cards.context';
@@ -9,7 +9,7 @@ import { CardsContext } from '../../context/cards.context';
 // const HEIGHT_SCALE = 1.86666667;
 const HEIGHT_SCALE = 1.5;
 
-export default function Card(props) {
+export default function PlayerCard(props) {
 
   const { canPlayCard, cardColor, cardId, scaleFactor, width } = props;
   const height = width * HEIGHT_SCALE;
@@ -53,25 +53,24 @@ export default function Card(props) {
   const [selected, setSelected] = useState(false);
   const [cards, onPlayerCardClicked] = useContext(CardsContext);
   const card = cards[cardId];
-  const cardAbility = card.activate || card.reveal;
   const currentHoverStyle = isHovered ? hoverStyles.card : noHoverStyles.card;
   const currentSelectedStyle = selected ? selectedStyles.card : {};
   const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
   return (
-    <div className="card">
+    <div className="player-card">
       <div
-        className="card__element"
+        className="player-card__element"
         onClick={() => handleCardClicked(card)}
         ref={hoverRef}
         style={combinedStyle}
       >
         {
           isHovered ?
-            <div className="card__text">{cardAbility.text}</div> :
+            <div className="player-card__text">{card.text}</div> :
             null
         }
-        <div className="card__name">{card.name}</div>
+        <div className="player-card__name">{card.name}</div>
       </div>
     </div>
   );
@@ -83,15 +82,15 @@ export default function Card(props) {
 
 const { bool, number, string } = PropTypes;
 
-Card.propTypes = {
+PlayerCard.propTypes = {
+  canPlayCard: bool.isRequired,
+  cardColor: string.isRequired,
   cardId: string.isRequired,
-  revealed: bool,
   scaleFactor: number,
   width: number,
 };
 
-Card.defaultProps = {
-  revealed: false,
+PlayerCard.defaultProps = {
   scaleFactor: 1.5,
   width: 120
 };

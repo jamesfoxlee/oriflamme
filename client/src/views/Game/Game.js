@@ -61,7 +61,10 @@ export default function Game(props) {
             />
           </div>
           <div className="game__queue">
-            <Queue selectedPlayerCard={selectedPlayerCard} />
+            <Queue
+              gameState={gameState}
+              selectedPlayerCard={selectedPlayerCard}
+            />
           </div>
           <div className="game__player">
             <PlayerArea

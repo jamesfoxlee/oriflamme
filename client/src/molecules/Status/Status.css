@@ -1,20 +1,22 @@
 .status {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding: 2rem;
+  padding: 3rem 2rem;
+  border: 1px solid red;
 }
 
 .status__phase {
   display: flex;
   align-items: center;
   flex: 1 1 0;
-  margin-bottom: 1rem;
+  padding-bottom: 2rem;
   font-family: var(--font-family-gothic);
   font-size: var(--font-size-biggest);
   font-weight: var(--font-weight-chunky);
+  border: 1px solid red;
 }
 
 .status__message {

@@ -1,4 +1,5 @@
 export const gameState = {
+  activePlayerId: 'ed',
   phase: 'planning',
   players: [
     {
@@ -21,7 +22,7 @@ export const gameState = {
     },
     {
       id: 'ch',
-      color: 'hsla(0, 0%, 0%, 1)',
+      color: 'hsla(209, 100%, 75%, 1)',
       discardPile: [],
       hand: ['ambush', 'archer', 'assassinate', 'conspiracy', 'heir', 'lord', 'royal_decree', 'shapeshifter', 'soldier', 'spy'],
       imageUrl: 'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',
@@ -47,8 +48,126 @@ export const gameState = {
       name: 'Edward',
     }
   ],
-  queue: [],
-  queueResolutionIndex: 0,
+  queue: [
+    [{
+      id: 'ambush',
+      influence: 0,
+      name: "Ambush",
+      ownerColor: 'hsla(209, 100%, 75%, 1)',
+      ownerId: 'ch',
+      text: "If eliminated by an opponent's character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush",
+      revealed: false
+    }],
+    [{
+      id: 'archer',
+      influence: 0,
+      name: "Archer",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'de',
+      text: "Eliminate the first or last card from the Queue.",
+      revealed: false
+    }],
+    [{
+      id: 'assassinate',
+      influence: 1,
+      name: "Assassinate",
+      ownerColor: 'hsla(235, 100%, 48%, 1)',
+      ownerId: 'be',
+      text: "Elimate any card in the Queue. Discard Assassination.",
+      revealed: false
+    }],
+    [{
+      id: 'heir',
+      influence: 0,
+      name: "Heir",
+      ownerColor: 'hsla(0, 100%, 55%, 1)',
+      ownerId: 'al',
+      text: "If there is no other card revealed with the same name, gain 2 influence.",
+      revealed: true
+    }],
+    [{
+      id: 'spy',
+      influence: 0,
+      name: "Spy",
+      ownerColor: 'hsla(0, 100%, 55%, 1)',
+      ownerId: 'al',
+      text: "Steal 1 influence from a player who has a card adjacent to your Spy.",
+      revealed: true
+    }],
+    [{
+      id: 'heir',
+      influence: 1,
+      name: "Heir",
+      ownerColor: 'hsla(0, 100%, 55%, 1)',
+      ownerId: 'be',
+      text: "If there is no other card revealed with the same name, gain 2 influence.",
+      revealed: false
+    }],
+    [{
+      id: 'archer',
+      influence: 0,
+      name: "Archer",
+      ownerColor: 'hsla(209, 100%, 75%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate the first or last card from the Queue.",
+      revealed: true
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(115, 100%, 24%, 1)',
+      ownerId: 'ed',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+    [{
+      id: 'soldier',
+      influence: 0,
+      name: "Soldier",
+      ownerColor: 'hsla(333, 0%, 44%, 1)',
+      ownerId: 'ch',
+      text: "Eliminate an adjacent card.",
+      revealed: false
+    }],
+  ],
+  queueResolutionIndex: 7,
   round: 2,
   turnOrder: ['ed', 'al', 'be']
   // turnOrder: ['al', 'be']
@@ -58,92 +177,54 @@ export const cards = {
   ambush: {
     id: 'ambush',
     name: "Ambush",
-    reveal: {
-      text: "If eliminated by an opponent's character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush",
-      then: 'discard',
-    },
-    activate: null,
+    text: "If eliminated by an opponent's character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush",
   },
   archer: {
     id: 'archer',
     name: "Archer",
-    reveal: null,
-    activate: {
-      text: "Eliminate the first or last card from the Queue.",
-      then: null,
-    }
+    text: "Eliminate the first or last card from the Queue.",
   },
   assassinate: {
     id: 'assassinate',
     name: "Assassinate",
-    reveal: {
-      text: "Elimate any card in the Queue. Discard Assassination.",
-      then: 'discard',
-    },
+    text: "Elimate any card in the Queue. Discard Assassination.",
     activate: null,
   },
   conspiracy: {
     id: 'conspiracy',
     name: "Conspiracy",
-    reveal: {
-      text: "Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.",
-      then: 'discard',
-    },
-    activate: null,
+    text: "Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.",
   },
   heir: {
     id: 'heir',
     name: "Heir",
-    reveal: null,
-    activate: {
-      text: "If there is no other card revealed with the same name, gain 2 influence",
-      then: null,
-    },
+    text: "If there is no other card revealed with the same name, gain 2 influence",
   },
   lord: {
     id: 'lord',
     name: "Lord",
     reveal: null,
-    activate: {
-      text: "Earn 1 influence, plus 1 per adjacent card that is in your family.",
-      then: null,
-    },
+    text: "Earn 1 influence, plus 1 per adjacent card that is in your family.",
   },
   royal_decree: {
     id: 'royal_decree',
     name: "Royal Decree",
-    reveal: {
-      text: "Move a card wherever you want in the Queue. Discard Royal Decree.",
-      then: 'discard',
-    },
-    activate: null,
+    text: "Move a card wherever you want in the Queue. Discard Royal Decree.",
   },
   shapeshifter: {
     id: 'shapeshifter',
     name: "Shapeshifter",
-    reveal: null,
-    activate: {
-      text: "Copy the ability of an adjacent revealed character.",
-      then: null,
-    }
+    text: "Copy the ability of an adjacent revealed character.",
   },
   soldier: {
     id: 'soldier',
     name: "Soldier",
-    reveal: null,
-    activate: {
-      text: "Eliminate an adjacent card.",
-      then: null,
-    },
+    text: "Eliminate an adjacent card.",
   },
   spy: {
     id: 'spy',
     name: "Spy",
-    reveal: null,
-    activate: {
-      text: "Steal 1 influence from a player who has a card adjacent to your Spy.",
-      then: null,
-    },
+    text: "Steal 1 influence from a player who has a card adjacent to your Spy.",
   },
 };
 

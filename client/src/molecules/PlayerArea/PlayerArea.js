@@ -11,8 +11,7 @@ export default function PlayerArea (props) {
   const { cards, gameState, player } = props;
   const [user] = useContext(UserContext);
 
-  const activePlayerId = gameState.turnOrder[0];
-  const handIsActive = (activePlayerId === user.id) && (gameState.phase === 'planning');
+  const handIsActive = (gameState.activePlayerId === user.id) && (gameState.phase === 'planning');
 
   return (
     <div className="player-area">

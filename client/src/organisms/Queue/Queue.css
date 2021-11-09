@@ -1,7 +1,6 @@
 .queue {
   display: flex;
   height: 100%;
-  border: 1px solid red;
 }
 
 .queue__endzone {
@@ -10,7 +9,6 @@
   justify-content: center;
   flex: 3 3 0;
   padding: 1rem;
-  border: 1px solid red;
 }
 
 .queue__arrow {
@@ -18,6 +16,7 @@
 }
 
 .queue__cards {
+  display: flex;
+  justify-content: center;
   flex: 97 97 0;
-  border: 1px solid red;
 }
