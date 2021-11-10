@@ -1,5 +1,7 @@
 const { v1: uuidv1 } = require('uuid');
 
+const { Room } = require('../models/room.model');
+
 module.exports = function LobbyManager () {
   const _rooms = {};
 
@@ -7,9 +9,9 @@ module.exports = function LobbyManager () {
 
   const getRooms = () => {
     return Object.values(_rooms).map(room => {
-      const { id, ownerId, ownerName, roomName, players } = room;
+      const { roomId, ownerId, ownerName, roomName, players } = room;
       return {
-        id,
+        roomId,
         ownerId,
         ownerName,
         roomName,
@@ -18,20 +20,28 @@ module.exports = function LobbyManager () {
     });
   };
 
-  const createRoom = (roomData) => {
+  const createRoom = async (roomData) => {
     console.log('LobbyManager.createRoom()')
-    const roomId = uuidv1();
-    // roomData: { ownerId, ownerName, roomName }
-    _rooms[roomId] = {
-      ...roomData,
-      id: roomId,
-      players: [],
-    };
-    console.log('rooms now running: ', _getNumberOfRooms());
-    return roomId;
+    try {
+      const roomId = uuidv1();
+      // roomData: { ownerId, ownerName, roomName }
+      const room = {
+        ...roomData,
+        roomId: roomId,
+        players: [],
+      };
+      _rooms[roomId] = room;
+      const rm = new Room(room);
+      await rm.save();
+      console.log('rooms now running: ', _getNumberOfRooms());
+      return roomId;
+    }
+    catch (err) {
+      console.log(err);
+    }
   };
 
-  const joinRoom = (roomId, socket, player) => {
+  const joinRoom = async (roomId, socket, player) => {
     // TODO: limit adding if > 5 players
     console.log('LobbyManager.joinRoom()');
     const room = _rooms[roomId];

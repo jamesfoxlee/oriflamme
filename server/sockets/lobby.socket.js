@@ -1,16 +1,16 @@
-const SOCKET_CONSTANTS = require('../config/socket.constants');
-const { LOBBY } = SOCKET_CONSTANTS.EVENTS;
+const SOCKET_EVENTS = require('../config/socket.constants');
+const { LOBBY } = SOCKET_EVENTS;
 
 module.exports = function registerLobbyEventHandlers(socket, lobbyManager, socketServer) {
 
   socket.on(LOBBY.GET_ROOMS, () => {
-    console.log('LOBBY.GET_ROOMS');
+    console.log(LOBBY.GET_ROOMS);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
   });
 
-  socket.on(LOBBY.CREATE_ROOM, (roomData) => {
-    console.log('LOBBY.CREATE_ROOM');
-    const roomId = lobbyManager.createRoom(roomData);
+  socket.on(LOBBY.CREATE_ROOM, async (roomData) => {
+    console.log(LOBBY.CREATE_ROOM);
+    const roomId = await lobbyManager.createRoom(roomData);
     const player = {
       id: roomData.ownerId,
       name: roomData.ownerName,
@@ -21,7 +21,7 @@ module.exports = function registerLobbyEventHandlers(socket, lobbyManager, socke
   });
 
   socket.on(LOBBY.JOIN_ROOM, (roomId, player) => {
-    console.log('LOBBY.JOIN_ROOM');
+    console.log(LOBBY.JOIN_ROOM);
     console.log(`${player.name} with id: ${player.id} joining room: ${roomId}`);
     console.log(player);
     lobbyManager.joinRoom(roomId, socket, player);
