@@ -37,5 +37,4 @@
 
 .game__messages {
   height: calc( (100vh - var(--size-navbar-height)) * 0.75);
-  padding-left: 0.4rem;
 }

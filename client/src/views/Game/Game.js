@@ -10,7 +10,10 @@ import Messages from '../../organisms/Messages/Messages';
 import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
-import { cards, gameState as fixedGameState, messages } from '../../services/mocks.service';
+
+import { gameState as fixedGameState } from '../../mocks/gamestate.mocks';
+import { cards } from '../../mocks/cards.mocks';
+import { messages } from '../../mocks/messages.mocks';
 
 const { GAME } = SOCKET_EVENTS;
 
@@ -19,8 +22,6 @@ export default function Game(props) {
   const { leaveRoom, roomId, socket } = props;
 
   const onPlayerCardClicked = (card) => {
-    console.log('onPlayerCardClicked');
-    console.log(card);
     setSelectedPlayerCard(card);
   }
 
@@ -34,6 +35,7 @@ export default function Game(props) {
     // socket.registerListener()
 
     return function teardownListeners() {
+      // TODO: implement
       console.log('Game [UNMOUNT]: teardownListeners()');
     }
   }, [])

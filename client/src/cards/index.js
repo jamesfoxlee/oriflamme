@@ -1,0 +1,1 @@
+import SpyCard from './spy';
