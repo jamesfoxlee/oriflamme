@@ -167,7 +167,7 @@ export const gameState = {
       revealed: false
     }],
   ],
-  queueResolutionIndex: 7,
+  queueResolutionIndex: 8,
   round: 2,
   turnOrder: ['ed', 'al', 'be']
   // turnOrder: ['al', 'be']

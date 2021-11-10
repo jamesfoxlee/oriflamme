@@ -4,8 +4,8 @@ import './Status.css';
 
 const boxStyles = {
   backgroundColor: 'var(--color-white)',
-  color: 'hsla(213, 62%, 15%, 1)',
   boxShadow: '0 0 2rem 2rem var(--color-white)',
+  color: 'hsla(213, 62%, 15%, 1)',
 }
 
 export default function Status(props) {

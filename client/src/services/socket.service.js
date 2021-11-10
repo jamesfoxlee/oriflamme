@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
-import SOCKET_CONSTANTS from '../config/socket.constants';
-const { CONNECTIVITY, LOBBY, MESSAGE } = SOCKET_CONSTANTS.EVENTS;
+import { SOCKET_EVENTS } from '../config/socket.constants';
+const { CONNECTIVITY, LOBBY, MESSAGE } = SOCKET_EVENTS;
 
 export default function Socket() {
 

@@ -7,12 +7,12 @@ import PlayerArea from '../../molecules/PlayerArea/PlayerArea';
 import Status from '../../molecules/Status/Status.js';
 import Messages from '../../organisms/Messages/Messages';
 
-import SOCKET_CONSTANTS from '../../config/socket.constants';
+import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
 import { cards, gameState as fixedGameState, messages } from '../../services/mocks.service';
 
-const { GAME } = SOCKET_CONSTANTS.EVENTS;
+const { GAME } = SOCKET_EVENTS;
 
 export default function Game(props) {
 

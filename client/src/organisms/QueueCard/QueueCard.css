@@ -11,7 +11,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin: 0 auto; */
+}
+
+.queue-card__back {
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-biggest);
+  font-weight: var(--font-weight-regular);
 }
 
 .queue-card__text {
@@ -23,6 +28,21 @@
 .queue-card__name {
   font-size: var(--font-size-smallest);
   font-weight: var(--font-weight-chunky);
+}
+
+.queue-card__influence {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.4rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  /* margin: 0 1rem 1rem; */
+  padding: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--color-silver);
+  filter: brightness(1.0);
+  font-size: var(--font-size-bigger);
+  text-align: center;
 }
 
 .queue-card__prompt {

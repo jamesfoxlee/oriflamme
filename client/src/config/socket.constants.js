@@ -1,4 +1,4 @@
-const EVENTS = {
+export const SOCKET_EVENTS = {
   CONNECTIVITY: {
     CONNECT: 'connect',
     CONNECTION: 'connection',
@@ -17,7 +17,3 @@ const EVENTS = {
     CREATE: 'message-create',
   },
 };
-
-module.exports = {
-  EVENTS,
-}

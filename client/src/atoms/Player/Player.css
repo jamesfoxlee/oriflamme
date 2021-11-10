@@ -37,7 +37,7 @@
   margin: 0 1rem 1rem;
   padding: 0.5rem;
   border-radius: 50%;
-  background-color: hsla(0, 100%, 55%, 1);
+  background-color: var(--color-maroon);
   font-size: var(--font-size-biggest);
 }
 

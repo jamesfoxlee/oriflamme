@@ -1,11 +1,10 @@
 .status {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   height: 100%;
-  padding: 3rem 2rem;
-  border: 1px solid red;
+  padding: 2rem 2rem;
 }
 
 .status__phase {
@@ -16,7 +15,6 @@
   font-family: var(--font-family-gothic);
   font-size: var(--font-size-biggest);
   font-weight: var(--font-weight-chunky);
-  border: 1px solid red;
 }
 
 .status__message {

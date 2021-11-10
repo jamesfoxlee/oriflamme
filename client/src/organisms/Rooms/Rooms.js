@@ -6,11 +6,11 @@ import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
 import Button from '../../atoms/Button/Button';
 
-import SOCKET_CONSTANTS from '../../config/socket.constants';
+import { SOCKET_EVENTS } from '../../config/socket.constants';
 import StorageService from '../../services/storage.service';
 import { UserContext } from '../../context/user.context';
 
-const { LOBBY } = SOCKET_CONSTANTS.EVENTS;
+const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 

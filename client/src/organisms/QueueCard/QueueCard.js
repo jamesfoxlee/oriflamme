@@ -87,7 +87,12 @@ export default function QueueCard(props) {
         {
           isOwned || card.revealed ?
            <div className="queue-card__name">{card.name}</div> :
-           null
+           <div className="queue-card__back">O</div>
+        }
+        {
+          card.influence ?
+            <span className="queue-card__influence">{card.influence}</span> :
+            null
         }
       </div>
       {

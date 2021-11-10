@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './Queue.css';
 import QueueCard from '../QueueCard/QueueCard';
 
+import { PHASES } from '../../config/game.constants';
+
 export default function Queue (props) {
 
   const { gameState, selectedPlayerCard } = props;
@@ -23,12 +25,13 @@ export default function Queue (props) {
             {
               queue.map((stack, idx) => {
                 const topCard = stack[stack.length - 1];
-                const isResolving = queueResolutionIndex === idx;
+                const isResolving = phase === PHASES.RESOLUTION &&
+                                    queueResolutionIndex === idx;
                 return (
                   <QueueCard
                     card={topCard}
                     isResolving={isResolving}
-                    key={`player-hand-card-${idx}`}
+                    key={`queue-card-${idx}`}
                     scaleFactor={2}
                     width={70}
                   />

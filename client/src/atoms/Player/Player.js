@@ -1,3 +1,5 @@
+import React from 'react';
+
 import './Player.css';
 
 export default function Player (props) {
@@ -10,13 +12,20 @@ export default function Player (props) {
     backgroundImage: `url(${imageUrl})`,
   }
 
+// OLD INFLUENCE USING PLAYER COLOR
+//   <span
+//   className="player__influence"
+//   style={{backgroundColor: color}}>
+//   {influence}
+// </span>
+
   return (
     <div className={playerStyle} style={imageStyles}>
       <div className="player__name" style={{backgroundColor: color}}>{name}</div>
       <div className="player__window">
         <span
           className="player__influence"
-          style={{backgroundColor: color}}>
+        >
           {influence}
         </span>
       </div>
