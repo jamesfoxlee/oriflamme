@@ -1,17 +1,18 @@
 const SOCKET_CONSTANTS = require('../config/socket.constants');
-const LobbyManager = require('../models/lobby-manager.model');
-const registerLobbyHandlers = require('./lobby.socket');
+const LobbyManager = require('../controllers/lobby-manager.controller');
+const registerLobbyEventHandlers = require('./lobby.socket');
+// don't think we need this here
 const registerGameEventHandlers = require('./game.socket');
 
 const { CONNECTIVITY, LOBBY } = SOCKET_CONSTANTS.EVENTS;
 
 const lobbyManager = LobbyManager();
 
-function registerConnectionHandlers (socketServer) {
+function registerConnectionEventHandlers (socketServer) {
 
   socketServer.on(CONNECTIVITY.CONNECTION, (socket) => {
     socket.join('lobby');
-    registerLobbyHandlers(socket, lobbyManager, socketServer);
+    registerLobbyEventHandlers(socket, lobbyManager, socketServer);
     // registerGameEventHandlers(socket, gameManager);
 
     socket.on(CONNECTIVITY.DISCONNECTING, (reason) => {
@@ -26,4 +27,4 @@ function registerConnectionHandlers (socketServer) {
   socketServer.of("/").adapter.on("create-room", (room) => {  console.log(`create-room: ${room} was created`);});
 }
 
-module.exports = registerConnectionHandlers;
+module.exports = registerConnectionEventHandlers;

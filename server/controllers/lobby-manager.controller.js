@@ -1,7 +1,6 @@
-const { config } = require('dotenv');
 const { v1: uuidv1 } = require('uuid');
 
-module.exports = function RoomsManager () {
+module.exports = function LobbyManager () {
   const _rooms = {};
 
   const _getNumberOfRooms = () => Object.keys(_rooms).length;
