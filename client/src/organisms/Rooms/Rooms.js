@@ -21,25 +21,25 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
   }
 
   const handleCreateRoom = (roomData) => {
-    if (!user.name) {
-      const newName = roomData.ownerName;
-      storageService.set('user.name', newName);
+    let player = { ...user };
+    if (!player.name) {
+      player.name = roomData.ownerName;
+      storageService.set('user.name', player.name);
       setUser({
         ...user,
-        name: newName
+        name: player.name
       });
     }
     // listen for acknowledgement of room create so we can set it as active
     socket.registerOneShotListener(
       LOBBY.CREATE_ROOM_SUCCESS,
-      (roomId) => joinRoom(roomId)
+      (roomId) => joinRoom(roomId, player)
     );
     // create the room
-    const owner = roomData.ownerName || user.name;
     socket.createRoom({
-      ownerId: user.id,
-      ownerName: user.name || roomData.ownerName,
-      roomName: roomData.roomName || `${owner}'s game`,
+      ownerId: player.id,
+      ownerName: player.name,
+      roomName: roomData.roomName || `${player.name}'s game`,
     });
     handleToggleModal();
   }

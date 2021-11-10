@@ -38,6 +38,7 @@ export default function Socket() {
 
     function joinRoom (roomId, player) {
       console.log(LOBBY.JOIN_ROOM);
+      console.log(`player.id: ${player.id} player.name: ${player.name}`);
       socket.emit(LOBBY.JOIN_ROOM, roomId, player);
     }
 

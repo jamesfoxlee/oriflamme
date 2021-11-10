@@ -17,8 +17,8 @@ let socket;
 
 function App() {
 
-  const joinRoom = (roomId) => {
-    socket.joinRoom(roomId, user);
+  const joinRoom = (roomId, player) => {
+    socket.joinRoom(roomId, player);
     setActiveRoom(roomId);
   }
 
@@ -26,9 +26,9 @@ function App() {
     setActiveRoom(null);
   }
 
-  const [activeRoom, setActiveRoom] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({ id: null, name: null});
+  const [activeRoom, setActiveRoom] = useState(null);
 
   useEffect(() => {
     Socket()
@@ -40,6 +40,7 @@ function App() {
         if (!userId) {
           storageService.set('user.id', socketId)
         }
+        console.log(`App useEffect(), setting user.id: ${userId} user.name: ${userName}`);
         setUser({
           id: userId || socketId,
           name: userName
