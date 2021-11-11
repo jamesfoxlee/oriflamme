@@ -1,6 +1,7 @@
 const SOCKET_EVENTS = require('../config/socket.constants');
 const LobbyManager = require('../controllers/lobby-manager.controller');
 const registerLobbyEventHandlers = require('./lobby.socket');
+const registerGameEventHandlers = require('./game.socket');
 
 const { CONNECTIVITY, LOBBY } = SOCKET_EVENTS;
 
@@ -11,7 +12,7 @@ function registerConnectionEventHandlers (socketServer) {
   socketServer.on(CONNECTIVITY.CONNECTION, (socket) => {
     socket.join('lobby');
     registerLobbyEventHandlers(socket, lobbyManager, socketServer);
-    // registerGameEventHandlers(socket, gameManager);
+    socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
 
     socket.on(CONNECTIVITY.DISCONNECTING, (reason) => {
       socket.leave('lobby');

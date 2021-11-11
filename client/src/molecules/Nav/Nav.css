@@ -12,7 +12,7 @@
 }
 
 .nav__logo {
-  flex: 2 1 0;
+  flex: 3 1 0;
   padding: 0 0 0 2rem;
   font-family: var(--font-family-gothic);
   font-size: var(--font-size-biggest);

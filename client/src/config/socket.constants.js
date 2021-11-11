@@ -7,6 +7,7 @@ export const SOCKET_EVENTS = {
 
   },
   GAME: {
+    GAME_STARTING: 'game.game_starting',
     ROUND_START: 'game.round_start',
   },
   LOBBY: {

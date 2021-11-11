@@ -11,13 +11,21 @@ import { SOCKET_EVENTS } from '../../config/socket.constants';
 import StorageService from '../../services/storage.service';
 import { UserContext } from '../../context/user.context';
 
-const { LOBBY } = SOCKET_EVENTS;
+const { LOBBY, GAME } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
 export default function Rooms(props) {
 
-  const { activeRoomId, joinRoom, leaveRoom, setActiveRoomId, socket, startGame } = props;
+  const {
+    activeRoomId,
+    handleGameStarting,
+    joinRoom,
+    leaveRoom,
+    setActiveRoomId,
+    socket,
+    startGame
+  } = props;
 
   // "METHODS"
 
@@ -88,6 +96,9 @@ export default function Rooms(props) {
       socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
     }
   }, [])
+
+  // TODO: New Room button stays disabled after server reconnect / reflash of rooms if
+  // user had previously created
 
   return (
     <div className="rooms">

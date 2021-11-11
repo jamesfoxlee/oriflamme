@@ -1,2 +1,13 @@
-// don't think we need this here
-const registerGameEventHandlers = require('./game.socket');
+const { v1: uuidv1 } = require('uuid');
+
+const { Room } = require('../models/room.model');
+
+function GameManager () {
+
+
+  return {
+
+  }
+}
+
+module.exports = GameManager;

@@ -5,11 +5,12 @@ import Game from './views/Game/Game';
 import Rooms from './organisms/Rooms/Rooms';
 import Nav from './molecules/Nav/Nav';
 import Loading from './atoms/Loading/Loading';
-// import Error from './atoms/Error/Error';
 
 import Socket from './services/socket.service';
 import StorageService from './services/storage.service';
 import { UserProvider } from './context/user.context';
+import { SOCKET_EVENTS } from './config/socket.constants';
+const { GAME } = SOCKET_EVENTS;
 
 
 const storageService = StorageService();
@@ -18,6 +19,7 @@ let socket;
 function App() {
 
   const joinRoom = (roomId, player) => {
+    socket.registerOneShotListener(GAME.GAME_STARTING, handleGameStarting);
     socket.joinRoom(roomId, player);
     setActiveRoomId(roomId);
   }
@@ -29,8 +31,11 @@ function App() {
 
   const startGame = (roomId) => {
     socket.startGame(roomId);
-    setGameStarted(true);
   }
+
+  const handleGameStarting = () => {
+    setGameStarted(true);
+  };
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({ id: null, name: null});
@@ -71,6 +76,7 @@ function App() {
           !loading && !gameStarted ?
             <Rooms
               activeRoomId={activeRoomId}
+              handleGameStarting={handleGameStarting}
               joinRoom={joinRoom}
               leaveRoom={leaveRoom}
               setActiveRoomId={setActiveRoomId}

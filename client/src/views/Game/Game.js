@@ -32,14 +32,16 @@ export default function Game(props) {
 
   }
 
+  const handleRoundStart = () => {
+    console.log(GAME.ROUND_START);
+  }
+
   useEffect(() => {
 
-    // register listeners
-    // socket.registerListener()
-
+    socket.registerListener(GAME.ROUND_START, handleRoundStart);
+    // TODO: change to cleanup useEffect to unregister listener
     return function teardownListeners() {
-      // TODO: implement
-      console.log('Game [UNMOUNT]: teardownListeners()');
+      socket.unregisterListeners(GAME.ROUND_START);
     }
   }, [])
 

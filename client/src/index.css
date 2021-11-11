@@ -17,11 +17,11 @@
   --color-cancel: hsla(222, 11%, 54%, 1);
   --color-destructive: hsla(291, 87%, 32%, 1);
   --font-family-gothic: 'UnifrakturMaguntia', cursive;
-  --font-family-regular: 'Nunito', sans-serif;;
+  --font-family-regular: 'EB Garamond', sans-serif;
   --font-size-arrows: 4.5rem;
   --font-size-biggest: 3.2rem;
   --font-size-bigger: 2.4rem;
-  --font-size-mid: 2rem;
+  --font-size-mid: 2.4rem;
   --font-size-smaller: 1.6rem;
   --font-size-smallest: 1.2rem;
   --font-weight-chunky: 700;
@@ -49,7 +49,7 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'EB Garamond', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;

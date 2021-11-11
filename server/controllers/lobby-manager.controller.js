@@ -2,8 +2,11 @@ const { v1: uuidv1 } = require('uuid');
 
 const { Room } = require('../models/room.model');
 
-module.exports = function LobbyManager () {
+function LobbyManager () {
+
   const _rooms = {};
+
+  // "METHODS"
 
   const _getNumberOfRooms = () => Object.keys(_rooms).length;
 
@@ -28,15 +31,15 @@ module.exports = function LobbyManager () {
       // NB roomData sent by client: { ownerId, ownerName, roomName }
       const room = {
         ...roomData,
-        roomId: roomId,
+        gameStates: [],
         players: [],
+        roomId: roomId,
         started: false
       };
       _rooms[roomId] = room;
       // Not saving until game started!
       // const rm = new Room(room);
       // await rm.save();
-      console.log('rooms now running: ', _getNumberOfRooms());
       return roomId;
     }
     catch (err) {
@@ -106,3 +109,5 @@ module.exports = function LobbyManager () {
     startGame
   }
 };
+
+module.exports = LobbyManager;

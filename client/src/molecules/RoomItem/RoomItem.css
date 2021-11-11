@@ -23,7 +23,7 @@
 }
 
 .room-item__smallprint {
-  font-size: var(--font-size-smallest);
+  font-size: var(--font-size-smaller);
 }
 
 .room-item__buttons {
