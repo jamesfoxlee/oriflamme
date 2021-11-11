@@ -2,7 +2,6 @@ const db = require('./db');
 const { Schema } = db;
 
 const RoomSchema = db.Schema({
-  gameStates: { type: [], default: [] },
   players: [{
     id: { type: String, required: true },
     name: { type: String, required: true }

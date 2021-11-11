@@ -1,10 +1,13 @@
 const { v1: uuidv1 } = require('uuid');
 
+const registerGameEventHandlers = require('../sockets/game.socket');
+const GameManager = require('./game-manager.controller');
 const { Room } = require('../models/room.model');
 
 function LobbyManager () {
 
   const _rooms = {};
+  const _gameManagers = {};
 
   // "METHODS"
 
@@ -31,15 +34,11 @@ function LobbyManager () {
       // NB roomData sent by client: { ownerId, ownerName, roomName }
       const room = {
         ...roomData,
-        gameStates: [],
         players: [],
         roomId: roomId,
         started: false
       };
       _rooms[roomId] = room;
-      // Not saving until game started!
-      // const rm = new Room(room);
-      // await rm.save();
       return roomId;
     }
     catch (err) {
@@ -49,8 +48,6 @@ function LobbyManager () {
 
   const joinRoom = async (roomId, socket, player) => {
     // TODO: limit adding if > 5 players
-    // NB not going to persist to DB here as players may come and go
-    // do on game start instead
     console.log(`LobbyManager.joinRoom() with roomId: ${roomId}`);
     const room = _rooms[roomId];
     socket.join(roomId);
@@ -58,14 +55,14 @@ function LobbyManager () {
       ...player,
       socketId: socket.id
     });
-    console.log(`number of players now in room: ${room.players.length}`);
   };
 
   const leaveRoom = (roomId, socket, leavingPlayer) => {
     console.log(`LobbyManager.leaveRoom() with roomId: ${roomId}`);
     socket.leave(roomId);
-    let room = _rooms[roomId];
+    const room = _rooms[roomId];
     if (room.players.length === 1) {
+      delete _gameManagers[roomId];
       delete _rooms[roomId];
     } else {
       const updated = {...room};
@@ -82,22 +79,35 @@ function LobbyManager () {
   const leaveAllRooms = (socket) => {
     console.log(`LobbyManager.leaveAllRooms() for socket.id: ${socket.id}`);
     for (let roomId of socket.rooms) {
+      // no need to to delete own room of socket
       if (roomId !== socket.id) {
         console.log(`leaving room ${roomId} ...`);
         socket.leave(roomId);
         const room = _rooms[roomId];
         if (room.players.length === 1) {
+          // last player is leaving - clean up room and game manager
+          delete _gameManagers[roomId];
           delete _rooms[roomId];
         } else {
-          const playerIdx = room.players.findIndex(player => player.socketId === socket.id);
-          room.players = room.players.filter((_, idx) => idx !== playerIdx);
+          room.players = room.players.filter(player => player.socketId !== socket.id);
         }
       }
     }
   }
 
-  const startGame = (roomId) => {
-
+  const startGame = async (roomId, socket, socketServer) => {
+    try {
+      const room = _rooms[roomId];
+      room.started = true;
+      const gameManager = GameManager();
+      gameManager.initialise(room);
+      registerGameEventHandlers(roomId, gameManager, socket, socketServer);
+      _gameManagers[roomId] = gameManager;
+      const rm = new Room(room);
+      await rm.save();
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return {
