@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 
 import './Rooms.css';
-import CreateRoom from '../../organisms/CreateRoom/CreateRoom';
+import PlayerNameForm from '../PlayerNameForm/PlayerNameForm';
 import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
 import NoRooms from '../../atoms/NoRooms/NoRooms';
@@ -15,36 +15,50 @@ const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
-export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
+export default function Rooms(props) {
+
+  const { activeRoomId, joinRoom, leaveRoom, socket } = props;
 
   // "METHODS"
 
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
+  const togglePlayerNameForm = () => {
+    setShowPlayerNameForm(!showPlayerNameForm);
   }
 
-  const handleCreateRoom = (roomData) => {
-    let player = { ...user };
-    if (!player.name) {
-      player.name = roomData.ownerName;
-      storageService.set('user.name', player.name);
-      setUser({
-        ...user,
-        name: player.name
+  const handleAddPlayerName = (playerName) => {
+    storageService.set('user.name', playerName);
+    setUser({
+      ...user,
+      name: playerName
+    });
+    togglePlayerNameForm();
+  }
+
+  const handleNewRoom = () => {
+    if (!user.name) {
+      togglePlayerNameForm();
+    }
+    else {
+      // listen for acknowledgement of room create so we can set it as active
+      socket.registerOneShotListener(
+        LOBBY.CREATE_ROOM_SUCCESS,
+        (roomId) => joinRoom(roomId, user)
+      );
+      // create the room
+      socket.createRoom({
+        ownerId: user.id,
+        ownerName: user.name,
+        roomName: `${user.name}'s game`,
       });
     }
-    // listen for acknowledgement of room create so we can set it as active
-    socket.registerOneShotListener(
-      LOBBY.CREATE_ROOM_SUCCESS,
-      (roomId) => joinRoom(roomId, player)
-    );
-    // create the room
-    socket.createRoom({
-      ownerId: player.id,
-      ownerName: player.name,
-      roomName: roomData.roomName || `${player.name}'s game`,
-    });
-    handleToggleModal();
+  }
+
+  const handleJoinRoom = (roomId) => {
+    if (!user.name) {
+      togglePlayerNameForm();
+    } else {
+      joinRoom(roomId, user);
+    }
   }
 
   const handleRoomsChanged = (rooms) => {
@@ -56,15 +70,14 @@ export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
 
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-
+  const [showPlayerNameForm, setShowPlayerNameForm] = useState(false);
   const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
     socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
     socket.getRooms();
     // TODO: change to cleanup useEffect to unregister listener
-    return function cleanup () {
+    return function cleanup() {
       socket.unregisterListener(LOBBY.ROOMS_CHANGED);
     }
   }, [])
@@ -72,11 +85,11 @@ export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
   return (
     <div className="rooms">
       {
-        showModal ?
-          <CreateRoom
-            onSubmit={handleCreateRoom}
-            show={showModal}
-            toggleModal={handleToggleModal}
+        showPlayerNameForm ?
+          <PlayerNameForm
+            onSubmit={handleAddPlayerName}
+            show={showPlayerNameForm}
+            toggleModal={togglePlayerNameForm}
           /> :
           null
       }
@@ -100,7 +113,7 @@ export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
                 return (
                   <RoomItem
                     isActiveRoom={room.roomId === activeRoomId}
-                    joinRoom={joinRoom}
+                    joinRoom={handleJoinRoom}
                     key={`room-item-${idx}`}
                     room={room}
                   />
@@ -115,7 +128,7 @@ export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
           <div className="rooms__buttons">
             <Button
               disabled={!!activeRoomId}
-              onClick={handleToggleModal}
+              onClick={handleNewRoom}
               text="New Room">
             </Button>
           </div> :

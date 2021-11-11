@@ -16,7 +16,6 @@
   justify-content: space-around;
   flex: 2 2 0;
   font-size: var(--font-size-mid);
-  border: 1px solid red;
 }
 
 .room-item__name {
@@ -32,5 +31,4 @@
   justify-content: space-evenly;
   flex: 1 1 0;
   padding: 1rem;
-  border: 1px solid red;
 }

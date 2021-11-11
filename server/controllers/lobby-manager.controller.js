@@ -31,8 +31,9 @@ module.exports = function LobbyManager () {
         players: [],
       };
       _rooms[roomId] = room;
-      const rm = new Room(room);
-      await rm.save();
+      // Not saving until game started!
+      // const rm = new Room(room);
+      // await rm.save();
       console.log('rooms now running: ', _getNumberOfRooms());
       return roomId;
     }
@@ -43,6 +44,8 @@ module.exports = function LobbyManager () {
 
   const joinRoom = async (roomId, socket, player) => {
     // TODO: limit adding if > 5 players
+    // NB not going to persist to DB here as players may come and go
+    // do on game start instead
     console.log('LobbyManager.joinRoom()');
     const room = _rooms[roomId];
     socket.join(roomId);

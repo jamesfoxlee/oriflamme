@@ -1,31 +1,31 @@
-.create-room {
+.player-name-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 3rem;
 }
 
-.create-room__title {
+.player-name-form__title {
   margin-bottom: 2rem;
   font-size: var(--font-size-bigger);
   font-weight: var(--font-weight-regular);
   text-align: left;
 }
 
-.create-room__form {
+.player-name-form__form {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 
-.create-room__form-group {
+.player-name-form__form-group {
   width: 100%;
   margin-bottom: 2rem;
   padding: 1rem;
 }
 
-.create-room__input {
+.player-name-form__input {
   display: block;
   width: 100%;
   padding: 1rem;
@@ -37,7 +37,7 @@
   font-size: var(--font-size-mid);
 }
 
-.create-room__label {
+.player-name-form__label {
   display: block;
   width: 100%;
   align-self: left;

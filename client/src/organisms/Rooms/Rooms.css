@@ -3,7 +3,6 @@
   width: 70%;
   height: calc(100vh - var(--size-navbar-height));
   margin: 0 auto;
-  border: 1px solid red;
 }
 
 .rooms__list {
@@ -15,7 +14,6 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   padding: 2rem;
-  border: 1px solid red;
 }
 
 .rooms__list::-webkit-scrollbar {
