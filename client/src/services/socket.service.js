@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 
 import { SOCKET_EVENTS } from '../config/socket.constants';
-const { CONNECTIVITY, LOBBY, MESSAGE } = SOCKET_EVENTS;
+const { CONNECTIVITY, GAME, LOBBY, MESSAGE } = SOCKET_EVENTS;
 
 export default function Socket() {
 
@@ -17,8 +17,8 @@ export default function Socket() {
       socket.on(event, handler);
     }
 
-    function unregisterListener (event) {
-      console.log(`Socket.unregisterListener() ${event}`);
+    function unregisterListeners (event) {
+      console.log(`Socket.unregisterListeners() ${event}`);
       socket.removeAllListeners(event);
     }
 
@@ -42,9 +42,20 @@ export default function Socket() {
       socket.emit(LOBBY.JOIN_ROOM, roomId, player);
     }
 
+    function leaveRoom (roomId, player) {
+      console.log(LOBBY.LEAVE_ROOM);
+      console.log(`player.id: ${player.id} player.name: ${player.name}`);
+      socket.emit(LOBBY.LEAVE_ROOM, roomId, player);
+    }
+
     function sendMessage (message) {
       console.log(MESSAGE.CREATE);
       socket.emit(MESSAGE.CREATE, message);
+    }
+
+    function startGame (roomId) {
+      console.log(LOBBY.START_GAME);
+      socket.emit(LOBBY.START_GAME, roomId);
     }
 
     //----------------------------------------------------------------
@@ -58,12 +69,14 @@ export default function Socket() {
       resolve({
         registerOneShotListener,
         registerListener,
-        unregisterListener,
+        unregisterListeners,
         getSocketId,
         getRooms,
         createRoom,
         joinRoom,
-        sendMessage
+        leaveRoom,
+        sendMessage,
+        startGame
       })
     });
 

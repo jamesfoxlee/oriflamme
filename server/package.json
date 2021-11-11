@@ -4,7 +4,7 @@
   "description": "Oriflamme card game based on socket.io",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./app.js",
+    "start": "clear && nodemon ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "James Foxlee",

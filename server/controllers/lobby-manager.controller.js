@@ -9,13 +9,14 @@ module.exports = function LobbyManager () {
 
   const getRooms = () => {
     return Object.values(_rooms).map(room => {
-      const { roomId, ownerId, ownerName, roomName, players } = room;
+      const { roomId, ownerId, ownerName, roomName, players, started } = room;
       return {
         roomId,
         ownerId,
         ownerName,
         roomName,
-        players
+        players,
+        started
       }
     });
   };
@@ -24,11 +25,12 @@ module.exports = function LobbyManager () {
     console.log('LobbyManager.createRoom()')
     try {
       const roomId = uuidv1();
-      // roomData: { ownerId, ownerName, roomName }
+      // NB roomData sent by client: { ownerId, ownerName, roomName }
       const room = {
         ...roomData,
         roomId: roomId,
         players: [],
+        started: false
       };
       _rooms[roomId] = room;
       // Not saving until game started!
@@ -46,7 +48,7 @@ module.exports = function LobbyManager () {
     // TODO: limit adding if > 5 players
     // NB not going to persist to DB here as players may come and go
     // do on game start instead
-    console.log('LobbyManager.joinRoom()');
+    console.log(`LobbyManager.joinRoom() with roomId: ${roomId}`);
     const room = _rooms[roomId];
     socket.join(roomId);
     room.players.push({
@@ -56,8 +58,22 @@ module.exports = function LobbyManager () {
     console.log(`number of players now in room: ${room.players.length}`);
   };
 
-  const leaveRoom = (roomId) => {
-
+  const leaveRoom = (roomId, socket, leavingPlayer) => {
+    console.log(`LobbyManager.leaveRoom() with roomId: ${roomId}`);
+    socket.leave(roomId);
+    let room = _rooms[roomId];
+    if (room.players.length === 1) {
+      delete _rooms[roomId];
+    } else {
+      const updated = {...room};
+      updated.players = room.players.filter((player) => player.id !== leavingPlayer.id);
+      if (leavingPlayer.id === room.ownerId) {
+        updated.ownerId = updated.players[0].id;
+        updated.ownerName = updated.players[0].name;
+        updated.roomName = `${updated.ownerName}'s game`;
+      }
+      _rooms[roomId] = updated;
+    }
   };
 
   const leaveAllRooms = (socket) => {
@@ -70,14 +86,15 @@ module.exports = function LobbyManager () {
         if (room.players.length === 1) {
           delete _rooms[roomId];
         } else {
-          console.log(`before removal, number of players in room: ${room.players.length}`);
           const playerIdx = room.players.findIndex(player => player.socketId === socket.id);
-          console.log(`player found in room at index: ${playerIdx}`);
           room.players = room.players.filter((_, idx) => idx !== playerIdx);
-          console.log(`player removed, number of players in room: ${room.players.length}`);
         }
       }
     }
+  }
+
+  const startGame = (roomId) => {
+
   }
 
   return {
@@ -85,6 +102,7 @@ module.exports = function LobbyManager () {
     createRoom,
     joinRoom,
     leaveRoom,
-    leaveAllRooms
+    leaveAllRooms,
+    startGame
   }
 };

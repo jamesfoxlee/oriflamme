@@ -17,13 +17,9 @@ const storageService = StorageService();
 
 export default function Rooms(props) {
 
-  const { activeRoomId, joinRoom, leaveRoom, socket } = props;
+  const { activeRoomId, joinRoom, leaveRoom, setActiveRoomId, socket, startGame } = props;
 
   // "METHODS"
-
-  const togglePlayerNameForm = () => {
-    setShowPlayerNameForm(!showPlayerNameForm);
-  }
 
   const handleAddPlayerName = (playerName) => {
     storageService.set('user.name', playerName);
@@ -34,6 +30,18 @@ export default function Rooms(props) {
     togglePlayerNameForm();
   }
 
+  const handleJoinRoom = (roomId) => {
+    if (!user.name) {
+      togglePlayerNameForm();
+    } else {
+      joinRoom(roomId, user);
+    }
+  }
+
+  const handleLeaveRoom = (roomId) => {
+    leaveRoom(roomId, user);
+  }
+
   const handleNewRoom = () => {
     if (!user.name) {
       togglePlayerNameForm();
@@ -42,7 +50,10 @@ export default function Rooms(props) {
       // listen for acknowledgement of room create so we can set it as active
       socket.registerOneShotListener(
         LOBBY.CREATE_ROOM_SUCCESS,
-        (roomId) => joinRoom(roomId, user)
+        (roomId) => {
+          joinRoom(roomId, user);
+          setActiveRoomId(roomId);
+        }
       );
       // create the room
       socket.createRoom({
@@ -53,19 +64,15 @@ export default function Rooms(props) {
     }
   }
 
-  const handleJoinRoom = (roomId) => {
-    if (!user.name) {
-      togglePlayerNameForm();
-    } else {
-      joinRoom(roomId, user);
-    }
-  }
-
   const handleRoomsChanged = (rooms) => {
     setRooms(rooms);
     if (loading) {
       setLoading(false);
     }
+  }
+
+  const togglePlayerNameForm = () => {
+    setShowPlayerNameForm(!showPlayerNameForm);
   }
 
   const [loading, setLoading] = useState(true);
@@ -77,8 +84,8 @@ export default function Rooms(props) {
     socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
     socket.getRooms();
     // TODO: change to cleanup useEffect to unregister listener
-    return function cleanup() {
-      socket.unregisterListener(LOBBY.ROOMS_CHANGED);
+    return function teardownListeners() {
+      socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
     }
   }, [])
 
@@ -112,10 +119,13 @@ export default function Rooms(props) {
               rooms.map((room, idx) => {
                 return (
                   <RoomItem
-                    isActiveRoom={room.roomId === activeRoomId}
+                    activeRoomId={activeRoomId}
                     joinRoom={handleJoinRoom}
+                    leaveRoom={handleLeaveRoom}
+                    playerIsOwner={room.ownerId === user.id}
                     key={`room-item-${idx}`}
                     room={room}
+                    startGame={startGame}
                   />
                 )
               })

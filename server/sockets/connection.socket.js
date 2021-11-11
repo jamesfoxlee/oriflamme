@@ -1,8 +1,6 @@
 const SOCKET_EVENTS = require('../config/socket.constants');
 const LobbyManager = require('../controllers/lobby-manager.controller');
 const registerLobbyEventHandlers = require('./lobby.socket');
-// don't think we need this here
-const registerGameEventHandlers = require('./game.socket');
 
 const { CONNECTIVITY, LOBBY } = SOCKET_EVENTS;
 

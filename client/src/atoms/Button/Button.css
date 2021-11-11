@@ -1,7 +1,7 @@
 .button {
   display: inline-block;
   width: 100%;
-  padding: 1rem 3rem;
+  padding: 1rem;
   border: 0;
   border-radius: 0.7rem;
   color: var(--color-white);

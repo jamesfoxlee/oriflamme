@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './Queue.css';
 import QueueCard from '../QueueCard/QueueCard';

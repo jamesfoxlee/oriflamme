@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './RoomItem.css';
-import PlayerNameForm from '../../organisms/PlayerNameForm/PlayerNameForm';
 import Button from '../../atoms/Button/Button';
 
 export default function RoomItem (props) {
 
-  const { isActiveRoom, joinRoom, leaveRoom, room } = props;
+  const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
 
-  const handleJoinRoom = (roomId) => {
-    console.log(`handleJoinRoom: roomId: ${roomId}`);
-    joinRoom(roomId);
-  }
-  const handleLeaveRoom = (roomId) => {
-    console.log(`handleLeaveRoom: roomId: ${roomId}`);
-    leaveRoom(roomId);
-  }
-
-  const { roomId, ownerName, roomName, players } = room;
+  const { roomId, ownerName, roomName, players, started } = room;
   const numPlayers = players.length;
   const playersText = ` player${numPlayers > 1 ? 's' : ''}`;
   const playersList = players.map(player => player.name).join(', ');
@@ -34,21 +24,36 @@ export default function RoomItem (props) {
       </div>
       <div className="room-item__buttons">
         {
-          !isActiveRoom ?
+          activeRoomId === roomId ?
+          <Button
+            buttonStyle="destructive"
+            extraStyles={{ maxWidth: '10rem' }}
+            onClick={ () => leaveRoom(roomId) }
+            text="Leave"
+          /> :
+          null
+        }
+        {
+          // isActiveRoom && playerIsOwner && players.length > 1 ?
+          activeRoomId === roomId && playerIsOwner ?
             <Button
               buttonStyle="positive"
+              extraStyles={{ maxWidth: '12rem' }}
+              onClick={ () => startGame(roomId) }
+              text="Start"
+            /> :
+            null
+        }
+        {
+          !activeRoomId && !started ?
+            <Button
+              buttonStyle="positive"
+              extraStyles={{ maxWidth: '12rem' }}
               onClick={ () => joinRoom(roomId) }
-              extraStyles={{ maxWidth: '10rem' }}
               text="Join"
             /> :
             null
         }
-        <Button
-          buttonStyle="destructive"
-          extraStyles={{ maxWidth: '10rem' }}
-          onClick={ () => leaveRoom(roomId) }
-          text="Leave"
-        />
       </div>
     </div>
   );

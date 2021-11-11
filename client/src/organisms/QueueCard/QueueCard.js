@@ -2,17 +2,14 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import './QueueCard.css';
-import Button from '../../atoms/Button/Button';
 
-import useHover from '../../hooks/hover.hook';
 import { UserContext } from '../../context/user.context';
-import userEvent from '@testing-library/user-event';
 
 const HEIGHT_SCALE = 1.5;
 
 export default function QueueCard(props) {
 
-  const { card, isResolving, revealed, scaleFactor, width } = props;
+  const { card, isResolving, scaleFactor, width } = props;
   const height = width * HEIGHT_SCALE;
   const [hovered, setHovered] = useState(false);
   const [user] = useContext(UserContext);
@@ -128,15 +125,17 @@ export default function QueueCard(props) {
 // PROPS
 //----------------------------------------------------------------
 
-const { bool, number, string, object } = PropTypes;
+const { bool, number, object } = PropTypes;
 
 QueueCard.propTypes = {
   card: object.isRequired,
+  isResolving: bool,
   scaleFactor: number,
   width: number,
 };
 
 QueueCard.defaultProps = {
+  isResolving: false,
   scaleFactor: 1.5,
   width: 100
 };

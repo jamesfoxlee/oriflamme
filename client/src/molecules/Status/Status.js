@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import './Status.css';
 
@@ -11,7 +11,7 @@ const boxStyles = {
 export default function Status(props) {
 
   const { gameState, selectedPlayerCard, user } = props;
-  const { activePlayerId, phase, players, round } = gameState;
+  const { activePlayerId, phase, players } = gameState;
 
   const activePlayer = players.find(player => player.id === activePlayerId);
   const playerIsActive = activePlayerId === user.id;

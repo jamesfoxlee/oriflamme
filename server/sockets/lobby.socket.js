@@ -23,9 +23,22 @@ module.exports = function registerLobbyEventHandlers(socket, lobbyManager, socke
   socket.on(LOBBY.JOIN_ROOM, (roomId, player) => {
     console.log(LOBBY.JOIN_ROOM);
     console.log(`${player.name} with id: ${player.id} joining room: ${roomId}`);
-    console.log(player);
     lobbyManager.joinRoom(roomId, socket, player);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
+  });
+
+  socket.on(LOBBY.LEAVE_ROOM, (roomId, player) => {
+    console.log(LOBBY.LEAVE_ROOM);
+    console.log(`${player.name} with id: ${player.id} leaving room: ${roomId}`);
+    lobbyManager.leaveRoom(roomId, socket, player);
+    socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
+  });
+
+  socket.on(LOBBY.START_GAME, (roomId) => {
+    console.log(LOBBY.START_GAME);
+    console.log(`Starting game for roomId: ${roomId}`);
+    lobbyManager.startGame(roomId, socket);
+    // socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
   });
 
 };
