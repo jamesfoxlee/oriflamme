@@ -10,7 +10,7 @@ import Socket from './services/socket.service';
 import StorageService from './services/storage.service';
 import { UserProvider } from './context/user.context';
 import { SOCKET_EVENTS } from './config/socket.constants';
-const { GAME } = SOCKET_EVENTS;
+const { LOBBY } = SOCKET_EVENTS;
 
 
 const storageService = StorageService();
@@ -19,7 +19,7 @@ let socket;
 function App() {
 
   const joinRoom = (roomId, player) => {
-    socket.registerOneShotListener(GAME.GAME_STARTING, handleGameStarting);
+    socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
     socket.joinRoom(roomId, player);
     setActiveRoomId(roomId);
   }
@@ -50,10 +50,11 @@ function App() {
         const userId = storageService.get('user.id');
         const userName = storageService.get('user.name');
         const socketId = socket.getSocketId();
+        // if no user data in localStorage, we store socketId as user.id
+        // allows persistence of player's names
         if (!userId) {
           storageService.set('user.id', socketId)
         }
-        console.log(`App useEffect(), setting user.id: ${userId} user.name: ${userName}`);
         setUser({
           id: userId || socketId,
           name: userName
@@ -76,7 +77,6 @@ function App() {
           !loading && !gameStarted ?
             <Rooms
               activeRoomId={activeRoomId}
-              handleGameStarting={handleGameStarting}
               joinRoom={joinRoom}
               leaveRoom={leaveRoom}
               setActiveRoomId={setActiveRoomId}

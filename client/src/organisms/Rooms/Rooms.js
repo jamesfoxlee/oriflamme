@@ -11,7 +11,7 @@ import { SOCKET_EVENTS } from '../../config/socket.constants';
 import StorageService from '../../services/storage.service';
 import { UserContext } from '../../context/user.context';
 
-const { LOBBY, GAME } = SOCKET_EVENTS;
+const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
@@ -19,7 +19,6 @@ export default function Rooms(props) {
 
   const {
     activeRoomId,
-    handleGameStarting,
     joinRoom,
     leaveRoom,
     setActiveRoomId,
@@ -57,7 +56,7 @@ export default function Rooms(props) {
     else {
       // listen for acknowledgement of room create so we can set it as active
       socket.registerOneShotListener(
-        LOBBY.CREATE_ROOM_SUCCESS,
+        LOBBY.ROOM_CREATED,
         (roomId) => {
           joinRoom(roomId, user);
           setActiveRoomId(roomId);
@@ -95,7 +94,7 @@ export default function Rooms(props) {
     return function teardownListeners() {
       socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: New Room button stays disabled after server reconnect / reflash of rooms if
   // user had previously created

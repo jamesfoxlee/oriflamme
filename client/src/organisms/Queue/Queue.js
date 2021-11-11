@@ -12,7 +12,7 @@ export default function Queue (props) {
 
   return (
     <div className="queue">
-      <div className="queue__endzone">
+      <div className="queue__endzone queue__endzone--left">
         {
           selectedPlayerCard ?
             <span className="queue__arrow icon-arrow-left"/> :
@@ -41,7 +41,7 @@ export default function Queue (props) {
           </div> :
           <div>NO CARDS</div>
       }
-      <div className="queue__endzone">
+      <div className="queue__endzone queue__endzone--right">
         {
           selectedPlayerCard ?
             <span className="queue__arrow icon-arrow-right"/> :

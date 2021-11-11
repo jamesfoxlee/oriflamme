@@ -7,6 +7,14 @@ export default function Socket() {
 
   return new Promise ((resolve, reject) => {
 
+    function getSocketId () {
+      return socket.id;
+    }
+
+    //----------------------------------------------------------------
+    // REGISTRATION
+    //----------------------------------------------------------------
+
     function registerOneShotListener (event, handler) {
       console.log(`Socket.registerOneShotListener() event: ${event}`);
       socket.once(event, handler);
@@ -22,40 +30,52 @@ export default function Socket() {
       socket.removeAllListeners(event);
     }
 
-    function getSocketId () {
-      return socket.id;
-    }
+    //----------------------------------------------------------------
+    // LOBBY
+    //----------------------------------------------------------------
 
     function getRooms () {
-      console.log(LOBBY.GET_ROOMS);
-      socket.emit(LOBBY.GET_ROOMS);
+      console.log('EMITTING EVENT: ', LOBBY.ROOMS_GET);
+      socket.emit(LOBBY.ROOMS_GET);
     }
 
     function createRoom (roomData) {
-      console.log(LOBBY.CREATE_ROOM);
-      socket.emit(LOBBY.CREATE_ROOM, roomData);
+      console.log('EMITTING EVENT: ', LOBBY.ROOM_CREATE);
+      socket.emit(LOBBY.ROOM_CREATE, roomData);
     }
 
     function joinRoom (roomId, player) {
-      console.log(LOBBY.JOIN_ROOM);
-      console.log(`player.id: ${player.id} player.name: ${player.name}`);
-      socket.emit(LOBBY.JOIN_ROOM, roomId, player);
+      console.log('EMITTING EVENT: ', LOBBY.ROOM_JOIN);
+      socket.emit(LOBBY.ROOM_JOIN, roomId, player);
     }
 
     function leaveRoom (roomId, player) {
-      console.log(LOBBY.LEAVE_ROOM);
-      console.log(`player.id: ${player.id} player.name: ${player.name}`);
-      socket.emit(LOBBY.LEAVE_ROOM, roomId, player);
-    }
-
-    function sendMessage (message) {
-      console.log(MESSAGE.CREATE);
-      socket.emit(MESSAGE.CREATE, message);
+      console.log('EMITTING EVENT: ', LOBBY.ROOM_LEAVE);
+      socket.emit(LOBBY.ROOM_LEAVE, roomId, player);
     }
 
     function startGame (roomId) {
-      console.log(LOBBY.START_GAME);
-      socket.emit(LOBBY.START_GAME, roomId);
+      console.log('EMITTING EVENT: ', LOBBY.GAME_START);
+      socket.emit(LOBBY.GAME_START, roomId);
+    }
+
+    //----------------------------------------------------------------
+    // GAME
+    //----------------------------------------------------------------
+
+    function getGameState () {
+      console.log('EMITTING EVENT: ', GAME.GAMESTATE_GET);
+      socket.emit(GAME.GAMESTATE_GET);
+    }
+
+    //----------------------------------------------------------------
+    // MESSAGING
+    //----------------------------------------------------------------
+
+
+    function sendMessage (message) {
+      console.log('EMITTING EVENT: ', MESSAGE.CREATE);
+      socket.emit(MESSAGE.CREATE, message);
     }
 
     //----------------------------------------------------------------
@@ -67,16 +87,17 @@ export default function Socket() {
     socket.on(CONNECTIVITY.CONNECT, () => {
       console.log(`Socket() connected to server, socket.id: ${socket.id}`)
       resolve({
+        getSocketId,
         registerOneShotListener,
         registerListener,
         unregisterListeners,
-        getSocketId,
         getRooms,
         createRoom,
         joinRoom,
         leaveRoom,
+        startGame,
+        getGameState,
         sendMessage,
-        startGame
       })
     });
 

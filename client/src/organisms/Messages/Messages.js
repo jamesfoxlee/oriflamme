@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import './Messages.css';
 import Message from '../../atoms/Message/Message';
@@ -35,16 +36,18 @@ export default function Messages({ messages, players, socket }) {
       <div className="messages__header">Messages</div>
       <div className="messages__list">
         {
-          sortedMessages.map((message, idx) => {
-            const messageFrom = playersObj[message.from].name;
-            return (
-              <Message
-                message={message}
-                from={messageFrom}
-                key={`message-${idx}`}
-              />
-            )
-          })
+          sortedMessages.length ?
+            sortedMessages.map((message, idx) => {
+              const messageFrom = playersObj[message.from].name;
+              return (
+                <Message
+                  message={message}
+                  from={messageFrom}
+                  key={`message-${idx}`}
+                />
+              )
+            }) :
+            null
         }
         <form className="messages__compose" id="message-form" action="">
           <input
@@ -64,3 +67,20 @@ export default function Messages({ messages, players, socket }) {
     </div>
   );
 }
+
+//----------------------------------------------------------------
+// PROPS
+//----------------------------------------------------------------
+
+const { object, arrayOf } = PropTypes;
+
+Messages.propTypes = {
+  messages: arrayOf(object),
+  players: arrayOf(object),
+  socket: object.isRequired,
+};
+
+Messages.defaultProps = {
+  messages: [],
+  players: []
+};

@@ -10,7 +10,7 @@
 }
 
 .player--active {
-  box-shadow: 0 0 3rem 0.2rem var(--color-white);
+  box-shadow: 0 0 2rem 1rem var(--color-white);
 }
 
 .player__name {

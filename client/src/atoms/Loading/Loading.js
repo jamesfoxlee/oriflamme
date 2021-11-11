@@ -17,7 +17,7 @@ export default function Loading (props) {
           />
         </svg>
       </div>
-      <div className="loading__message">{loadingMessage}...</div>
+      <div className="loading__message">{loadingMessage}</div>
   </div>
   );
 }

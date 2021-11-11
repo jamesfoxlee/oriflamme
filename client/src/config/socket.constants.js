@@ -2,22 +2,25 @@ export const SOCKET_EVENTS = {
   CONNECTIVITY: {
     CONNECT: 'connect',
     CONNECTION: 'connection',
+    DISCONNECT: 'disconnect',
     DISCONNECTING: 'disconnecting',
-    DISCONNECT: 'disconnect'
 
   },
   GAME: {
-    GAME_STARTING: 'game.game_starting',
+    GAMESTATE_CHANGED: 'game.gamestate_changed',
+    GAMESTATE_GET: 'game.gamestate_get',
     ROUND_START: 'game.round_start',
   },
   LOBBY: {
-    GET_ROOMS: 'lobby.get_rooms',
-    CREATE_ROOM: 'lobby.create',
-    CREATE_ROOM_SUCCESS: 'lobby.create_room_success',
-    JOIN_ROOM: 'lobby.join_room',
-    LEAVE_ROOM: 'lobby.leave_room',
+    GAME_START: 'lobby.game_start',
+    GAME_STARTING: 'lobby.game_starting',
+    GAME_STARTED: 'lobby.game_started',
+    ROOM_CREATE: 'lobby.room_create',
+    ROOM_CREATED: 'lobby.room_created',
+    ROOM_JOIN: 'lobby.room_join',
+    ROOM_LEAVE: 'lobby.room_leave',
     ROOMS_CHANGED: 'lobby.rooms_changed',
-    START_GAME: 'lobby.start_game'
+    ROOMS_GET: 'lobby.rooms_get',
   },
   MESSAGE: {
     CREATE: 'message.create',

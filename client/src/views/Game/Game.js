@@ -12,15 +12,16 @@ import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
 
-import { gameState as fixedGameState } from '../../mocks/gamestate.mocks';
+// TODO: remove
+// import { gameState as fixedGameState } from '../../mocks/gamestate.mocks';
 import { cards } from '../../mocks/cards.mocks';
-import { messages } from '../../mocks/messages.mocks';
 
-const { GAME } = SOCKET_EVENTS;
+const { LOBBY, GAME } = SOCKET_EVENTS;
 
-export default function Game(props) {
+export default function Game (props) {
 
-  const { leaveRoom, roomId, socket } = props;
+  const { socket } = props;
+  // const { activeRoomId, leaveRoom, socket } = props;
 
   // "METHODS"
 
@@ -28,81 +29,84 @@ export default function Game(props) {
     setSelectedPlayerCard(card);
   }
 
-  const onAddToQueue = () => {
+  // const onAddToQueue = () => {
 
-  }
+  // }
 
-  const handleRoundStart = () => {
-    console.log(GAME.ROUND_START);
+  const handleGameStateChanged = (newGameState) => {
+    console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
+    setGameState(newGameState);
+    if (loading) {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
 
-    socket.registerListener(GAME.ROUND_START, handleRoundStart);
+    // socket.registerListener(GAME.ROUND_START, handleRoundStart);
     // TODO: change to cleanup useEffect to unregister listener
+    socket.registerListener(GAME.GAMESTATE_CHANGED, handleGameStateChanged);
+    socket.registerOneShotListener(LOBBY.GAME_STARTED, () => {
+      socket.getGameState();
+    });
+
     return function teardownListeners() {
-      socket.unregisterListeners(GAME.ROUND_START);
+      // TODO: all the others
+      socket.unregisterListeners(GAME.GAMESTATE_CHANGED);
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: review this
-  const [gameState, setGameState] = useState(fixedGameState);
   const [loading, setLoading] = useState(true);
+  const [gameState, setGameState] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [selectedPlayerCard, setSelectedPlayerCard] = useState(null);
 
   const [user] = useContext(UserContext);
   // const [messages, setMessages] = useState({});
-  // TODO: reference main player by user
-  // TODO: **IMPORTANT** revire everything below, likely temporary!!
-  const { players, queue } = gameState;
-  const opponents = players.slice(0, players.length - 1);
-  const player = players[players.length - 1];
 
   return (
     <div className="game">
       {
         loading ?
         <Loading message={"Starting game..."} /> :
-        <CardsProvider value={[cards, onPlayerCardClicked]} >
-          <div className="game__table">
-            <div className="game__opponents">
-              <OpponentArea
-                cards={cards}
-                gameState={gameState}
-                opponents={opponents}
-              />
+        null
+      }
+      {
+        !loading && gameState ?
+          <CardsProvider value={[cards, onPlayerCardClicked]} >
+            <div className="game__table">
+              <div className="game__opponents">
+                <OpponentArea gameState={gameState} />
+              </div>
+              <div className="game__queue">
+                <Queue
+                  gameState={gameState}
+                  selectedPlayerCard={selectedPlayerCard}
+                />
+              </div>
+              <div className="game__player">
+                <PlayerArea gameState={gameState} />
+              </div>
             </div>
-            <div className="game__queue">
-              <Queue
-                gameState={gameState}
-                selectedPlayerCard={selectedPlayerCard}
-              />
+            <div className="game__sidebar">
+              <div className="game__status">
+                <Status
+                  gameState={gameState}
+                  selectedPlayerCard={selectedPlayerCard}
+                  user={user}
+                />
+              </div>
+              <div className="game__messages">
+                <Messages
+                  messages={messages}
+                  players={gameState.players}
+                  socket={socket}
+                />
+              </div>
             </div>
-            <div className="game__player">
-              <PlayerArea
-                cards={cards}
-                gameState={gameState}
-                player={player}
-              />
-            </div>
-          </div>
-          <div className="game__sidebar">
-            <div className="game__status">
-              <Status
-                gameState={gameState}
-                selectedPlayerCard={selectedPlayerCard}
-                user={user}
-              />
-            </div>
-            <div className="game__messages">
-              <Messages
-                messages={messages}
-                players={players}
-                socket={socket}
-              />
-            </div>
-          </div>
-        </CardsProvider>
+          </CardsProvider> :
+          null
       }
     </div>
   );

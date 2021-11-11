@@ -27,6 +27,11 @@ function GameManager () {
 
   const initialise = (room) => {
 
+    // TODO: card randomisation
+    // TODO: first player randomisation
+    // TODO: extract into helper
+    // TODO: FY shuffle helper
+
     console.log('GameManager.initialise()');
     const { players, roomId } = room;
     const colors = [...PLAYER_COLORS];
@@ -48,7 +53,7 @@ function GameManager () {
 
     _gameState = {
       ...INITIAL_GAMESTATE,
-      activePlayerId: null,
+      activePlayerId: updatedPlayers[0].id,
       players: updatedPlayers,
       queue: [],
       queueResolutionIndex: 0,

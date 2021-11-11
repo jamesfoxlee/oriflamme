@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './Player.css';
 
+import { CardsContext } from '../../context/cards.context';
+import { UserContext } from '../../context/user.context';
+
 export default function Player (props) {
 
-  const { cards, isActivePlayer, player } = props;
+  const { player } = props;
   const { name, influence, imageUrl, discardPile, color } = player;
+  const [user] = useContext(UserContext);
+  const [cards] = useContext(CardsContext);
 
+  const isActivePlayer = player.id === user.id;
   const playerStyle = 'player' + (isActivePlayer ? ' player--active' : '');
   const imageStyles = {
     backgroundImage: `url(${imageUrl})`,
   }
-
-// OLD INFLUENCE USING PLAYER COLOR
-//   <span
-//   className="player__influence"
-//   style={{backgroundColor: color}}>
-//   {influence}
-// </span>
 
   return (
     <div className={playerStyle} style={imageStyles}>

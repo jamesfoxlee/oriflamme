@@ -1,15 +1,28 @@
 .queue {
   display: flex;
+  justify-content: space-between;
   height: 100%;
+  border: 1px solid red;
 }
 
 .queue__endzone {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 3 3 0;
+  flex: 2 2 0;
   padding: 1rem;
+  background-color: hotpink;
+  border: 1px solid red;
 }
+
+.queue__endzone--left {
+  align-items: center;
+}
+
+.queue__endzone--right {
+  align-items: center;
+}
+
 
 .queue__arrow {
   font-size: var(--font-size-arrows);
@@ -18,5 +31,6 @@
 .queue__cards {
   display: flex;
   justify-content: center;
-  flex: 97 97 0;
+  flex: 96 96 0;
+  border: 1px solid red;
 }
