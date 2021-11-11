@@ -11,8 +11,6 @@ export default function Button (props) {
     }
   }
 
-  // TODO: use native disabled??
-
   const buttonClass = `button button--${props.buttonStyle}`;
 
   return (
@@ -21,6 +19,7 @@ export default function Button (props) {
       className={buttonClass}
       disabled={props.disabled}
       onClick={handleClick}
+      style={props.extraStyles}
       type="button"
     >
       {props.text || props.children}
@@ -32,11 +31,12 @@ export default function Button (props) {
 // PROPS
 //----------------------------------------------------------------
 
-const { bool, string, func, oneOf } = PropTypes;
+const { bool, string, func, oneOf, object } = PropTypes;
 
 Button.propTypes = {
   buttonStyle: oneOf(['positive', 'cancel', 'destructive']),
   disabled: bool,
+  extraStyles: object,
   onClick: func.isRequired,
   text: string,
 };
@@ -44,5 +44,5 @@ Button.propTypes = {
 Button.defaultProps = {
   buttonStyle: 'positive',
   disabled: false,
-  style: '',
+  extraStyles: {}
 };

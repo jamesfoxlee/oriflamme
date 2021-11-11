@@ -4,6 +4,7 @@ import './Rooms.css';
 import CreateRoom from '../../organisms/CreateRoom/CreateRoom';
 import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
+import NoRooms from '../../atoms/NoRooms/NoRooms';
 import Button from '../../atoms/Button/Button';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
@@ -14,7 +15,9 @@ const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
-export default function Rooms ({ joinRoom, leaveRoom, socket }) {
+export default function Rooms ({ activeRoomId, joinRoom, leaveRoom, socket }) {
+
+  // "METHODS"
 
   const handleToggleModal = () => {
     setShowModal(!showModal);
@@ -69,11 +72,6 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
   return (
     <div className="rooms">
       {
-        loading ?
-          <Loading message={"Loading rooms"} /> :
-          null
-      }
-      {
         showModal ?
           <CreateRoom
             onSubmit={handleCreateRoom}
@@ -83,8 +81,15 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
           null
       }
       {
+        loading ?
+          <Loading message={"Loading rooms"} /> :
+          null
+      }
+      {
         !loading && !rooms.length ?
-          <div>No rooms at the moment</div> :
+          <div className="rooms__list">
+            <NoRooms />
+          </div> :
           null
       }
       {
@@ -94,8 +99,9 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
               rooms.map((room, idx) => {
                 return (
                   <RoomItem
-                    key={`room-item-${idx}`}
+                    isActiveRoom={room.roomId === activeRoomId}
                     joinRoom={joinRoom}
+                    key={`room-item-${idx}`}
                     room={room}
                   />
                 )
@@ -104,9 +110,17 @@ export default function Rooms ({ joinRoom, leaveRoom, socket }) {
           </div> :
           null
       }
-      <div className="rooms__buttons">
-        <Button onClick={handleToggleModal} text="New Room"></Button>
-      </div>
+      {
+        !loading ?
+          <div className="rooms__buttons">
+            <Button
+              disabled={!!activeRoomId}
+              onClick={handleToggleModal}
+              text="New Room">
+            </Button>
+          </div> :
+          null
+      }
     </div>
   );
 }

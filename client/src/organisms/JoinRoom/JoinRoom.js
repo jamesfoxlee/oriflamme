@@ -35,34 +35,23 @@ export default function JoinRoom ({ onCreate, show, toggleModal }) {
       isOpen={show}
       onRequestClose={toggleModal}
       style={modalStyles}
-      contentLabel="Example Modal"
+      contentLabel="Join Room"
     >
-      <div className="create-room">
-        <div className="create-room__title">Create a new room</div>
-        <form className="create-room__form" id="create-room-form" >
-          <div className="create-room__form-group">
-            <label className="create-room__label" htmlFor="ownerName">Your Name</label>
+      <div className="join-room">
+        <div className="join-room__title">Create a new room</div>
+        <form className="join-room__form" id="join-room-form" >
+          <div className="join-room__form-group">
+            <label className="join-room__label" htmlFor="ownerName">Your Name</label>
             <input
               id="ownerName"
-              className="create-room__input"
+              className="join-room__input"
               placeholder="Enter your name for the game"
               type="text"
               value={formData.ownerName}
               onChange={(e) => handleInputChanged(e, 'ownerName')}
             />
           </div>
-          <div className="create-room__form-group">
-            <label className="create-room__label" htmlFor="roomName">Room Name</label>
-            <input
-              id="roomName"
-              className="create-room__input"
-              placeholder="Enter room name (leave blank to generate randomly)"
-              type="text"
-              value={formData.roomName}
-              onChange={(e) => handleInputChanged(e, 'roomName')}
-            />
-          </div>
-          <div className="create-room__form-group">
+          <div className="join-room__form-group">
             <Button
               disabled={submitDisabled}
               onClick={handleSubmit}

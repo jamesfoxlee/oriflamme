@@ -6,12 +6,17 @@
   background-color: var(--color-blue-midnight-washed);
 }
 
+.room-item:last-child {
+  margin-bottom: 0;
+}
+
 .room-item__info {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  flex: 3 3 0;
+  flex: 2 2 0;
   font-size: var(--font-size-mid);
+  border: 1px solid red;
 }
 
 .room-item__name {
@@ -23,6 +28,9 @@
 }
 
 .room-item__buttons {
+  display: flex;
+  justify-content: space-evenly;
   flex: 1 1 0;
-  padding: 2rem;
+  padding: 1rem;
+  border: 1px solid red;
 }

@@ -19,16 +19,17 @@ function App() {
 
   const joinRoom = (roomId, player) => {
     socket.joinRoom(roomId, player);
-    setActiveRoom(roomId);
+    setActiveRoomId(roomId);
   }
 
   const leaveRoom = () => {
-    setActiveRoom(null);
+    setActiveRoomId(null);
   }
 
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({ id: null, name: null});
-  const [activeRoom, setActiveRoom] = useState(null);
+  const [activeRoomId, setActiveRoomId] = useState(null);
+  const [gameState, setGameState] = useState(null);
 
   useEffect(() => {
     Socket()
@@ -50,6 +51,8 @@ function App() {
       .catch(err => console.log(err))
   }, []);
 
+  const gameStarted = activeRoomId && gameState && gameState.started;
+
   return (
     <div className="app" id="app">
       <UserProvider value={[user, setUser]}>
@@ -60,8 +63,9 @@ function App() {
             null
         }
         {
-          !loading && !activeRoom ?
+          !loading && !gameStarted ?
             <Rooms
+              activeRoomId={activeRoomId}
               joinRoom={joinRoom}
               leaveRoom={leaveRoom}
               socket={socket}
@@ -69,10 +73,10 @@ function App() {
             null
         }
         {
-          !loading && activeRoom ?
+          !loading && gameStarted ?
               <Game
+                activeRoomId={activeRoomId}
                 leaveRoom={leaveRoom}
-                roomId={activeRoom}
                 socket={socket}
               /> :
             null

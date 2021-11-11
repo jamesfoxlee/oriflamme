@@ -172,6 +172,7 @@ export const gameState = {
   ],
   queueResolutionIndex: 8,
   round: 2,
+  started: true,
   turnOrder: ['ed', 'al', 'be']
   // turnOrder: ['al', 'be']
 }

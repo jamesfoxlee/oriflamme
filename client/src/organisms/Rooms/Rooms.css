@@ -3,17 +3,19 @@
   width: 70%;
   height: calc(100vh - var(--size-navbar-height));
   margin: 0 auto;
+  border: 1px solid red;
 }
 
 .rooms__list {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 4 4 0;
+  flex: 7 7 0;
   overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   padding: 2rem;
+  border: 1px solid red;
 }
 
 .rooms__list::-webkit-scrollbar {
@@ -23,6 +25,6 @@
 .rooms__buttons {
   display: flex;
   align-items: center;
-  flex: 1 1 0;
-  padding: 2rem;;
+  flex: 3 3 0;
+  padding: 2rem;
 }
