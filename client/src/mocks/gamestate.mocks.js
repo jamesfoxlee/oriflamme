@@ -1,8 +1,8 @@
 export const gameState = {
   activePlayerId: 'al',
   phase: 'planning',
-  players: [
-    {
+  players: {
+   al: {
       id: 'al',
       color: 'hsla(0, 100%, 55%, 1)',
       discardPile: [],
@@ -12,7 +12,7 @@ export const gameState = {
       influence: 0,
       name: 'Alan',
     },
-    {
+    be: {
       id: 'be',
       color: 'hsla(235, 100%, 48%, 1)',
       discardPile: [],
@@ -22,7 +22,7 @@ export const gameState = {
       influence: 0,
       name: 'Beatrice',
     },
-    {
+    ch: {
       id: 'ch',
       color: 'hsla(115, 100%, 24%, 1)',
       discardPile: [],
@@ -32,7 +32,7 @@ export const gameState = {
       influence: 0,
       name: 'Chris',
     },
-    // {
+    // de: {
     //   id: 'de',
     //   color: 'hsla(333, 0%, 44%, 1)',
     //   discardPile: [],
@@ -41,7 +41,7 @@ export const gameState = {
     //   influence: 11,
     //   name: 'Deirdre',
     // },
-    // {
+    // ed: {
     //   id: 'ed',
     //   color: 'hsla(115, 100%, 24%, 1)',
     //   discardPile: ['royal_decree'],
@@ -50,7 +50,7 @@ export const gameState = {
     //   imageUrl: 'https://i.pinimg.com/736x/cd/0a/48/cd0a4811395c05bf10170e7e15fc3c9b.jpg',
     //   name: 'Edward',
     // }
-  ],
+  },
   queue: [
     // [{
     //   id: 'ambush',

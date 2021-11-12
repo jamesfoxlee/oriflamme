@@ -86,5 +86,4 @@ PlayerCard.propTypes = {
   canPlayCard: bool.isRequired,
   cardColor: string.isRequired,
   cardId: string.isRequired,
-  isSelected: bool.isRequired,
 };

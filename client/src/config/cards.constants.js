@@ -1,4 +1,4 @@
-export const cards = {
+export const CARDS = {
   ambush: {
     id: 'ambush',
     name: "Ambush",

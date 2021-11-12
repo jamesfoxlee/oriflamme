@@ -26,11 +26,6 @@ export default function Messages({ messages, players, socket }) {
     return aDate - bDate;
   });
 
-  const playersObj = {};
-  players.forEach(player => {
-    playersObj[player.id] = player;
-  })
-
   return (
     <div className="messages">
       <div className="messages__header">Messages</div>
@@ -38,7 +33,7 @@ export default function Messages({ messages, players, socket }) {
         {
           sortedMessages.length ?
             sortedMessages.map((message, idx) => {
-              const messageFrom = playersObj[message.from].name;
+              const messageFrom = players[message.from].name;
               return (
                 <Message
                   message={message}

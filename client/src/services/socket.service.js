@@ -68,6 +68,11 @@ export default function Socket() {
       socket.emit(GAME.GAMESTATE_GET);
     }
 
+    function playCard (card, position) {
+      console.log('EMITTING EVENT: ', GAME.PLANNING.PLAY_CARD);
+      socket.emit(GAME.PLANNING.PLAY_CARD, card, position);
+    }
+
     //----------------------------------------------------------------
     // MESSAGING
     //----------------------------------------------------------------
@@ -97,6 +102,7 @@ export default function Socket() {
         leaveRoom,
         startGame,
         getGameState,
+        playCard,
         sendMessage,
       })
     });

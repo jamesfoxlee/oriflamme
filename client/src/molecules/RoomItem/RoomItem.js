@@ -8,9 +8,9 @@ export default function RoomItem (props) {
   const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
 
   const { roomId, ownerName, roomName, players, started } = room;
-  const numPlayers = players.length;
+  const numPlayers = Object.keys(players).length;
   const playersText = ` player${numPlayers > 1 ? 's' : ''}`;
-  const playersList = players.map(player => player.name).join(', ');
+  const playersList = Object.values(players).map(player => player.name).join(', ');
   const playersString = `${numPlayers} ${playersText} (${playersList})`;
 
   return (

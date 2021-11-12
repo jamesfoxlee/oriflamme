@@ -13,7 +13,7 @@ export default function Status(props) {
   const { gameState, selectedPlayerCard, user } = props;
   const { activePlayerId, phase, players } = gameState;
 
-  const activePlayer = players.find(player => player.id === activePlayerId);
+  const activePlayer = players[activePlayerId];
   const playerIsActive = activePlayerId === user.id;
   const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
   const playerName = playerIsActive ? 'you' : activePlayer.name;

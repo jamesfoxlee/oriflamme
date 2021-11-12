@@ -14,7 +14,7 @@ import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
 // TODO: remove cards to server?
-import { cards } from '../../config/cards.constants';
+import { CARDS as cards } from '../../config/cards.constants';
 
 const { LOBBY, GAME } = SOCKET_EVENTS;
 
@@ -23,7 +23,6 @@ export default function Game (props) {
   // const { activeRoomId, leaveRoom } = props;
 
   // "METHODS"
-
 
   const handleGameStateChanged = (newGameState) => {
     console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
@@ -88,6 +87,7 @@ export default function Game (props) {
                 <Queue
                   gameState={gameState}
                   selectedPlayerCard={selectedPlayerCard}
+                  setSelectedPlayerCard={setSelectedPlayerCard}
                 />
               </div>
               <div className="game__bottom-bar">

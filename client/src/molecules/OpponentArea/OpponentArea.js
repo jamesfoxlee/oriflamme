@@ -15,7 +15,7 @@ export default function OpponentArea (props) {
   const userIdx = turnOrder.indexOf(user.id);
   const opponentOrder = turnOrder.slice(userIdx + 1).concat(turnOrder.slice(0, userIdx));
   const opponents = opponentOrder.map(opponentId => {
-    return players.find(player => player.id === opponentId);
+    return players[opponentId];
   });
 
   // TODO: set isActive prop if player is current active player (glow effect)

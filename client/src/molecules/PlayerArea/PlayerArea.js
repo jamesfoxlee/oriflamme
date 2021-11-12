@@ -10,7 +10,7 @@ export default function PlayerArea (props) {
 
   const { activePlayerId, phase, players } = props;
   const [user] = useContext(UserContext);
-  const player = players.find(player => player.id === user.id);
+  const player = players[user.id];
 
   const isActivePlayer = player.id === activePlayerId;
   const isHandActive = isActivePlayer && phase === 'planning';
