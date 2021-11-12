@@ -9,6 +9,9 @@ const SOCKET_EVENTS = {
   GAME: {
     GAMESTATE_CHANGED: 'game.gamestate_changed',
     GAMESTATE_GET: 'game.gamestate_get',
+    PLANNING: {
+      PLAY_CARD: 'game.planning.play_card',
+    },
     ROUND_START: 'game.round_start',
   },
   LOBBY: {
