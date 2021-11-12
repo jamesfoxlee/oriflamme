@@ -14,8 +14,8 @@ export default function PlayerCard(props) {
 
   // "METHODS"
 
-  const handleCardClicked = (cardId) => {
-    canPlayCard && handlePlayerCardClicked(cardId);
+  const handleCardClicked = (card) => {
+    canPlayCard && handlePlayerCardClicked(card);
   }
 
   // DYNAMIC STYLES
@@ -61,7 +61,7 @@ export default function PlayerCard(props) {
     <div className="player-card">
       <div
         className="player-card__element"
-        onClick={() => handleCardClicked(cardId)}
+        onClick={() => handleCardClicked(card)}
         ref={hoverRef}
         style={combinedStyle}
       >

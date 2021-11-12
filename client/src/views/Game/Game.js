@@ -32,8 +32,12 @@ export default function Game (props) {
     }
   }
 
-  const handlePlayerCardClicked = (cardId) => {
-    const val = selectedPlayerCard === cardId ? null : cardId;
+  const handlePlayerCardClicked = (card) => {
+    // set to null to deselect if same card clicked
+    let val = card;
+    if (selectedPlayerCard) {
+      val = selectedPlayerCard.id === card.id ? null : val;
+    }
     setSelectedPlayerCard(val);
   }
 

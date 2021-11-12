@@ -16,6 +16,7 @@
   display: flex;
   justify-content: center;
   flex: 94 94 0;
+  border: 1px solid red;
 }
 
 .queue__endzone--left {
@@ -26,12 +27,10 @@
   align-items: center;
 }
 
-
 .queue__arrow {
   font-size: var(--font-size-arrows);
 }
 
 .queue__cards {
-
   border: 1px solid red;
 }

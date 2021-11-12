@@ -26,7 +26,7 @@ export default function Queue (props) {
     }
     // card data held client-side already has id,  name, text
     const card = {
-      ...cards[selectedPlayerCard],
+      ...selectedPlayerCard,
       influence: 0,
       ownerColor: color,
       ownerId: user.id,
