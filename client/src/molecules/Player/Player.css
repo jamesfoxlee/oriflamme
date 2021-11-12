@@ -47,6 +47,7 @@
   align-items: center;
   flex: 15 15 0;
   background-color: var(--color-blue-midnight);
+  font-size: var(--font-size-smaller);
   text-align: center;
 }
 

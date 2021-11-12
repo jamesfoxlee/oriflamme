@@ -10,9 +10,9 @@ import Round from '../../atoms/Round/Round';
 import Loading from '../../atoms/Loading/Loading';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
+import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
-
 // TODO: remove cards to server?
 import { cards } from '../../config/cards.constants';
 
@@ -20,8 +20,7 @@ const { LOBBY, GAME } = SOCKET_EVENTS;
 
 export default function Game (props) {
 
-  const { socket } = props;
-  // const { activeRoomId, leaveRoom, socket } = props;
+  // const { activeRoomId, leaveRoom } = props;
 
   // "METHODS"
 
@@ -41,6 +40,18 @@ export default function Game (props) {
     }
   }
 
+  // STATE, CONTEXT etc
+
+  // TODO: review this
+  const [loading, setLoading] = useState(true);
+  const [gameState, setGameState] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [selectedPlayerCard, setSelectedPlayerCard] = useState(null);
+
+  const socket = useContext(SocketContext);
+  const [user] = useContext(UserContext);
+  // const [messages, setMessages] = useState({});
+
   useEffect(() => {
 
     // socket.registerListener(GAME.ROUND_START, handleRoundStart);
@@ -55,15 +66,6 @@ export default function Game (props) {
       socket.unregisterListeners(GAME.GAMESTATE_CHANGED);
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
-
-  // TODO: review this
-  const [loading, setLoading] = useState(true);
-  const [gameState, setGameState] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [selectedPlayerCard, setSelectedPlayerCard] = useState(null);
-
-  const [user] = useContext(UserContext);
-  // const [messages, setMessages] = useState({});
 
   return (
     <div className="game">

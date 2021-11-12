@@ -8,15 +8,17 @@ import Loading from './atoms/Loading/Loading';
 
 import Socket from './services/socket.service';
 import StorageService from './services/storage.service';
+import { SocketProvider } from './context/socket.context';
 import { UserProvider } from './context/user.context';
 import { SOCKET_EVENTS } from './config/socket.constants';
 const { LOBBY } = SOCKET_EVENTS;
-
 
 const storageService = StorageService();
 let socket;
 
 function App() {
+
+  // "METHODS"
 
   const joinRoom = (roomId, player) => {
     socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
@@ -41,7 +43,6 @@ function App() {
   const [user, setUser] = useState({ id: null, name: null});
   const [activeRoomId, setActiveRoomId] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
-  // const [gameState, setGameState] = useState(null);
 
   useEffect(() => {
     Socket()
@@ -66,35 +67,35 @@ function App() {
 
   return (
     <div className="app" id="app">
-      <UserProvider value={[user, setUser]}>
-        <Nav />
-        {
-          loading ?
-            <Loading message={"Connecting"} /> :
-            null
-        }
-        {
-          !loading && !gameStarted ?
-            <Rooms
-              activeRoomId={activeRoomId}
-              joinRoom={joinRoom}
-              leaveRoom={leaveRoom}
-              setActiveRoomId={setActiveRoomId}
-              socket={socket}
-              startGame={startGame}
-            /> :
-            null
-        }
-        {
-          !loading && gameStarted ?
-            <Game
-              activeRoomId={activeRoomId}
-              leaveRoom={leaveRoom}
-              socket={socket}
-            /> :
-            null
-        }
-      </UserProvider>
+      <SocketProvider value={socket}>
+        <UserProvider value={[user, setUser]}>
+          <Nav />
+          {
+            loading ?
+              <Loading message={"Connecting"} /> :
+              null
+          }
+          {
+            !loading && !gameStarted ?
+              <Rooms
+                activeRoomId={activeRoomId}
+                joinRoom={joinRoom}
+                leaveRoom={leaveRoom}
+                setActiveRoomId={setActiveRoomId}
+                startGame={startGame}
+              /> :
+              null
+          }
+          {
+            !loading && gameStarted ?
+              <Game
+                activeRoomId={activeRoomId}
+                leaveRoom={leaveRoom}
+              /> :
+              null
+          }
+        </UserProvider>
+      </SocketProvider>
     </div>
   );
 }

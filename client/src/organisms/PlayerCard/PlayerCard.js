@@ -6,13 +6,11 @@ import './PlayerCard.css';
 import useHover from '../../hooks/hover.hook';
 import { CardsContext } from '../../context/cards.context';
 
-// const HEIGHT_SCALE = 1.86666667;
-const HEIGHT_SCALE = 1.5;
+import { PLAYER_CARD as PC } from '../../config/ui.constants';
 
 export default function PlayerCard(props) {
 
-  const { canPlayCard, cardColor, cardId, scaleFactor, width } = props;
-  const height = width * HEIGHT_SCALE;
+  const { canPlayCard, cardColor, cardId } = props;
 
   // "METHODS"
 
@@ -26,6 +24,9 @@ export default function PlayerCard(props) {
 
   // DYNAMIC STYLES
 
+  const width = PC.WIDTH;
+  const height = width * PC.HEIGHT_SCALE;
+
   const noHoverStyles = {
     card: {
       width: `${width}px`,
@@ -37,8 +38,8 @@ export default function PlayerCard(props) {
   const hoverStyles = {
     card: {
       marginBottom: `${width}px`,
-      width: `${width * scaleFactor}px`,
-      height: `${height * scaleFactor}px`,
+      width: `${width * PC.HOVER_SCALE}px`,
+      height: `${height * PC.HOVER_SCALE}px`,
       backgroundColor: cardColor,
     }
   };
@@ -80,17 +81,10 @@ export default function PlayerCard(props) {
 // PROPS
 //----------------------------------------------------------------
 
-const { bool, number, string } = PropTypes;
+const { bool, string } = PropTypes;
 
 PlayerCard.propTypes = {
   canPlayCard: bool.isRequired,
   cardColor: string.isRequired,
   cardId: string.isRequired,
-  scaleFactor: number,
-  width: number,
-};
-
-PlayerCard.defaultProps = {
-  scaleFactor: 1.5,
-  width: 120
 };

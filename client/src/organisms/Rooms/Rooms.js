@@ -7,9 +7,10 @@ import Loading from '../../atoms/Loading/Loading';
 import NoRooms from '../../atoms/NoRooms/NoRooms';
 import Button from '../../atoms/Button/Button';
 
-import { SOCKET_EVENTS } from '../../config/socket.constants';
 import StorageService from '../../services/storage.service';
+import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
+import { SOCKET_EVENTS } from '../../config/socket.constants';
 
 const { LOBBY } = SOCKET_EVENTS;
 
@@ -22,7 +23,6 @@ export default function Rooms(props) {
     joinRoom,
     leaveRoom,
     setActiveRoomId,
-    socket,
     startGame
   } = props;
 
@@ -82,9 +82,12 @@ export default function Rooms(props) {
     setShowPlayerNameForm(!showPlayerNameForm);
   }
 
+  // STATE, CONTEXT etc
+
   const [loading, setLoading] = useState(true);
   const [rooms, setRooms] = useState([]);
   const [showPlayerNameForm, setShowPlayerNameForm] = useState(false);
+  const socket = useContext(SocketContext);
   const [user, setUser] = useContext(UserContext);
 
   useEffect(() => {
@@ -97,7 +100,7 @@ export default function Rooms(props) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: New Room button stays disabled after server reconnect / reflash of rooms if
-  // user had previously created
+  // user had previously created one
 
   return (
     <div className="rooms">
