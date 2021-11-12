@@ -13,9 +13,8 @@ import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { UserContext } from '../../context/user.context';
 import { CardsProvider } from '../../context/cards.context';
 
-// TODO: remove
-// import { gameState as fixedGameState } from '../../mocks/gamestate.mocks';
-import { cards } from '../../mocks/cards.mocks';
+// TODO: remove cards to server?
+import { cards } from '../../config/cards.constants';
 
 const { LOBBY, GAME } = SOCKET_EVENTS;
 

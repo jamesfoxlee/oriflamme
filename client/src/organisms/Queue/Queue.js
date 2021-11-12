@@ -20,26 +20,28 @@ export default function Queue (props) {
             null
         }
       </div>
-      {
-        queue.length ?
-          <div className="queue__cards">
-            {
-              queue.map((stack, idx) => {
-                const topCard = stack[stack.length - 1];
-                const isResolving = phase === PHASES.RESOLUTION &&
-                                    queueResolutionIndex === idx;
-                return (
-                  <QueueCard
-                    card={topCard}
-                    isResolving={isResolving}
-                    key={`queue-card-${idx}`}
-                  />
-                )
-              })
-            }
-          </div> :
-          <EmptyQueue />
-      }
+      <div className="queue__centrezone">
+        {
+          queue.length ?
+            <div className="queue__cards">
+              {
+                queue.map((stack, idx) => {
+                  const topCard = stack[stack.length - 1];
+                  const isResolving = phase === PHASES.RESOLUTION &&
+                                      queueResolutionIndex === idx;
+                  return (
+                    <QueueCard
+                      card={topCard}
+                      isResolving={isResolving}
+                      key={`queue-card-${idx}`}
+                    />
+                  )
+                })
+              }
+            </div> :
+            <EmptyQueue />
+        }
+      </div>
       <div className="queue__endzone queue__endzone--right">
         {
           selectedPlayerCard ?

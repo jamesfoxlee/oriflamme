@@ -5,7 +5,7 @@ import PlayerCard from '../../organisms/PlayerCard/PlayerCard';
 
 export default function PlayerHand(props) {
 
-  const { cardColor, hand, handIsActive } = props;
+  const { cardColor, hand, isActive } = props;
 
   return (
     <div className="player-hand">
@@ -13,7 +13,7 @@ export default function PlayerHand(props) {
         hand.map((cardId, idx) => {
           return (
             <PlayerCard
-              canPlayCard={handIsActive}
+              canPlayCard={isActive}
               cardColor={cardColor}
               cardId={cardId}
               key={`player-hand-card-${idx}`}

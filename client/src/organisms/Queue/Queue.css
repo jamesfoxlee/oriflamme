@@ -8,9 +8,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex: 2 2 0;
+  flex: 3 3 0;
   padding: 1rem;
-  border: 1px solid red;
+}
+
+.queue__centrezone {
+  display: flex;
+  justify-content: center;
+  flex: 94 94 0;
 }
 
 .queue__endzone--left {
@@ -27,8 +32,6 @@
 }
 
 .queue__cards {
-  display: flex;
-  justify-content: center;
-  flex: 96 96 0;
+
   border: 1px solid red;
 }

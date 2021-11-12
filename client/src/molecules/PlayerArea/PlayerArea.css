@@ -1,16 +1,13 @@
 .player-area {
   display: flex;
   height: 100%;
-  border: 1px solid red;
 }
 
 .player-area__player {
   flex: 2 2 0;
   padding: 2rem;
-  border: 1px solid red;
 }
 
 .player-area__hand {
   flex: 8 8 0;
-  border: 1px solid red;
 }

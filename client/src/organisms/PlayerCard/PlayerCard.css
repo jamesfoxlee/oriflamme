@@ -14,11 +14,11 @@
 
 .player-card__text {
   padding: 3rem 0.5rem;
-  font-size: var(--font-size-smallest);
+  font-size: var(--font-size-smaller);
   text-align: center;
 }
 
 .player-card__name {
-  font-size: var(--font-size-smallest);
+  font-size: var(--font-size-mid);
   font-weight: var(--font-weight-chunky);
 }
