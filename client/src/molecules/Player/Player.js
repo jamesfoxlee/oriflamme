@@ -7,12 +7,11 @@ import { UserContext } from '../../context/user.context';
 
 export default function Player (props) {
 
-  const { player } = props;
+  const { isActivePlayer, player } = props;
   const { name, influence, imageUrl, discardPile, color } = player;
   const [user] = useContext(UserContext);
   const [cards] = useContext(CardsContext);
 
-  const isActivePlayer = player.id === user.id;
   const playerStyle = 'player' + (isActivePlayer ? ' player--active' : '');
   const imageStyles = {
     backgroundImage: `url(${imageUrl})`,

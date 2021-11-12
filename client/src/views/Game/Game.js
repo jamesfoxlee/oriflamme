@@ -77,7 +77,11 @@ export default function Game (props) {
           <CardsProvider value={[cards, onPlayerCardClicked]} >
             <div className="game__table">
               <div className="game__opponents">
-                <OpponentArea gameState={gameState} />
+                <OpponentArea
+                  activePlayerId={gameState.activePlayerId}
+                  players={gameState.players}
+                  turnOrder={gameState.turnOrder}
+                />
               </div>
               <div className="game__queue">
                 <Queue
@@ -86,7 +90,11 @@ export default function Game (props) {
                 />
               </div>
               <div className="game__player">
-                <PlayerArea gameState={gameState} />
+                <PlayerArea
+                  activePlayerId={gameState.activePlayerId}
+                  phase={gameState.phase}
+                  players={gameState.players}
+                />
               </div>
             </div>
             <div className="game__sidebar">

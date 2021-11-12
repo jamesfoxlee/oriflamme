@@ -7,8 +7,7 @@ import { UserContext } from '../../context/user.context';
 
 export default function OpponentArea (props) {
 
-  const { gameState } = props;
-  const { players, turnOrder } = gameState;
+  const { activePlayerId, players, turnOrder } = props;
   const [user] = useContext(UserContext);
 
   // obtain a list of players for rendering the UI
@@ -25,9 +24,11 @@ export default function OpponentArea (props) {
     <div className="opponent-area">
       {
         opponents.map((opponent, idx) => {
+          const isActivePlayer = opponent.id === activePlayerId;
           return (
             <div className="opponent__wrapper" key={`opponent-${idx}`}>
               <Player
+                isActivePlayer={isActivePlayer}
                 player={opponent}
               />
             </div>
