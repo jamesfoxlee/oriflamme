@@ -14,12 +14,8 @@ export default function PlayerCard(props) {
 
   // "METHODS"
 
-  const handleCardClicked = () => {
-    if (canPlayCard) {
-      setSelected(!selected);
-      const value = !selected ? card : null;
-      onPlayerCardClicked(value);
-    }
+  const handleCardClicked = (cardId) => {
+    canPlayCard && handlePlayerCardClicked(cardId);
   }
 
   // DYNAMIC STYLES
@@ -50,19 +46,22 @@ export default function PlayerCard(props) {
     }
   };
 
+  // STATE, CONTEXT etc
+
   const [hoverRef, isHovered] = useHover();
-  const [selected, setSelected] = useState(false);
-  const [cards, onPlayerCardClicked] = useContext(CardsContext);
+  const [cards, selectedPlayerCard, handlePlayerCardClicked] = useContext(CardsContext);
+
   const card = cards[cardId];
+  const isSelected = cardId === selectedPlayerCard;
   const currentHoverStyle = isHovered ? hoverStyles.card : noHoverStyles.card;
-  const currentSelectedStyle = selected ? selectedStyles.card : {};
+  const currentSelectedStyle = isSelected ? selectedStyles.card : {};
   const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
   return (
     <div className="player-card">
       <div
         className="player-card__element"
-        onClick={() => handleCardClicked(card)}
+        onClick={() => handleCardClicked(cardId)}
         ref={hoverRef}
         style={combinedStyle}
       >
@@ -87,4 +86,5 @@ PlayerCard.propTypes = {
   canPlayCard: bool.isRequired,
   cardColor: string.isRequired,
   cardId: string.isRequired,
+  isSelected: bool.isRequired,
 };

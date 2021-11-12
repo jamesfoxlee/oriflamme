@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './PlayerHand.css';
-import PlayerCard from '../../organisms/PlayerCard/PlayerCard';
+import PlayerCard from '../PlayerCard/PlayerCard';
 
 export default function PlayerHand(props) {
 

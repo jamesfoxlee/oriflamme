@@ -1,7 +1,7 @@
 import React, { useContext} from 'react';
 
 import './PlayerArea.css';
-import PlayerHand from '../PlayerHand/PlayerHand';
+import PlayerHand from '../../organisms/PlayerHand/PlayerHand';
 import Player from '../Player/Player';
 
 import { UserContext } from '../../context/user.context';

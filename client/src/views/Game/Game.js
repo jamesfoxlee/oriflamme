@@ -24,13 +24,6 @@ export default function Game (props) {
 
   // "METHODS"
 
-  const onPlayerCardClicked = (card) => {
-    setSelectedPlayerCard(card);
-  }
-
-  // const onAddToQueue = () => {
-
-  // }
 
   const handleGameStateChanged = (newGameState) => {
     console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
@@ -38,6 +31,11 @@ export default function Game (props) {
     if (loading) {
       setLoading(false);
     }
+  }
+
+  const handlePlayerCardClicked = (cardId) => {
+    const val = selectedPlayerCard === cardId ? null : cardId;
+    setSelectedPlayerCard(val);
   }
 
   // STATE, CONTEXT etc
@@ -76,7 +74,7 @@ export default function Game (props) {
       }
       {
         !loading && gameState ?
-          <CardsProvider value={[cards, onPlayerCardClicked]} >
+          <CardsProvider value={[cards, selectedPlayerCard, handlePlayerCardClicked]} >
             <div className="game__table">
               <div className="game__top-bar">
                 <Round round={gameState.round} />
