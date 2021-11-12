@@ -10,9 +10,8 @@
   flex: 4 4 0;
 }
 
-.game__opponents {
-  align-self: center;
-  width: 70%;
+.game__top-bar {
+  display: flex;
   height: calc( (100vh - var(--size-navbar-height)) * 0.25);
 }
 
@@ -21,7 +20,7 @@
   background-color: var(--color-blue-midnight-darkest);
 }
 
-.game__player {
+.game__bottom-bar {
   align-self: center;
   width: 100%;
   height: calc( (100vh - var(--size-navbar-height)) * 0.3);

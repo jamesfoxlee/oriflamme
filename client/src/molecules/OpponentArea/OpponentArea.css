@@ -1,5 +1,6 @@
 .opponent-area {
   display: flex;
+  flex: 8 8 0;
   height: 100%;
   border: 1px solid red;
 }

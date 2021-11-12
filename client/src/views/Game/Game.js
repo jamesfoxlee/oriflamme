@@ -6,6 +6,7 @@ import Queue from '../../organisms/Queue/Queue';
 import PlayerArea from '../../molecules/PlayerArea/PlayerArea';
 import Status from '../../molecules/Status/Status.js';
 import Messages from '../../organisms/Messages/Messages';
+import Round from '../../atoms/Round/Round';
 import Loading from '../../atoms/Loading/Loading';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
@@ -76,7 +77,8 @@ export default function Game (props) {
         !loading && gameState ?
           <CardsProvider value={[cards, onPlayerCardClicked]} >
             <div className="game__table">
-              <div className="game__opponents">
+              <div className="game__top-bar">
+                <Round round={gameState.round} />
                 <OpponentArea
                   activePlayerId={gameState.activePlayerId}
                   players={gameState.players}
@@ -89,7 +91,7 @@ export default function Game (props) {
                   selectedPlayerCard={selectedPlayerCard}
                 />
               </div>
-              <div className="game__player">
+              <div className="game__bottom-bar">
                 <PlayerArea
                   activePlayerId={gameState.activePlayerId}
                   phase={gameState.phase}
