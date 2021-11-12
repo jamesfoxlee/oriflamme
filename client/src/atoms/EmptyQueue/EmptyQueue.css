@@ -1,0 +1,28 @@
+.empty-queue {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 50%;
+}
+
+.empty-queue__headline {
+  font-size: var(--font-size-biggest);
+  font-weight: var(--font-size-chunky);
+}
+
+.empty-queue__phantom-cards {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 2rem;
+}
+
+.empty-queue__phantom-card {
+  background-color: var(--color-blue-midnight-washed);
+}
+
+.empty-queue__text {
+  font-size: var(--font-size-mid);
+  text-align: center;
+}

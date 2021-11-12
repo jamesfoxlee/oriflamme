@@ -4,15 +4,19 @@ import PropTypes from 'prop-types';
 import './QueueCard.css';
 
 import { UserContext } from '../../context/user.context';
-
-const HEIGHT_SCALE = 1.5;
+import { QUEUE_CARD } from '../../config/ui.constants';
 
 export default function QueueCard(props) {
 
-  const { card, isResolving, scaleFactor, width } = props;
-  const height = width * HEIGHT_SCALE;
+  const { card, isResolving } = props;
+
   const [hovered, setHovered] = useState(false);
   const [user] = useContext(UserContext);
+
+  const width = QUEUE_CARD.WIDTH;
+  const maxWidth = QUEUE_CARD.MAX_WIDTH;
+  const hoverScale = QUEUE_CARD.HOVER_SCALE;
+  const height = width * QUEUE_CARD.HEIGHT_SCALE;
 
   // "METHODS"
 
@@ -46,14 +50,14 @@ export default function QueueCard(props) {
 
   const noHoverStyles = {
     width: `${width}px`,
-    maxWidth: 120,
+    maxWidth: maxWidth,
     height: `${height}px`,
   };
 
   const hoverStyles = {
-    width: `${width * scaleFactor}px`,
-    maxWidth: 120,
-    height: `${height * scaleFactor}px`,
+    width: `${width * hoverScale}px`,
+    maxWidth: maxWidth,
+    height: `${height * hoverScale}px`,
     backgroundColor: card.ownerColor,
   };
 
@@ -130,12 +134,8 @@ const { bool, number, object } = PropTypes;
 QueueCard.propTypes = {
   card: object.isRequired,
   isResolving: bool,
-  scaleFactor: number,
-  width: number,
 };
 
 QueueCard.defaultProps = {
   isResolving: false,
-  scaleFactor: 1.5,
-  width: 100
 };

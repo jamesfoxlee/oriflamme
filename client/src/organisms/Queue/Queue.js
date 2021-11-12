@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Queue.css';
 import QueueCard from '../QueueCard/QueueCard';
+import EmptyQueue from '../../atoms/EmptyQueue/EmptyQueue';
 
 import { PHASES } from '../../config/game.constants';
 
@@ -32,14 +33,12 @@ export default function Queue (props) {
                     card={topCard}
                     isResolving={isResolving}
                     key={`queue-card-${idx}`}
-                    scaleFactor={2}
-                    width={70}
                   />
                 )
               })
             }
           </div> :
-          <div>NO CARDS</div>
+          <EmptyQueue />
       }
       <div className="queue__endzone queue__endzone--right">
         {

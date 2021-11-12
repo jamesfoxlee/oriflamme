@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   height: 100%;
-  border: 1px solid red;
 }
 
 .queue__endzone {
@@ -11,7 +10,6 @@
   justify-content: center;
   flex: 2 2 0;
   padding: 1rem;
-  background-color: hotpink;
   border: 1px solid red;
 }
 
