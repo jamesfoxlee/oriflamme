@@ -21,8 +21,19 @@ function registerConnectionEventHandlers (socketServer) {
   });
 
   // DEBUG
-  socketServer.of("/").adapter.on("leave-room", (room) => {  console.log(`${room} was left`);});
   socketServer.of("/").adapter.on("create-room", (room) => {  console.log(`create-room: ${room} was created`);});
+  socketServer.of("/").adapter.on("join-room", (room, id) => {
+    if (room !== id) {
+      // don't log if socket joining its "own" room
+      console.log(`${room} was joined by id: ${id}`);
+    }
+  });
+  socketServer.of("/").adapter.on("leave-room", (room, id) => {
+    if (room !== id) {
+      // don't log if socket joining its "own" room
+      console.log(`${room} was left by id: ${id}`);
+    }
+  });
 }
 
 module.exports = registerConnectionEventHandlers;

@@ -48,7 +48,7 @@ function LobbyManager () {
 
   const joinRoom = async (roomId, socket, player) => {
     // TODO: limit adding if > 5 players
-    console.log(`LobbyManager.joinRoom() with roomId: ${roomId}`);
+    console.log('LobbyManager.joinRoom()');
     const room = _rooms[roomId];
     socket.join(roomId);
     room.players.push({
@@ -95,13 +95,14 @@ function LobbyManager () {
     }
   }
 
-  const startGame = async (roomId, socket, socketServer) => {
+  const startGame = async (roomId, socketServer) => {
     try {
       const room = _rooms[roomId];
       room.started = true;
+      // TODO: test that room is actually locked to other clients while all this is happening
       const gameManager = GameManager();
       gameManager.initialise(room);
-      registerGameEventHandlers(roomId, gameManager, socket, socketServer);
+      await registerGameEventHandlers(roomId, gameManager, socketServer);
       _gameManagers[roomId] = gameManager;
       const rm = new Room(room);
       await rm.save();

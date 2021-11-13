@@ -3,13 +3,11 @@ import React, { useContext } from 'react';
 import './Player.css';
 
 import { CardsContext } from '../../context/cards.context';
-import { UserContext } from '../../context/user.context';
 
 export default function Player (props) {
 
   const { isActivePlayer, player } = props;
   const { name, influence, imageUrl, discardPile, color } = player;
-  const [user] = useContext(UserContext);
   const [cards] = useContext(CardsContext);
 
   const playerStyle = 'player' + (isActivePlayer ? ' player--active' : '');

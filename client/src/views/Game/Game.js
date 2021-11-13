@@ -4,9 +4,9 @@ import './Game.css';
 import OpponentArea from '../../molecules/OpponentArea/OpponentArea';
 import Queue from '../../organisms/Queue/Queue';
 import PlayerArea from '../../molecules/PlayerArea/PlayerArea';
-import Status from '../../molecules/Status/Status.js';
 import Messages from '../../organisms/Messages/Messages';
 import Round from '../../atoms/Round/Round';
+import Status from '../../atoms/Status/Status.js';
 import Loading from '../../atoms/Loading/Loading';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
@@ -18,7 +18,7 @@ import { CARDS as cards } from '../../config/cards.constants';
 
 const { LOBBY, GAME } = SOCKET_EVENTS;
 
-export default function Game (props) {
+export default function Game(props) {
 
   // const { activeRoomId, leaveRoom } = props;
 
@@ -43,15 +43,14 @@ export default function Game (props) {
 
   // STATE, CONTEXT etc
 
-  // TODO: review this
   const [loading, setLoading] = useState(true);
   const [gameState, setGameState] = useState(null);
+  // TODO: review this, implement messages
   const [messages, setMessages] = useState([]);
   const [selectedPlayerCard, setSelectedPlayerCard] = useState(null);
 
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
-  // const [messages, setMessages] = useState({});
 
   useEffect(() => {
 
@@ -72,8 +71,8 @@ export default function Game (props) {
     <div className="game">
       {
         loading ?
-        <Loading message={"Starting game..."} /> :
-        null
+          <Loading message={"Starting game..."} /> :
+          null
       }
       {
         !loading && gameState ?

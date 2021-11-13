@@ -13,11 +13,6 @@ export default function QueueCard(props) {
   const [hovered, setHovered] = useState(false);
   const [user] = useContext(UserContext);
 
-  const width = QUEUE_CARD.WIDTH;
-  const maxWidth = QUEUE_CARD.MAX_WIDTH;
-  const hoverScale = QUEUE_CARD.HOVER_SCALE;
-  const height = width * QUEUE_CARD.HEIGHT_SCALE;
-
   // "METHODS"
 
   const handleMouseEnter = (e) => setHovered(true);
@@ -38,6 +33,11 @@ export default function QueueCard(props) {
   }
 
   // DYNAMIC STYLES
+
+  const width = QUEUE_CARD.WIDTH;
+  const height = width * QUEUE_CARD.HEIGHT_SCALE;
+  const maxWidth = QUEUE_CARD.MAX_WIDTH;
+  const hoverScale = QUEUE_CARD.HOVER_SCALE;
 
   const notRevealedStyles = {
     backgroundColor: card.ownerColor,
@@ -129,7 +129,7 @@ export default function QueueCard(props) {
 // PROPS
 //----------------------------------------------------------------
 
-const { bool, number, object } = PropTypes;
+const { bool, object } = PropTypes;
 
 QueueCard.propTypes = {
   card: object.isRequired,

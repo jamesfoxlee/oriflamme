@@ -33,7 +33,7 @@ module.exports = function registerLobbyEventHandlers(lobbyManager, socket, socke
     console.log('EVENT RECEIVED: ', LOBBY.GAME_START);
     console.log(`Starting game for roomId: ${roomId}`);
     socketServer.to(roomId).emit(LOBBY.GAME_STARTING);
-    await lobbyManager.startGame(roomId, socket, socketServer);
+    await lobbyManager.startGame(roomId, socketServer);
     // TODO: fix, could cause a race as people can still join while game spinning up
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
     socketServer.to(roomId).emit(LOBBY.GAME_STARTED);

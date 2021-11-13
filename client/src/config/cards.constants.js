@@ -13,7 +13,6 @@ export const CARDS = {
     id: 'assassinate',
     name: "Assassinate",
     text: "Elimate any card in the Queue. Discard Assassination.",
-    activate: null,
   },
   conspiracy: {
     id: 'conspiracy',
@@ -28,7 +27,6 @@ export const CARDS = {
   lord: {
     id: 'lord',
     name: "Lord",
-    reveal: null,
     text: "Earn 1 influence, plus 1 per adjacent card that is in your family.",
   },
   royal_decree: {

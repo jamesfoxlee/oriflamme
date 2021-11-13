@@ -6,7 +6,6 @@ import EmptyQueue from '../../atoms/EmptyQueue/EmptyQueue';
 
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
-import { CardsContext } from '../../context/cards.context';
 import { PHASES } from '../../config/game.constants';
 
 export default function Queue (props) {
@@ -40,7 +39,6 @@ export default function Queue (props) {
   const [playerColor, setPlayerColor] = useState(null);
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
-  const [cards] = useContext(CardsContext);
 
   return (
     <div className="queue">
