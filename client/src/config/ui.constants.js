@@ -7,7 +7,7 @@ export const QUEUE_CARD = {
 
 export const PLAYER_CARD = {
   HEIGHT_SCALE: 1.5, // real life scale: height is 1.86666667 * width
-  HOVER_SCALE: 2,
+  HOVER_SCALE: 1.7,
   MAX_WIDTH: 120,
   WIDTH: 120
 }
