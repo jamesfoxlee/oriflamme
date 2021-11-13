@@ -111,6 +111,8 @@ function LobbyManager () {
     }
   }
 
+  // TODO: endGame, cleanup room and gameManager
+
   return {
     getRooms,
     createRoom,

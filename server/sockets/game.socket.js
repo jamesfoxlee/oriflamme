@@ -15,7 +15,6 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
 
       socket.on(GAME.PLANNING.PLAY_CARD, (card, position) => {
         console.log('EVENT RECEIVED: ', GAME.PLANNING.PLAY_CARD);
-        console.log(`playing ${card.name} to position: ${position}`);
         gameManager.playCard(card, position);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });

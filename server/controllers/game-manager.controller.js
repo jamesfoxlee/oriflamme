@@ -33,12 +33,14 @@ function GameManager () {
 
   // PRIVATE
 
-  const _nextResolutionPhase = (prevGameState) => {
+  const _nextResolutionPhase = (prevGS) => {
     console.log('GameManager._nextResolutionPhase()');
+    const firstQueueCard = prevGS.queue[0][0];
+    console.log(`firstQueueCard: name: ${firstQueueCard.name} owner: ${firstQueueCard.ownerId}`);
     const gs = {
-      ...prevGameState,
+      ...prevGS,
+      activePlayerId: firstQueueCard.ownerId,
       phase: PHASES.RESOLUTION,
-      planningPhasePlayed: 0,
     };
     return gs;
   }
@@ -104,9 +106,13 @@ function GameManager () {
   const getGameState = () => _gameState;
 
   const playCard = (cardPlayed, position) => {
-    console.log('GameManager.playCard()');
+    console.log('GameManager.playCard() to position: ', position);
+    console.log(cardPlayed);
+
     // update hand of player that played card
-    const gs = {..._gameState};
+    let gs = {..._gameState};
+    console.log('queue before insert');
+    console.log(gs.queue);
     const playerId = cardPlayed.ownerId;
     const player = gs.players[playerId];
     const updatedHand = player.hand.filter(handCardId => handCardId !== cardPlayed.id);
@@ -114,6 +120,8 @@ function GameManager () {
     // NB must add card to queue inside an array - queue is nested arrays!
     // TODO: implement adding to stack here
     gs.queue.splice(position, 0, [cardPlayed]);
+    console.log('queue after insert');
+    console.log(gs.queue);
     // check for advance to Resolution Phase
     gs.planningPhasePlayed += 1;
     if (gs.planningPhasePlayed === gs.numPlayers) {
@@ -131,6 +139,8 @@ function GameManager () {
     }
     // update the gameState
     // TODO: save old gameState in history / DB
+    console.log('returning from playCard, queue follows...');
+    console.log(gs.queue);
     _gameState = gs;
   }
 
