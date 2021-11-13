@@ -18,8 +18,6 @@ export default function OpponentArea (props) {
     return players[opponentId];
   });
 
-  // TODO: set isActive prop if player is current active player (glow effect)
-
   return (
     <div className="opponent-area">
       {

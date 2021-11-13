@@ -1,12 +1,12 @@
 const INITIAL_GAMESTATE = {
   activePlayerId: null,
-  firstPlayerIndex: 0,
   numPlayers: 0,
   phase: 'planning',
   planningPhasePlayed: 0,
   players: {},
   queue: [],
   queueResolutionIndex: 0,
+  roomId: null,
   round: 1,
   turnOrder: [],
   turnOrderIndex: 0

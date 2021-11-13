@@ -4,10 +4,10 @@ const { GAME, MESSAGE } = SOCKET_EVENTS;
 module.exports = async function registerGameEventHandlers (roomId, gameManager, socketServer) {
 
   try {
+    // add game listeners to all sockets in room
     const socketsInRoom = await socketServer.in(roomId).fetchSockets();
     for (let socket of socketsInRoom) {
-      console.log(`subscribing socket with id: ${socket.id} to game listeners`);
-      console.log('events registered before subscribe: ', socket.eventNames().length);
+
       socket.on(GAME.GAMESTATE_GET, () => {
         console.log('EVENT RECEIVED: ', GAME.GAMESTATE_GET);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
@@ -24,9 +24,6 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         console.log('EVENT RECEIVED: ', MESSAGE.CREATE);
         console.log(message);
       });
-
-      console.log('events registered after subscribe: ', socket.eventNames().length);
-
     }
   } catch (err) {
     console.error('ERROR registerGameEventHandlers() : ', err);

@@ -33,17 +33,29 @@ function GameManager () {
 
   // PRIVATE
 
-  const _advancePhase = (prevGameState) => {
-    console.log('GameManager._advancePhase()');
-    const gs = {...prevGameState};
-    // things
+  const _nextResolutionPhase = (prevGameState) => {
+    console.log('GameManager._nextResolutionPhase()');
+    const gs = {
+      ...prevGameState,
+      phase: PHASES.RESOLUTION,
+      planningPhasePlayed: 0,
+    };
     return gs;
   }
 
-  const _advanceRound = (prevGameState) => {
-    console.log('GameManager._advanceRound()');
-    const gs = {...prevGameState};
-    // things
+  const _nextRound = (prevGS) => {
+    console.log('GameManager._nextRound()');
+    const updatedTurnOrder = prevGS.turnOrder.slice(1).concat(prevGS.turnOrder.slice(0, 1));
+    const gs = {
+      ...prevGS,
+      activePlayerId: updatedTurnOrder[0],
+      phase: PHASES.PLANNING,
+      planningPhasePlayed: 0,
+      queueResolutionIndex: 0,
+      round: prevGS.round + 1,
+      turnOrder: updatedTurnOrder,
+      turnOrderIndex: 0
+    };
     return gs;
   }
 
@@ -75,6 +87,7 @@ function GameManager () {
         imageUrl: images.shift(),
         influence: 1,
         name: player.name,
+        roomId: roomId,
       }
     });
 
@@ -93,34 +106,31 @@ function GameManager () {
   const playCard = (cardPlayed, position) => {
     console.log('GameManager.playCard()');
     // update hand of player that played card
-    let gs = {..._gameState};
+    const gs = {..._gameState};
     const playerId = cardPlayed.ownerId;
     const player = gs.players[playerId];
     const updatedHand = player.hand.filter(handCardId => handCardId !== cardPlayed.id);
     player.hand = updatedHand;
+    // NB must add card to queue inside an array - queue is nested arrays!
     // TODO: implement adding to stack here
-    // remember: queue is an array of arrays! For future stack functionality
     gs.queue.splice(position, 0, [cardPlayed]);
-
-    // have all players played a card this phase?
+    // check for advance to Resolution Phase
     gs.planningPhasePlayed += 1;
-
-    // TODO: ** SATURDAY MORNING **
-    // uncomment if, work on phase
-
-    // if (gs.planningPhasePlayed === gs.numPlayers) {
-    //   gs = _advancePhase(gs);
-    // } else {
-      // get next player
-      // we only manipulate turnOrder array on a new round occurring
+    if (gs.planningPhasePlayed === gs.numPlayers) {
+      gs = _nextResolutionPhase(gs);
+    } else {
+      gs.turnOrderIndex += 1;
+      gs.activePlayerId = gs.turnOrder[gs.turnOrderIndex];
+      /*
+      // if wrap logic required
       let idx = gs.turnOrderIndex + 1;
-      console.log('idx after inc, before wrap check: ', idx);
       idx = idx === gs.numPlayers ? 0 : idx;
-      console.log('idx after inc, after wrap check: ', idx);
       gs.turnOrderIndex = idx;
       gs.activePlayerId = gs.turnOrder[idx];
-    // }
+      */
+    }
     // update the gameState
+    // TODO: save old gameState in history / DB
     _gameState = gs;
   }
 
