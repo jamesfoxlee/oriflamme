@@ -17,48 +17,54 @@ function GameManager () {
   let _gameState = null;
   const _history = [];
 
-  // const INITIAL_GAMESTATE = {
-  //   activePlayerId: null,
-  //   firstPlayerIndex: 0,
-  //   numPlayers: 0,
-  //   phase: 'planning',
-  //   planningPhasePlayed: 0,
-  //   players: {},
-  //   queue: [],
-  //   queueResolutionIndex: 0,
-  //   round: 1,
-  //   turnOrder: [],
-  //   turnOrderIndex: 0
-  // }
-
   // PRIVATE
 
-  const _nextResolutionPhase = (prevGS) => {
-    console.log('GameManager._nextResolutionPhase()');
-    const firstQueueCard = prevGS.queue[0][0];
-    console.log(`firstQueueCard: name: ${firstQueueCard.name} owner: ${firstQueueCard.ownerId}`);
-    const gs = {
-      ...prevGS,
-      activePlayerId: firstQueueCard.ownerId,
-      phase: PHASES.RESOLUTION,
-    };
-    return gs;
+  const _getTopCardInStack = (queue, qri) => {
+    const stack = queue[qri];
+    return stack[stack.length - 1];
+  };
+
+  const _checkForResolutionPhase = (prevState) => {
+    console.log('GameManager._checkForResolutionPhase()');
+    if (prevState.planningPhasePlayed === prevState.numPlayers) {
+      // advance to resolution phase
+      const firstQueueCard = _getTopCardInStack(prevState.queue, 0);
+      return {
+        ...prevState,
+        activePlayerId: firstQueueCard.ownerId,
+        phase: PHASES.RESOLUTION,
+      };
+    }
+    // otherwise it's the next player
+    return {
+      ...prevState,
+      activePlayerId: prevState.turnOrder[prevState.turnOrderIndex + 1],
+      turnOrderIndex: prevState.turnOrderIndex + 1,
+    }
   }
 
-  const _nextRound = (prevGS) => {
-    console.log('GameManager._nextRound()');
-    const updatedTurnOrder = prevGS.turnOrder.slice(1).concat(prevGS.turnOrder.slice(0, 1));
-    const gs = {
-      ...prevGS,
+  const _checkForNextRound = (prevState) => {
+    console.log('GameManager._checkForNextRound()');
+    if (prevState.queueResolutionIndex < prevState.queue.length) {
+      // there are cards left to resolve
+      const nextCard = _getTopCardInStack(prevState.queue, prevState.queueResolutionIndex);
+      return {
+        ...prevState,
+        activePlayerId: nextCard.ownerId,
+      };
+    }
+    // advance the round
+    const updatedTurnOrder = prevState.turnOrder.slice(1).concat(prevState.turnOrder.slice(0, 1));
+    return {
+      ...prevState,
       activePlayerId: updatedTurnOrder[0],
       phase: PHASES.PLANNING,
       planningPhasePlayed: 0,
       queueResolutionIndex: 0,
-      round: prevGS.round + 1,
+      round: prevState.round + 1,
       turnOrder: updatedTurnOrder,
       turnOrderIndex: 0
     };
-    return gs;
   }
 
   // PUBLIC
@@ -79,14 +85,14 @@ function GameManager () {
     // convert array of players into an object ref'd by playerId
     const turnOrder = [];
     const playersObj = {};
-    players.forEach(player => {
+    players.forEach((player, idx) => {
       turnOrder.push(player.id);
       playersObj[player.id] = {
         ...INITIAL_PLAYERSTATE,
         id: player.id,
-        color: colors.shift(),
+        color: colors[idx],
         hand: [...STARTING_HAND_SIMPLE],
-        imageUrl: images.shift(),
+        imageUrl: images[idx],
         influence: 1,
         name: player.name,
         roomId: roomId,
@@ -101,53 +107,60 @@ function GameManager () {
       queue: [],
       turnOrder: turnOrder
     }
-  }
+  };
 
   const getGameState = () => _gameState;
 
   const playCard = (cardPlayed, position) => {
-    console.log('GameManager.playCard() to position: ', position);
-    console.log(cardPlayed);
-
+    console.log('GameManager.playCard()');
     // update hand of player that played card
-    let gs = {..._gameState};
-    console.log('queue before insert');
-    console.log(gs.queue);
+    let nextState = {..._gameState};
     const playerId = cardPlayed.ownerId;
-    const player = gs.players[playerId];
+    const player = nextState.players[playerId];
     const updatedHand = player.hand.filter(handCardId => handCardId !== cardPlayed.id);
     player.hand = updatedHand;
     // NB must add card to queue inside an array - queue is nested arrays!
     // TODO: implement adding to stack here
-    gs.queue.splice(position, 0, [cardPlayed]);
-    console.log('queue after insert');
-    console.log(gs.queue);
-    // check for advance to Resolution Phase
-    gs.planningPhasePlayed += 1;
-    if (gs.planningPhasePlayed === gs.numPlayers) {
-      gs = _nextResolutionPhase(gs);
-    } else {
-      gs.turnOrderIndex += 1;
-      gs.activePlayerId = gs.turnOrder[gs.turnOrderIndex];
-      /*
-      // if wrap logic required
-      let idx = gs.turnOrderIndex + 1;
-      idx = idx === gs.numPlayers ? 0 : idx;
-      gs.turnOrderIndex = idx;
-      gs.activePlayerId = gs.turnOrder[idx];
-      */
-    }
-    // update the gameState
+    nextState.queue.splice(position, 0, [cardPlayed]);
+    nextState.planningPhasePlayed += 1;
     // TODO: save old gameState in history / DB
-    console.log('returning from playCard, queue follows...');
-    console.log(gs.queue);
-    _gameState = gs;
+    _gameState = _checkForResolutionPhase(nextState);
+  };
+
+  const queueNoReveal = (qri) => {
+    console.log('GameManager.queueNoReveal() at queue index: ', qri);
+    let nextState = {..._gameState};
+    const updatedCard = _getTopCardInStack(nextState.queue, qri);
+    updatedCard.influence += 1;
+    nextState.queueResolutionIndex += 1;
+    // TODO: save old gameState in history / DB
+    _gameState = _checkForNextRound(nextState);
   }
+
+  const queueReveal = (qri) => {
+    console.log('GameManager.queueReveal() at queue index: ', qri);
+
+  };
+
+  // const INITIAL_GAMESTATE = {
+  //   activePlayerId: null,
+  //   numPlayers: 0,
+  //   phase: 'planning',
+  //   planningPhasePlayed: 0,
+  //   players: {},
+  //   queue: [],
+  //   queueResolutionIndex: 0,
+  //   round: 1,
+  //   turnOrder: [],
+  //   turnOrderIndex: 0
+  // }
 
   return {
     getGameState,
     initialise,
-    playCard
+    playCard,
+    queueNoReveal,
+    queueReveal
   }
 }
 

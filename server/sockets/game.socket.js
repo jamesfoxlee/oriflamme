@@ -19,6 +19,18 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
+      socket.on(GAME.RESOLUTION.QUEUE.NO_REVEAL, (qri) => {
+        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.NO_REVEAL);
+        gameManager.queueNoReveal(qri);
+        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
+      });
+
+      socket.on(GAME.RESOLUTION.QUEUE.REVEAL, (qri) => {
+        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.REVEAL);
+        gameManager.queueReveal(qri);
+        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
+      });
+
       socket.on(MESSAGE.CREATE, (message) => {
         console.log('EVENT RECEIVED: ', MESSAGE.CREATE);
         console.log(message);
