@@ -36,8 +36,6 @@ export default function QueueCard(props) {
 
   const width = QUEUE_CARD.WIDTH;
   const height = width * QUEUE_CARD.HEIGHT_SCALE;
-  const maxWidth = QUEUE_CARD.MAX_WIDTH;
-  const hoverScale = QUEUE_CARD.HOVER_SCALE;
 
   const notRevealedStyles = {
     backgroundColor: card.ownerColor,
@@ -50,14 +48,14 @@ export default function QueueCard(props) {
 
   const noHoverStyles = {
     width: `${width}px`,
-    maxWidth: maxWidth,
+    maxWidth: QUEUE_CARD.MAX_WIDTH,
     height: `${height}px`,
   };
 
   const hoverStyles = {
-    width: `${width * hoverScale}px`,
-    maxWidth: maxWidth,
-    height: `${height * hoverScale}px`,
+    width: `${width * QUEUE_CARD.HOVER_SCALE}px`,
+    // maxWidth: QUEUE_CARD.MAX_WIDTH,
+    height: `${height * QUEUE_CARD.HOVER_SCALE}px`,
     backgroundColor: card.ownerColor,
   };
 

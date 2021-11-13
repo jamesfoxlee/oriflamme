@@ -16,7 +16,6 @@
   display: flex;
   justify-content: center;
   flex: 94 94 0;
-  border: 1px solid yellow;
 }
 
 .queue__endzone--left {
@@ -35,6 +34,4 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  /* flex: 94 94 0; */
-  border: 1px solid red;
 }
