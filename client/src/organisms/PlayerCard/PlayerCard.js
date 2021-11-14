@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import './PlayerCard.css';
@@ -13,6 +13,10 @@ export default function PlayerCard(props) {
   const { canPlayCard, cardColor, cardId } = props;
 
   // "METHODS"
+
+  const handleMouseEnter = (e) => setHovered(true);
+
+  const handleMouseLeave = (e) => setHovered(false);
 
   const handleCardClicked = (card) => {
     canPlayCard && handlePlayerCardClicked(card);
@@ -36,6 +40,7 @@ export default function PlayerCard(props) {
       marginBottom: `${width}px`,
       width: `${width * PC.HOVER_SCALE}px`,
       height: `${height * PC.HOVER_SCALE}px`,
+      maxWidth: PC.MAX_WIDTH,
       backgroundColor: cardColor,
     }
   };
@@ -48,25 +53,27 @@ export default function PlayerCard(props) {
 
   // STATE, CONTEXT etc
 
-  const [hoverRef, isHovered] = useHover();
+  const [hovered, setHovered] = useState(false);
+  // const [hoverRef, isHovered] = useHover();
   const [cards, selectedPlayerCard, handlePlayerCardClicked] = useContext(CardsContext);
 
   const card = cards[cardId];
   const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
-  const currentHoverStyle = isHovered ? hoverStyles.card : noHoverStyles.card;
+  const currentHoverStyle = hovered ? hoverStyles.card : noHoverStyles.card;
   const currentSelectedStyle = isSelected ? selectedStyles.card : {};
   const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
   return (
-    <div className="player-card">
+    <div className="player-card__wrapper">
       <div
-        className="player-card__element"
+        className="player-card__card"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={() => handleCardClicked(card)}
-        ref={hoverRef}
         style={combinedStyle}
       >
         {
-          isHovered ?
+          hovered ?
             <div className="player-card__text">{card.text}</div> :
             null
         }

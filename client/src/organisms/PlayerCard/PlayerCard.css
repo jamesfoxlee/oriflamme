@@ -1,10 +1,10 @@
-.player-card {
+.player-card__wrapper {
   display: flex;
   align-items: center;
   flex: 1 1 0;
 }
 
-.player-card__element {
+.player-card__card {
   display: flex;
   flex-direction: column;
   justify-content: center;
