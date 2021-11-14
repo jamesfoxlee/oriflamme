@@ -1,0 +1,24 @@
+.qc-buttons__prompt {
+  font-size: var(--font-size-bigger);
+  font-weight: var(--font-weight-regular);
+  text-align: center;
+}
+
+.qc-buttons__buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.qc-buttons__button {
+  border: 0;
+  background: transparent;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.qc-buttons__button-icon {
+  color: var(--color-white);
+  font-size: var(--font-size-biggest);
+}

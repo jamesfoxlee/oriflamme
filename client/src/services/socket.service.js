@@ -83,6 +83,11 @@ export default function Socket() {
       socket.emit(GAME.RESOLUTION.QUEUE.REVEAL, qri);
     }
 
+    function queueConfirmTarget (qri) {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
+      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, qri);
+    }
+
     //----------------------------------------------------------------
     // MESSAGING
     //----------------------------------------------------------------

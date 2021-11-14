@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import './QueueCard.css';
+import QCButtons from '../../atoms/QCButtons/QCButtons';
 
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
@@ -9,26 +10,23 @@ import { QUEUE_CARD } from '../../config/ui.constants';
 
 export default function QueueCard(props) {
 
-  const { card, isResolving, qri } = props;
+  const handleMouseEnter = (e) => setHovered(true);
+  const handleMouseLeave = (e) => setHovered(false);
+
+  const handleNoReveal = () => socket.queueNoReveal(qri);
+  const handleReveal = () => socket.queueReveal(qri);
+  const handleConfirmTarget = () => socket.queueConfirmTarget(qri);
+
+  // PROPS, STATE, CONTEXT etc
+
+  const { card, isPlayerTurn, isResolving, isTarget, isTargettingWindow, qri } = props;
 
   const [hovered, setHovered] = useState(false);
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
 
-
-  // "METHODS"
-
-  const handleMouseEnter = (e) => setHovered(true);
-
-  const handleMouseLeave = (e) => setHovered(false);
-
-  const handleNoReveal = () => {
-    socket.queueNoReveal(qri);
-  }
-
-  const handleReveal = () => {
-    socket.queueReveal(qri);
-  }
+  const { revealed } = card;
+  const isOwned = card.ownerId === user.id;
 
   // DYNAMIC STYLES
 
@@ -51,7 +49,6 @@ export default function QueueCard(props) {
 
   const hoverStyles = {
     width: `${width * QUEUE_CARD.HOVER_SCALE}px`,
-    // maxWidth: QUEUE_CARD.MAX_WIDTH,
     height: `${height * QUEUE_CARD.HOVER_SCALE}px`,
     backgroundColor: card.ownerColor,
   };
@@ -60,13 +57,15 @@ export default function QueueCard(props) {
     boxShadow: '0 0 1rem 1rem var(--color-white)',
   };
 
-  const rStyle = card.revealed ? revealedStyles : notRevealedStyles;
-  const hStyle = hovered ? hoverStyles : noHoverStyles;
-  const sStyle = isResolving ? resolvingStyles : {};
-  const combinedStyle = { ...rStyle, ...hStyle, ...sStyle };
+  const targettedStyles = {
+    boxShadow: '0 0 1rem 1rem var(--color-gold)',
+  };
 
-  const { revealed } = card;
-  const isOwned = card.ownerId === user.id;
+  const revStyle = card.revealed ? revealedStyles : notRevealedStyles;
+  const hovStyle = hovered ? hoverStyles : noHoverStyles;
+  const resStyle = isResolving ? (isTarget ? targettedStyles : resolvingStyles) : {};
+  const tarStyle = isTarget ? targettedStyles : {};
+  const combinedStyle = { ...revStyle, ...hovStyle, ...resStyle, ...tarStyle };
 
   return (
     <div className="queue-card">
@@ -105,28 +104,20 @@ export default function QueueCard(props) {
         }
       </div>
       {
-        isResolving && isOwned ?
-          <div className="queue-card__prompt">
-            Reveal?
-            <div className="queue-card__buttons">
-              <button
-                autoComplete="off"
-                className="queue-card__button"
-                onClick={handleReveal}
-                type="button"
-              >
-                <span className="queue-card__button-icon icon-check" />
-              </button>
-              <button
-                autoComplete="off"
-                className="queue-card__button"
-                onClick={handleNoReveal}
-                type="button"
-              >
-                <span className="queue-card__button-icon icon-cross" />
-              </button>
-            </div>
-          </div> :
+        isPlayerTurn && isResolving && isOwned && !isTargettingWindow ?
+          <QCButtons
+            onYes={handleReveal}
+            onNo={handleNoReveal}
+            text="Reveal?"
+          /> :
+          null
+      }
+      {
+        isPlayerTurn && isTarget ?
+          <QCButtons
+            onYes={handleConfirmTarget}
+            text="Target?"
+          /> :
           null
       }
     </div>

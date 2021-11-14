@@ -10,11 +10,6 @@ import { PHASES } from '../../config/game.constants';
 
 export default function Queue (props) {
 
-  const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
-  const { phase, players, queue, queueResolutionIndex:qri } = gameState;
-
-  // "METHODS"
-
   const handleCardPlayed = (position) => {
     setSelectedPlayerCard(null);
     let color = playerColor;
@@ -36,9 +31,22 @@ export default function Queue (props) {
 
   // STATE, CONTEXT etc
 
+  const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
+  const {
+    activePlayerId,
+    phase,
+    players,
+    queue,
+    queueResolutionIndex:qri,
+    queueTargets
+  } = gameState;
+
   const [playerColor, setPlayerColor] = useState(null);
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
+
+  const isPlayerTurn = activePlayerId === user.id;
+  const isTargettingWindow = queueTargets.length > 0;
 
   return (
     <div className="queue">
@@ -61,10 +69,14 @@ export default function Queue (props) {
                   const topCard = stack[stack.length - 1];
                   const isResolving = phase === PHASES.RESOLUTION &&
                                       qri === idx;
+                  const isTarget = queueTargets.includes(idx);
                   return (
                     <QueueCard
                       card={topCard}
+                      isPlayerTurn={isPlayerTurn}
                       isResolving={isResolving}
+                      isTarget={isTarget}
+                      isTargettingWindow={isTargettingWindow}
                       qri={qri}
                       key={`queue-card-${idx}`}
                     />

@@ -27,6 +27,7 @@ export default function Game(props) {
   const handleGameStateChanged = (newGameState) => {
     console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
     setGameState(newGameState);
+    console.log(newGameState);
     if (loading) {
       setLoading(false);
     }

@@ -129,8 +129,8 @@ function GameManager () {
     _gameState = _checkForResolutionPhase(nextState);
   };
 
-  const queueNoReveal = (qri) => {
-    console.log('GameManager.queueNoReveal() at queue index: ', qri);
+  const dontRevealCard = (qri) => {
+    console.log('GameManager.dontRevealCard() at queue index: ', qri);
     let nextState = {..._gameState};
     const updatedCard = _getTopCardInStack(nextState.queue, qri);
     updatedCard.influence += 1;
@@ -140,8 +140,8 @@ function GameManager () {
     _gameState = _checkForNextRound(nextState);
   }
 
-  const queueReveal = (qri) => {
-    console.log('GameManager.queueReveal() at queue index: ', qri);
+  const revealCard = (qri) => {
+    console.log('GameManager.revealCard() at queue index: ', qri);
     const nextState = {..._gameState};
     const { queue } = nextState;
     const card = _getTopCardInStack(queue, qri);
@@ -159,6 +159,9 @@ function GameManager () {
     _gameState = nextState;
   }
 
+  const confirmTarget = (qri) => {
+    console.log('GameManager.confirmTarget() at queue index: ', qri);
+  }
 
   const queueAfterAbility = () => {
     // discard? etc (see Power Point)
@@ -188,8 +191,9 @@ function GameManager () {
     getGameState,
     initialise,
     playCard,
-    queueNoReveal,
-    queueReveal,
+    dontRevealCard,
+    revealCard,
+    confirmTarget,
     // queueBeforeAbility,
     // queueOnAbility,
     // queueAfterAbility,

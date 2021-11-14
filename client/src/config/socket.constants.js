@@ -14,6 +14,7 @@ export const SOCKET_EVENTS = {
     },
     RESOLUTION: {
       QUEUE: {
+        CONFIRM_TARGET: 'game.queue.confirm_target',
         NO_REVEAL: 'game.queue.no_reveal',
         REVEAL: 'game.queue.reveal'
       }
