@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 
 import './PlayerCard.css';
 
-import useHover from '../../hooks/hover.hook';
 import { CardsContext } from '../../context/cards.context';
-
 import { PLAYER_CARD as PC } from '../../config/ui.constants';
 
 export default function PlayerCard(props) {
@@ -54,7 +52,6 @@ export default function PlayerCard(props) {
   // STATE, CONTEXT etc
 
   const [hovered, setHovered] = useState(false);
-  // const [hoverRef, isHovered] = useHover();
   const [cards, selectedPlayerCard, handlePlayerCardClicked] = useContext(CardsContext);
 
   const card = cards[cardId];
