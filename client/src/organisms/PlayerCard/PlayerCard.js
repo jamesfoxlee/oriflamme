@@ -52,7 +52,7 @@ export default function PlayerCard(props) {
   const [cards, selectedPlayerCard, handlePlayerCardClicked] = useContext(CardsContext);
 
   const card = cards[cardId];
-  const isSelected = cardId === selectedPlayerCard;
+  const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
   const currentHoverStyle = isHovered ? hoverStyles.card : noHoverStyles.card;
   const currentSelectedStyle = isSelected ? selectedStyles.card : {};
   const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
