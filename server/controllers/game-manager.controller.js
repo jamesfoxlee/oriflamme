@@ -139,7 +139,17 @@ function GameManager () {
 
   const queueReveal = (qri) => {
     console.log('GameManager.queueReveal() at queue index: ', qri);
+    let nextState = {..._gameState};
+    const cardRevealed = _getTopCardInStack(nextState.queue, qri);
+    console.log('cardRevealed: ', cardRevealed.name);
+    console.log(cardRevealed);
+    cardRevealed.revealed = true;
+    console.log('after reveal, .revealed:', cardRevealed.revealed);
 
+    // trigger ability
+    nextState.queueResolutionIndex += 1;
+    // TODO: save old gameState in history / DB
+    _gameState = _checkForNextRound(nextState);
   };
 
   // const INITIAL_GAMESTATE = {
@@ -150,6 +160,8 @@ function GameManager () {
   //   players: {},
   //   queue: [],
   //   queueResolutionIndex: 0,
+  //   queueTargets: [],
+  //   roomId,
   //   round: 1,
   //   turnOrder: [],
   //   turnOrderIndex: 0

@@ -1,3 +1,5 @@
+const CARDS = require("./cards.constants");
+
 const INITIAL_GAMESTATE = {
   activePlayerId: null,
   numPlayers: 0,
@@ -6,6 +8,7 @@ const INITIAL_GAMESTATE = {
   players: {},
   queue: [],
   queueResolutionIndex: 0,
+  queueTargets: [],
   roomId: null,
   round: 1,
   turnOrder: [],
@@ -69,6 +72,11 @@ const STARTING_HAND_SIMPLE = [
   'soldier',
   'spy'
 ];
+
+const CARD_EFFECTS = {
+  ELIMINATE: 'eliminate',
+  STEAL: 'steal'
+}
 
 module.exports = {
   INITIAL_GAMESTATE,

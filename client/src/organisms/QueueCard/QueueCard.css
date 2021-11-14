@@ -14,6 +14,14 @@
   position: relative;
 }
 
+.queue-card__card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .queue-card__back {
   font-family: var(--font-family-gothic);
   font-size: var(--font-size-biggest);

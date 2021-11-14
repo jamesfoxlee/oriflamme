@@ -65,6 +65,7 @@ export default function QueueCard(props) {
   const sStyle = isResolving ? resolvingStyles : {};
   const combinedStyle = { ...rStyle, ...hStyle, ...sStyle };
 
+  const { revealed } = card;
   const isOwned = card.ownerId === user.id;
 
   return (
@@ -76,18 +77,25 @@ export default function QueueCard(props) {
         style={combinedStyle}
       >
         {
-          !hovered && !card.revealed ?
-            <div className="queue-card__back">O</div> :
+          !revealed && !isOwned ?
+            <div className="queue-card__card-wrapper">
+              <div className="queue-card__back">O</div>
+            </div> :
             null
         }
         {
-          hovered && (card.revealed || isOwned) ?
-            <div className="queue-card__name">{card.name}</div> :
+          (revealed || isOwned) && !hovered ?
+            <div className="queue-card__card-wrapper">
+              <div className="queue-card__name">{card.name}</div>
+            </div> :
             null
         }
         {
-          hovered && (card.revealed || isOwned) ?
-            <div className="queue-card__text">{card.text}</div> :
+          (revealed || isOwned) && hovered ?
+            <div className="queue-card__card-wrapper">
+              <div className="queue-card__text">{card.text}</div>
+              <div className="queue-card__name">{card.name}</div>
+            </div> :
             null
         }
         {
