@@ -73,6 +73,16 @@ export default function Socket() {
       socket.emit(GAME.PLANNING.PLAY_CARD, card, position);
     }
 
+    function queueNoReveal (qri) {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.NO_REVEAL);
+      socket.emit(GAME.RESOLUTION.QUEUE.NO_REVEAL, qri);
+    }
+
+    function queueReveal (qri) {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.REVEAL);
+      socket.emit(GAME.RESOLUTION.QUEUE.REVEAL, qri);
+    }
+
     //----------------------------------------------------------------
     // MESSAGING
     //----------------------------------------------------------------
@@ -103,6 +113,8 @@ export default function Socket() {
         startGame,
         getGameState,
         playCard,
+        queueNoReveal,
+        queueReveal,
         sendMessage,
       })
     });

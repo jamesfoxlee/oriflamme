@@ -9,9 +9,9 @@ export const CARDS = {
     name: "Archer",
     text: "Eliminate the first or last card in the Queue.",
   },
-  assassinate: {
-    id: 'assassinate',
-    name: "Assassinate",
+  assassination: {
+    id: 'assassination',
+    name: "Assassination",
     text: "Elimate any card in the Queue. Discard Assassination.",
   },
   conspiracy: {

@@ -17,8 +17,8 @@ const CARDS = {
       then: null,
     }
   },
-  assassinate: {
-    id: 'assassinate',
+  assassination: {
+    id: 'assassination',
     name: "Assassinate",
     reveal: {
       text: "Elimate any card in the Queue. Discard Assassination.",

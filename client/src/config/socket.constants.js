@@ -12,6 +12,12 @@ export const SOCKET_EVENTS = {
     PLANNING: {
       PLAY_CARD: 'game.planning.play_card',
     },
+    RESOLUTION: {
+      QUEUE: {
+        NO_REVEAL: 'game.queue.no_reveal',
+        REVEAL: 'game.queue.reveal'
+      }
+    },
     ROUND_START: 'game.round_start',
   },
   LOBBY: {

@@ -69,14 +69,14 @@ export default function Status(props) {
         }
         {
           phase === PHASES.RESOLUTION && playerIsActive && resolvingCard && !resolvingCard.revealed?
-            <div className="status__message">
+            <div className="status__message" style={playerIsActive ? boxStyles : null}>
               {`Reveal ${resolvingCard.name} to apply its effect, or place 1 influence on it.`}
             </div> :
             null
         }
         {
           phase === PHASES.RESOLUTION && playerIsActive && resolvingCard && resolvingCard.revealed?
-            <div className="status__message">
+            <div className="status__message" style={playerIsActive ? boxStyles : null}>
               {`Choose targets for ${resolvingCard.name}.`}
             </div> :
             null

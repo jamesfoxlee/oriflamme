@@ -3,15 +3,18 @@ import PropTypes from 'prop-types';
 
 import './QueueCard.css';
 
+import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { QUEUE_CARD } from '../../config/ui.constants';
 
 export default function QueueCard(props) {
 
-  const { card, isResolving } = props;
+  const { card, isResolving, qri } = props;
 
   const [hovered, setHovered] = useState(false);
+  const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
+
 
   // "METHODS"
 
@@ -19,17 +22,12 @@ export default function QueueCard(props) {
 
   const handleMouseLeave = (e) => setHovered(false);
 
-  const handleReveal = () => {
-    console.log('REVEAL');
-    // if (canPlayCard) {
-    //   setSelected(!selected);
-    //   const value = !selected ? card : null;
-    //   onQueueCardClicked(value);
-    // }
+  const handleNoReveal = () => {
+    socket.queueNoReveal(qri);
   }
 
-  const handleLeaveUnrevealed = () => {
-    console.log('DON\'T REVEAL');
+  const handleReveal = () => {
+    socket.queueReveal(qri);
   }
 
   // DYNAMIC STYLES
@@ -39,7 +37,6 @@ export default function QueueCard(props) {
 
   const notRevealedStyles = {
     backgroundColor: card.ownerColor,
-    filter: 'brightness(0.7)'
   };
 
   const revealedStyles = {
@@ -71,22 +68,27 @@ export default function QueueCard(props) {
   const isOwned = card.ownerId === user.id;
 
   return (
-    <div
-      className="queue-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="queue-card">
       <div
-        className="queue-card__card" style={combinedStyle}>
+        className="queue-card__card"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={combinedStyle}
+      >
         {
-          hovered && (isOwned || card.revealed) ?
-            <div className="queue-card__text">{card.text}</div> :
+          !hovered && !card.revealed ?
+            <div className="queue-card__back">O</div> :
             null
         }
         {
-          isOwned || card.revealed ?
-           <div className="queue-card__name">{card.name}</div> :
-           <div className="queue-card__back">O</div>
+          hovered && (card.revealed || isOwned) ?
+            <div className="queue-card__name">{card.name}</div> :
+            null
+        }
+        {
+          hovered && (card.revealed || isOwned) ?
+            <div className="queue-card__text">{card.text}</div> :
+            null
         }
         {
           card.influence ?
@@ -110,7 +112,7 @@ export default function QueueCard(props) {
               <button
                 autoComplete="off"
                 className="queue-card__button"
-                onClick={handleLeaveUnrevealed}
+                onClick={handleNoReveal}
                 type="button"
               >
                 <span className="queue-card__button-icon icon-cross" />

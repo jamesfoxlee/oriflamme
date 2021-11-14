@@ -19,6 +19,6 @@
 }
 
 .player-card__name {
-  font-size: var(--font-size-mid);
+  font-size: var(--font-size-smaller);
   font-weight: var(--font-weight-chunky);
 }

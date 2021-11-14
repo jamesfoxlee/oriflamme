@@ -11,7 +11,7 @@ import { PHASES } from '../../config/game.constants';
 export default function Queue (props) {
 
   const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
-  const { phase, players, queue, queueResolutionIndex } = gameState;
+  const { phase, players, queue, queueResolutionIndex:qri } = gameState;
 
   // "METHODS"
 
@@ -60,11 +60,12 @@ export default function Queue (props) {
                 queue.map((stack, idx) => {
                   const topCard = stack[stack.length - 1];
                   const isResolving = phase === PHASES.RESOLUTION &&
-                                      queueResolutionIndex === idx;
+                                      qri === idx;
                   return (
                     <QueueCard
                       card={topCard}
                       isResolving={isResolving}
+                      qri={qri}
                       key={`queue-card-${idx}`}
                     />
                   )

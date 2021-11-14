@@ -50,7 +50,7 @@ const PLAYER_COLORS = [
 const STARTING_HAND_FULL = [
   'ambush',
   'archer',
-  'assassinate',
+  'assassination',
   'conspiracy',
   'heir',
   'lord',
@@ -62,7 +62,7 @@ const STARTING_HAND_FULL = [
 
 const STARTING_HAND_SIMPLE = [
   'archer',
-  'assassinate',
+  'assassination',
   'conspiracy',
   'heir',
   'lord',

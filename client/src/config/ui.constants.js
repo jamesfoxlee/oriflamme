@@ -1,6 +1,6 @@
 export const QUEUE_CARD = {
   HEIGHT_SCALE: 1.5,
-  HOVER_SCALE: 1.4,
+  HOVER_SCALE: 1.5,
   MAX_WIDTH: 120,
   WIDTH: 100
 }
