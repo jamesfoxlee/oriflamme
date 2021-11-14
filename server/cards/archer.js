@@ -4,34 +4,29 @@ const archer = {
   id: 'archer',
   name: 'Archer',
   text: 'Eliminate the first or last card from the Queue.',
-  onCollectInfluence: (thisCard) => {
-    // return amount of influence gained when revealed by the owner
-    return thisCard.influence;
+  getInfluenceGain: (resolvingCard) => {
+    return resolvingCard.influence;
   },
-  beforeReveal: () => {
-    // return potential targets and actions
+  getTargetsForAbility: (queue) => {
+    const queueStartIdx = 0;
+    const queueEndIdx = queue.length - 1;
+    const targets = [queueStartIdx];
+    queueEndIdx !== queueStartIdx && targets.push(queueEndIdx);
+    return targets;
+  },
+  onAbility: (queue, selfIndex) => {
 
   },
-  onReveal: (queue, selfIndex) => {
-
-  },
-  afterReveal: () => {
+  afterAbility: () => {
 
   },
   beforeRecurrentAction: (queue, selfIndex) => {
     // return potential targets and actions
-    const queueStartIndex = 0;
-    const queueEndIndex = queue.length - 1;
-    const targets = [queueStartIndex];
-    queueEndIndex !== queueStartIndex && targets.push(queueEndIndex);
-    return {
-      action: CARD_EFFECTS.ELIMINATE,
-      targets,
-    }
+
   },
   onRecurrentAction: () => {
 
-  }
+  },
   onElimination: () => {
 
   }

@@ -1,7 +1,7 @@
 const { v1: uuidv1 } = require('uuid');
 
 const { Room } = require('../models/room.model');
-const helpers = require('../helpers/game.helpers');
+const CardHelper = require('../helpers/card.helper');
 
 const {
   INITIAL_GAMESTATE,
@@ -10,7 +10,9 @@ const {
   PHASES,
   PLAYER_IMAGES,
   PLAYER_COLORS
-} = require('../config/game.constants')
+} = require('../config/game.constants');
+
+const cardHelper = CardHelper();
 
 function GameManager () {
 
@@ -132,6 +134,7 @@ function GameManager () {
     let nextState = {..._gameState};
     const updatedCard = _getTopCardInStack(nextState.queue, qri);
     updatedCard.influence += 1;
+    // next player / advance round
     nextState.queueResolutionIndex += 1;
     // TODO: save old gameState in history / DB
     _gameState = _checkForNextRound(nextState);
@@ -139,14 +142,28 @@ function GameManager () {
 
   const queueReveal = (qri) => {
     console.log('GameManager.queueReveal() at queue index: ', qri);
-    let nextState = {..._gameState};
-    const cardRevealed = _getTopCardInStack(nextState.queue, qri);
-    console.log('cardRevealed: ', cardRevealed.name);
-    console.log(cardRevealed);
-    cardRevealed.revealed = true;
-    console.log('after reveal, .revealed:', cardRevealed.revealed);
+    const nextState = {..._gameState};
+    const { queue } = nextState;
+    const card = _getTopCardInStack(queue, qri);
+    const { ownerId } = card;
+    const owner = nextState.players[ownerId];
+    console.log('card: ', card.name);
+    card.revealed = true;
+    // TODO: send message saying 'PLAYER revealed CARD.'
+    const influenceGain = cardHelper.getInfluenceGain(card);
+    owner.influence += influenceGain;
+    // TODO: send message saying 'PLAYER gained INFLUENCE influence accumulated on CARD.'
+    nextState.queueTargets = cardHelper.getTargetsForAbility(card, queue);
+    // TODO: send message saying 'PLAYER is resolving CARD ability.'
+    // TODO: save old gameState in history / DB
+    _gameState = nextState;
+  }
 
-    // trigger ability
+
+  const queueAfterAbility = () => {
+    // discard? etc (see Power Point)
+
+    // next player / advance round
     nextState.queueResolutionIndex += 1;
     // TODO: save old gameState in history / DB
     _gameState = _checkForNextRound(nextState);
@@ -172,7 +189,10 @@ function GameManager () {
     initialise,
     playCard,
     queueNoReveal,
-    queueReveal
+    queueReveal,
+    // queueBeforeAbility,
+    // queueOnAbility,
+    // queueAfterAbility,
   }
 }
 

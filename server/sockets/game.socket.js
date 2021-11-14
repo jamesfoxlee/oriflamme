@@ -4,7 +4,6 @@ const { GAME, MESSAGE } = SOCKET_EVENTS;
 module.exports = async function registerGameEventHandlers (roomId, gameManager, socketServer) {
 
   try {
-    // add game listeners to all sockets in room
     const socketsInRoom = await socketServer.in(roomId).fetchSockets();
     for (let socket of socketsInRoom) {
 

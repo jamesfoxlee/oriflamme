@@ -1,7 +1,0 @@
-function n () {
-
-}
-
-module.exports = {
-
-};
