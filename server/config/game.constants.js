@@ -18,7 +18,7 @@ const INITIAL_GAMESTATE = {
 const INITIAL_PLAYERSTATE = {
   id: null,
   color: null,
-  discardPile: [],
+  discardPile: null,
   hand: null,
   imageUrl: null,
   influence: 1,

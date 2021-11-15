@@ -2,7 +2,7 @@
 
 This is the solo project I wrote whilst on the intensive and brilliant Codeworks Software Engineering Immersive program. I really enjoy modern boardgames and wanted to lean about WebSockets so a game was the obvious choice.
 
-The game in question is Oriflamme by Studio H Games (review and overview [here](https://www.dicebreaker.com/games/oriflamme/review/oriflamme-board-game-review)).
+The game in question is Oriflamme by Studio H Games (video overview [here](https://youtu.be/RWJh259QSEc?t=36)).
 
 Players find themselves in the middle of a medieval feud over the French royal crown. The King is dead! Long live the King! As heads of influential families, the players strive to come to power with cunning, malice, strength, virtue and infamy. Their goal: the king’s throne!
 

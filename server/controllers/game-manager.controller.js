@@ -133,6 +133,7 @@ function GameManager () {
         ...INITIAL_PLAYERSTATE,
         id: player.id,
         color: colors[idx],
+        discardPile: [],
         hand: [...STARTING_HAND_SIMPLE],
         imageUrl: images[idx],
         influence: 1,
