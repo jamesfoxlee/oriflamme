@@ -1,0 +1,17 @@
+*** FAILED: (P1, INITIATOR) ****
+
+EMITTING EVENT:  lobby.game_start
+
+Socket.unregisterListeners() lobby.rooms_changed
+Socket.registerListener() game.gamestate_changed
+Socket.registerOneShotListener() event: lobby.game_started
+
+**** GOOD (P2) ****
+
+
+Socket.unregisterListeners() lobby.rooms_changed
+Socket.registerListener() game.gamestate_changed
+Socket.registerOneShotListener() event: lobby.game_started
+
+EMITTING EVENT:  game.gamestate_get
+EVENT RECEIVED:  game.gamestate_changed

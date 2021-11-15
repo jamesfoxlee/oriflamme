@@ -14,25 +14,25 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
 
       socket.on(GAME.PLANNING.PLAY_CARD, (card, position) => {
         console.log('EVENT RECEIVED: ', GAME.PLANNING.PLAY_CARD);
-        gameManager.playCard(card, position);
+        gameManager.cardWasPlayed(card, position);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
       socket.on(GAME.RESOLUTION.QUEUE.NO_REVEAL, (qri) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.NO_REVEAL);
-        gameManager.dontRevealCard(qri);
+        gameManager.cardWasNotRevealed(qri);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
       socket.on(GAME.RESOLUTION.QUEUE.REVEAL, (qri) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.REVEAL);
-        gameManager.revealCard(qri);
+        gameManager.cardWasRevealed(qri);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
       socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, (targetIndex) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
-        gameManager.confirmTarget(targetIndex);
+        gameManager.targetWasConfirmed(targetIndex);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 

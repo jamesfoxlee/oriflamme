@@ -9,8 +9,7 @@ const archer = {
     return resolvingCard.influence;
   },
   getTargetsForAbility: (queue, qri) => {
-    // return an empty array if no targets at all
-    // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
+    // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     const queueStartIdx = 0;
     const queueEndIdx = queue.length - 1;
@@ -20,10 +19,10 @@ const archer = {
   },
   getActionForAbility: (queue, qri) => {
     // cards like Heir and Lord will need the queue to determine influence gain
-    // return influenceGain prop if this occurs
+    // return influenceChange prop if this occurs
     return {
       type: CARD_EFFECTS.ELIMINATE,
-      influenceGain: 1
+      influenceChange: 1
     }
   },
   getDiscardAfterAbility: (queue, qri) => false,

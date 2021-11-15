@@ -1,5 +1,5 @@
 const SOCKET_EVENTS = require('../config/socket.constants');
-const { LOBBY, GAME } = SOCKET_EVENTS;
+const { LOBBY } = SOCKET_EVENTS;
 
 module.exports = function registerLobbyEventHandlers(lobbyManager, socket, socketServer) {
 

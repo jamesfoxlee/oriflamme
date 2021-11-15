@@ -20,75 +20,146 @@ function GameManager () {
   let _gameState = null;
   const _history = [];
 
-  // PRIVATE
+  //----------------------------------------------------------------
+  // GETTERS
+  //----------------------------------------------------------------
 
   const _getTopCardInStack = (queue, qri) => {
     const stack = queue[qri];
     return stack && stack[stack.length - 1];
   };
 
-  const _checkForResolutionPhase = (prevState) => {
-    console.log('GameManager._checkForResolutionPhase()');
-    if (prevState.planningPhasePlayed === prevState.numPlayers) {
-      // advance to resolution phase
-      const firstQueueCard = _getTopCardInStack(prevState.queue, 0);
-      return {
-        ...prevState,
-        activePlayerId: firstQueueCard.ownerId,
-        phase: PHASES.RESOLUTION,
-      };
-    }
-    // otherwise it's the next player
-    return {
-      ...prevState,
-      activePlayerId: prevState.turnOrder[prevState.turnOrderIndex + 1],
-      turnOrderIndex: prevState.turnOrderIndex + 1,
-    }
-  }
+  const getGameState = () => _gameState;
 
-  const _checkForNextRound = (prevState) => {
-    console.log('GameManager._checkForNextRound()');
-    if (prevState.queueResolutionIndex < prevState.queue.length) {
-      // there are cards left to resolve
-      const nextCard = _getTopCardInStack(prevState.queue, prevState.queueResolutionIndex);
-      return {
-        ...prevState,
-        activePlayerId: nextCard.ownerId,
-      };
-    }
-    // advance the round
-    const updatedTurnOrder = prevState.turnOrder.slice(1).concat(prevState.turnOrder.slice(0, 1));
-    // TODO: send a message that "New round started. PLAYER is now the first player."
-    return {
-      ...prevState,
-      activePlayerId: updatedTurnOrder[0],
-      phase: PHASES.PLANNING,
-      planningPhasePlayed: 0,
-      queueResolutionIndex: 0,
-      round: prevState.round + 1,
-      turnOrder: updatedTurnOrder,
-      turnOrderIndex: 0
-    };
-  }
+  //----------------------------------------------------------------
+  // GAME LOOP
+  //----------------------------------------------------------------
 
-  const _discardCardAfterAbility = (prevState) => {
-    console.log('GameManager._discardCardAfterAbility()');
+  // should call _returnToPlayer() if need "break out" of game loop
+
+  const _checkForAdvanceToResolutionPhase = (prevState) => {
+    console.log('GameManager._checkForAdvanceToResolutionPhase()');
     const nextState = {...prevState};
-    const { players, queue, queueResolutionIndex:qri } = nextState;
-    const discardStack = queue[qri];
-    const discardedCard = discardStack.pop();
-    if (_getTopCardInStack(queue, qri) === undefined) {
-      queue.splice(qri, 1);
-      // need to compensate or next card would not get to resolve
-      nextState.queueResolutionIndex -= 1;
+    if (nextState.planningPhasePlayed === nextState.numPlayers) {
+      nextState.phase = PHASES.RESOLUTION;
+      _resolveNextCard(nextState);
+    } else {
+      // otherwise it's the next player
+      nextState.turnOrderIndex += 1;
+      nextState.activePlayerId = nextState.turnOrder[nextState.turnOrderIndex];
+      _returnToPlayer(nextState);
     }
-    const discardedCardOwner = players[discardedCard.ownerId];
-    discardedCardOwner.discardPile.push(discardedCard.id);
-    return nextState;
   }
 
-  const _eliminateCard = (targetIndex, resolvingCard, influenceGain, prevState) => {
-    console.log('GameManager._eliminateCard()');
+  const _checkForAdvanceToNextRound = (prevState) => {
+    console.log('GameManager._checkForAdvanceToNextRound()');
+    const nextState = {...prevState};
+    nextState.queueResolutionIndex += 1;
+    const { queue, queueResolutionIndex: qri } = nextState;
+    if (qri < queue.length) {
+      _resolveNextCard(nextState);
+    }
+    else {
+      // no cards left to resolve, advance the round
+      const updatedTurnOrder = nextState.turnOrder.slice(1).concat(nextState.turnOrder.slice(0, 1));
+      // TODO: send a message that "New round started. PLAYER is now the first player."
+      _returnToPlayer({
+        ...nextState,
+        activePlayerId: updatedTurnOrder[0],
+        phase: PHASES.PLANNING,
+        planningPhasePlayed: 0,
+        queueResolutionIndex: 0,
+        round: nextState.round + 1,
+        turnOrder: updatedTurnOrder,
+        turnOrderIndex: 0,
+      });
+    }
+  }
+
+  const _resolveNextCard = (prevState) => {
+    const nextState = {...prevState};
+    const { queue, queueResolutionIndex: qri } = nextState;
+    const resolvingCard = _getTopCardInStack(queue, qri);
+    nextState.activePlayerId = resolvingCard.ownerId;
+    if (resolvingCard.revealed) {
+      // activate card ability
+      _requestTargets(nextState);
+    } else {
+      // prompt for reveal
+      _returnToPlayer(nextState);
+    }
+  };
+
+  const _requestTargets = (prevState) => {
+    const nextState = {...prevState};
+    const {queue, queueResolutionIndex: qri} = nextState;
+    const resolvingCard = _getTopCardInStack(queue, qri);
+    nextState.queueTargets = cardHelper.getTargetsForAbility(resolvingCard, queue, qri);
+    _returnToPlayer(nextState);
+  }
+
+  const _applyAbility = (prevState) => {
+    const { queue, queueResolutionIndex: qri, targetIndex } = prevState;
+    const resolvingCard = _getTopCardInStack(queue, qri);
+    console.log('resolvingCard: ', resolvingCard.name);
+    const action = cardHelper.getActionForAbility(resolvingCard, queue, qri);
+    let nextState;
+    switch (action.type) {
+      case CARD_EFFECTS.NONE:
+        nextState = {..._gameState};
+        break;
+      case CARD_EFFECTS.ELIMINATE:
+        nextState = _eliminate(targetIndex, resolvingCard, action.influenceChange, _gameState);
+        break;
+      case CARD_EFFECTS.GAIN_INFLUENCE:
+        nextState = _gainInfluence(resolvingCard, action.influenceChange, _gameState);
+        break;
+      case CARD_EFFECTS.STEAL:
+        nextState = _steal(targetIndex, resolvingCard, action.influenceChange, _gameState);
+        break;
+      case CARD_EFFECTS.MOVE:
+        // TODO: implement
+        nextState = {..._gameState};
+        break;
+      case CARD_EFFECTS.COPY_ABILITY:
+        // TODO: implement
+        nextState = {..._gameState};
+        break;
+    }
+    _checkForDiscardAfterResolution(nextState);
+  }
+
+  const _checkForDiscardAfterResolution = (prevState) => {
+    let nextState = {...prevState};
+    const { queue, queueResolutionIndex:qri } = nextState;
+    const resolvingCard = _getTopCardInStack(queue, qri);
+    if (resolvingCard) {
+      // if there isn't a resolvingCard, it has eliminated itself!!
+      // can happen with e.g. Assassination, or Soldier and Archer who may be forced to
+      const toDiscard = cardHelper.getDiscardAfterAbility(resolvingCard, queue, qri);
+      if (toDiscard) {
+        nextState = _discardCard(nextState);
+      }
+    }
+    nextState.queueTargets = [];
+    _checkForAdvanceToNextRound(nextState);
+  }
+
+  const _returnToPlayer = (prevState) => {
+    // TODO: save old gameState in history / DB
+    _gameState = prevState;
+    // by not calling another function, we "drop out of the loop" and control returns
+    // to socket management code (game.socket.js) to emit events and new game state
+  };
+
+  //----------------------------------------------------------------
+  // CARD ABILITIES & EFFECTS
+  //----------------------------------------------------------------
+
+  // all of these should return an updated nextState to the caller
+
+  const _eliminate = (targetIndex, resolvingCard, influenceChange, prevState) => {
+    console.log('GameManager._eliminate()');
     const nextState = {...prevState};
     const { players, queue, queueResolutionIndex:qri } = nextState;
     const targetStack = queue[targetIndex];
@@ -105,20 +176,48 @@ function GameManager () {
     const targetCardOwner = players[targetCard.ownerId];
     targetCardOwner.discardPile.push(targetCard.id);
     const resolvingCardOwner = players[resolvingCard.ownerId];
-    resolvingCardOwner.influence += influenceGain;
+    resolvingCardOwner.influence += influenceChange;
     return nextState;
   }
 
-  const _gainInfluence = (resolvingCard, influenceGained, prevState) => {
-    console.log('GameManager._gainInfluence() gaining: ', influenceGained);
+  const _gainInfluence = (resolvingCard, influenceChange, prevState) => {
+    console.log('GameManager._gainInfluence() gaining: ', influenceChange);
     const nextState = {...prevState};
-    const { players } = nextState
+    const { players } = nextState;
     const resolvingCardOwner = players[resolvingCard.ownerId];
-    resolvingCardOwner.influence += influenceGained;
+    resolvingCardOwner.influence += influenceChange;
     return nextState;
   }
 
-  // PUBLIC
+  const _steal = (targetIndex, resolvingCard, influenceToSteal, prevState) => {
+    // console.log('GameManager._steal() stealing: ', influenceToSteal);
+    // const nextState = {...prevState};
+    // const { players } = nextState;
+    // const resolvingCardOwner = players[resolvingCard.ownerId];
+    // resolvingCardOwner.influence += influenceToSteal;
+    return nextState;
+  }
+
+  const _discardCard = (prevState) => {
+    console.log('GameManager._discardCard()');
+    const nextState = {...prevState};
+    const { players, queue, queueResolutionIndex:qri } = nextState;
+    const discardStack = queue[qri];
+    const discardedCard = discardStack.pop();
+    if (_getTopCardInStack(queue, qri) === undefined) {
+      queue.splice(qri, 1);
+      // need to compensate or next card would not get to resolve
+      nextState.queueResolutionIndex -= 1;
+    }
+    const discardedCardOwner = players[discardedCard.ownerId];
+    discardedCardOwner.discardPile.push(discardedCard.id);
+    return nextState;
+  }
+
+
+  //----------------------------------------------------------------
+  // INITIALISE
+  //----------------------------------------------------------------
 
   const initialise = (room) => {
 
@@ -161,12 +260,14 @@ function GameManager () {
     }
   };
 
-  const getGameState = () => _gameState;
+  //----------------------------------------------------------------
+  // TRIGGERED BY EVENTS FROM PLAYER
+  //----------------------------------------------------------------
 
-  const playCard = (cardPlayed, position) => {
-    console.log('GameManager.playCard()');
+  const cardWasPlayed = (cardPlayed, position) => {
+    console.log('GameManager.cardWasPlayed()');
     // update hand of player that played card
-    let nextState = {..._gameState};
+    const nextState = {..._gameState};
     const playerId = cardPlayed.ownerId;
     const player = nextState.players[playerId];
     const updatedHand = player.hand.filter(handCardId => handCardId !== cardPlayed.id);
@@ -175,23 +276,19 @@ function GameManager () {
     // TODO: implement adding to stack here
     nextState.queue.splice(position, 0, [cardPlayed]);
     nextState.planningPhasePlayed += 1;
-    // TODO: save old gameState in history / DB
-    _gameState = _checkForResolutionPhase(nextState);
+    _checkForAdvanceToResolutionPhase(nextState);
   };
 
-  const dontRevealCard = (qri) => {
-    console.log('GameManager.dontRevealCard() at queue index: ', qri);
+  const cardWasNotRevealed = (qri) => {
+    console.log('GameManager.cardWasNotRevealed() at queue index: ', qri);
     let nextState = {..._gameState};
     const card = _getTopCardInStack(nextState.queue, qri);
     card.influence += 1;
-    // next player / advance round
-    nextState.queueResolutionIndex += 1;
-    // TODO: save old gameState in history / DB
-    _gameState = _checkForNextRound(nextState);
+    _checkForAdvanceToNextRound(nextState);
   }
 
-  const revealCard = (qri) => {
-    console.log('GameManager.revealCard() at queue index: ', qri);
+  const cardWasRevealed = (qri) => {
+    console.log('GameManager.cardWasRevealed() at queue index: ', qri);
     const nextState = {..._gameState};
     const { queue } = nextState;
     const card = _getTopCardInStack(queue, qri);
@@ -199,71 +296,21 @@ function GameManager () {
     console.log('card: ', card.name);
     card.revealed = true;
     // TODO: send message saying 'PLAYER revealed CARD.'
-    const influenceGain = cardHelper.getInfluenceGainOnReveal(card);
-    owner.influence += influenceGain;
+    const influenceChange = cardHelper.getInfluenceGainOnReveal(card);
+    owner.influence += influenceChange;
     card.influence = 0;
     // TODO: send message saying 'PLAYER gained INFLUENCE influence accumulated on CARD.'
-    nextState.queueTargets = cardHelper.getTargetsForAbility(card, queue, qri);
-    // TODO: send message saying 'PLAYER is resolving CARD ability.'
-    // TODO: save old gameState in history / DB
-    _gameState = nextState;
+    _requestTargets(nextState);
   }
 
-  const confirmTarget = (targetIndex) => {
-    console.log('GameManager.confirmTarget() at queue index: ', targetIndex);
-    const { queue, queueResolutionIndex:qri } = _gameState;
-    const resolvingCard = _getTopCardInStack(queue, qri);
-    console.log('resolvingCard: ', resolvingCard.name);
-    // TODO: send message saying 'PLAYER revealed CARD.'
-    const action = cardHelper.getActionForAbility(resolvingCard, queue, qri);
+  const targetWasConfirmed = (targetIndex) => {
+    console.log('GameManager.targetWasConfirmed() at queue index: ', targetIndex);
     // TODO: Royal Decree - needs further prompt from user, should do anyway
     // to alert other players of final choice
-    let nextState;
-    switch (action.type) {
-      case CARD_EFFECTS.NONE:
-        nextState = {..._gameState};
-        break;
-      case CARD_EFFECTS.ELIMINATE:
-        nextState = _eliminateCard(targetIndex, resolvingCard, action.influenceGain, _gameState);
-        break;
-      case CARD_EFFECTS.GAIN_INFLUENCE:
-        nextState = _gainInfluence(resolvingCard, action.influenceGain, _gameState);
-        break;
-      case CARD_EFFECTS.STEAL:
-        nextState = _stealFrom(targetIndex, resolvingCard, _gameState);
-        break;
-      case CARD_EFFECTS.MOVE:
-        // TODO: implement
-        nextState = {..._gameState};
-        break;
-      case CARD_EFFECTS.COPY_ABILITY:
-        // TODO: implement
-        nextState = {..._gameState};
-        break;
-    }
-    _checkDiscardAfterAbility(nextState);
-  }
-
-  const _checkDiscardAfterAbility = (prevState) => {
-    let nextState = {...prevState};
-    const { queue, queueResolutionIndex:qri } = nextState;
-    const resolvingCard = _getTopCardInStack(queue, qri);
-    if (resolvingCard) {
-      // if there isn't a resolvingCard, it has eliminated itself!!
-      // can happen with e.g. Assassination, or Soldier and Archer who may be forced to
-      const toDiscard = cardHelper.getDiscardAfterAbility(resolvingCard, queue, qri);
-      if (toDiscard) {
-        nextState = _discardCardAfterAbility(nextState);
-      }
-    }
-    // next player / advance round
-    nextState.queueResolutionIndex += 1;
-    // TODO: save old gameState in history / DB
-    nextState = _checkForNextRound(nextState);
-    nextState.queueTargets = [];
-    // TODO: send message saying 'PLAYER is resolving CARD ability.'
-    // TODO: save old gameState in history / DB
-    _gameState = nextState;
+    _applyAbility({
+      ..._gameState,
+      targetIndex
+    });
   }
 
   // const INITIAL_GAMESTATE = {
@@ -282,15 +329,12 @@ function GameManager () {
   // }
 
   return {
-    getGameState,
     initialise,
-    playCard,
-    dontRevealCard,
-    revealCard,
-    confirmTarget,
-    // queueBeforeAbility,
-    // queueOnAbility,
-    // queueAfterAbility,
+    getGameState,
+    cardWasPlayed,
+    cardWasNotRevealed,
+    cardWasRevealed,
+    targetWasConfirmed,
   }
 }
 

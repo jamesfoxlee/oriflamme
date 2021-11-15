@@ -9,14 +9,13 @@ const conspiracy = {
     return resolvingCard.influence * 2;
   },
   getTargetsForAbility: () => {
-    // return an empty array if no targets at all
-    // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
+    // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     return [];
   },
   getActionForAbility: () => {
     // cards like Heir and Lord will need the queue to determine influence gain
-    // return influenceGain prop if this occurs
+    // return influenceChange prop if this occurs
     return {
       type: CARD_EFFECTS.NONE,
     }
