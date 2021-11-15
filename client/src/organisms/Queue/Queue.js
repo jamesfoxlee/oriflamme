@@ -73,6 +73,7 @@ export default function Queue (props) {
                   return (
                     <QueueCard
                       card={topCard}
+                      indexInQueue={idx}
                       isPlayerTurn={isPlayerTurn}
                       isResolving={isResolving}
                       isTarget={isTarget}

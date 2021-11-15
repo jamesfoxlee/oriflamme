@@ -15,11 +15,18 @@ export default function QueueCard(props) {
 
   const handleNoReveal = () => socket.queueNoReveal(qri);
   const handleReveal = () => socket.queueReveal(qri);
-  const handleConfirmTarget = () => socket.queueConfirmTarget(qri);
+  const handleConfirmTarget = () => socket.queueConfirmTarget(indexInQueue);
 
   // PROPS, STATE, CONTEXT etc
 
-  const { card, isPlayerTurn, isResolving, isTarget, isTargettingWindow, qri } = props;
+  const { card,
+    indexInQueue,
+    isPlayerTurn,
+    isResolving,
+    isTarget,
+    isTargettingWindow,
+    qri
+  } = props;
 
   const [hovered, setHovered] = useState(false);
   const socket = useContext(SocketContext);

@@ -83,9 +83,9 @@ export default function Socket() {
       socket.emit(GAME.RESOLUTION.QUEUE.REVEAL, qri);
     }
 
-    function queueConfirmTarget (qri) {
+    function queueConfirmTarget (targetIndex) {
       console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
-      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, qri);
+      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, targetIndex);
     }
 
     //----------------------------------------------------------------
@@ -120,6 +120,7 @@ export default function Socket() {
         playCard,
         queueNoReveal,
         queueReveal,
+        queueConfirmTarget,
         sendMessage,
       })
     });
