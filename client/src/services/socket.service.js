@@ -102,7 +102,7 @@ export default function Socket() {
     // INITIALISE SOCKET
     //----------------------------------------------------------------
 
-    const socket = io('http://localhost:19126');
+    const socket = io('http://localhost:7777');
 
     socket.on(CONNECTIVITY.CONNECT, () => {
       console.log(`Socket() connected to server, socket.id: ${socket.id}`)
