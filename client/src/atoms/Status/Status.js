@@ -13,7 +13,7 @@ const boxStyles = {
 export default function Status(props) {
 
   const { gameState, selectedPlayerCard, user } = props;
-  const { activePlayerId, phase, players, queue, queueResolutionIndex:qri } = gameState;
+  const { activePlayerId, phase, players, queue, queueResolutionIndex:qri, queueTargets } = gameState;
 
   const activePlayer = players[activePlayerId];
   const playerIsActive = activePlayerId === user.id;
@@ -28,59 +28,56 @@ export default function Status(props) {
     resolvingCard = null;
   }
 
+  const resolvingCardHasNoTarget = resolvingCard &&
+                                   queueTargets.length === 0;
+
+  let statusMessage;
+  if (phase === PHASES.PLANNING) {
+    if (!playerIsActive) {
+      statusMessage = `Waiting for ${playerName} to play a card...`;
+    }
+    if (playerIsActive && !selectedPlayerCard ) {
+      statusMessage =  'Select a card to play to either end of the Queue.';
+    }
+    if (playerIsActive && selectedPlayerCard) {
+      statusMessage = `Play ${selectedPlayerCard.name} to either end of the Queue, or select another card.`;
+    }
+  }
+  else if (phase === PHASES.RESOLUTION) {
+
+    if (!playerIsActive && resolvingCard && !resolvingCard.revealed) {
+      statusMessage = `Waiting for ${playerName} to choose whether to reveal the current card...`;
+    }
+
+    if (!playerIsActive && resolvingCard && resolvingCard.revealed) {
+      statusMessage = `Waiting for ${playerName} to resolve the effect of ${resolvingCard.name}...`;
+    }
+
+    if (playerIsActive && resolvingCard && !resolvingCard.revealed) {
+      statusMessage = `Reveal ${resolvingCard.name} to apply its effect, or place 1 influence on it.`;
+    }
+
+    if (playerIsActive && resolvingCard && resolvingCard.revealed) {
+      if (resolvingCardHasNoTarget) {
+        // currently Ambush / Conspiracy
+        statusMessage = `${resolvingCard.name} will now be discarded. Click Confirm to continue.`;
+      }
+      else if (resolvingCard.id === 'heir' || resolvingCard.id === 'heir') {
+        statusMessage = `${resolvingCard.name} may now gain additional influence. Click Confirm to continue.`;
+      }
+      else {
+        statusMessage = `Choose targets for ${resolvingCard.name}.`;
+      }
+    }
+  }
+
   return (
     <div className="status">
       <div className="status__inner">
         <div className="status__phase">{phaseText}</div>
-        {
-          phase === PHASES.PLANNING && !playerIsActive ?
-            <div className="status__message">
-              {`Waiting for ${playerName} to play a card...`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.PLANNING && playerIsActive && !selectedPlayerCard ?
-            <div className="status__message" style={playerIsActive ? boxStyles : null}>
-              {`Select a card to play to either end of the Queue.`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.PLANNING && playerIsActive && selectedPlayerCard ?
-            <div className="status__message" style={playerIsActive ? boxStyles : null}>
-              {`Play ${selectedPlayerCard.name} to either end of the Queue, or select another card.`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.RESOLUTION && !playerIsActive && resolvingCard && !resolvingCard.revealed?
-            <div className="status__message">
-              {`Waiting for ${playerName} to choose whether to reveal the current card...`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.RESOLUTION && !playerIsActive && resolvingCard && resolvingCard.revealed?
-            <div className="status__message">
-              {`Waiting for ${playerName} to resolve the effect of ${resolvingCard.name}...`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.RESOLUTION && playerIsActive && resolvingCard && !resolvingCard.revealed?
-            <div className="status__message" style={playerIsActive ? boxStyles : null}>
-              {`Reveal ${resolvingCard.name} to apply its effect, or place 1 influence on it.`}
-            </div> :
-            null
-        }
-        {
-          phase === PHASES.RESOLUTION && playerIsActive && resolvingCard && resolvingCard.revealed?
-            <div className="status__message" style={playerIsActive ? boxStyles : null}>
-              {`Choose targets for ${resolvingCard.name}.`}
-            </div> :
-            null
-        }
+          <div className="status__message" style={playerIsActive ? boxStyles : null}>
+            {statusMessage}
+          </div>
       </div>
     </div>
   );

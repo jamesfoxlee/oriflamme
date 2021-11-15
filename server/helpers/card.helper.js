@@ -4,7 +4,7 @@ function CardHelper () {
     // ambush: require('../cards/ambush'),
     archer: require('../cards/archer'),
     assassination: require('../cards/assassination'),
-    // conspiracy: require('../cards/conspiracy'),
+    conspiracy: require('../cards/conspiracy'),
     // heir: require('../cards/heir'),
     // lord: require('../cards/lord'),
     // royal_decree: require('../cards/royal_decree'),

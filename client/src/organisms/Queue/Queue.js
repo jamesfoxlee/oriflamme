@@ -8,7 +8,7 @@ import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { PHASES } from '../../config/game.constants';
 
-export default function Queue (props) {
+export default function Queue(props) {
 
   const handleCardPlayed = (position) => {
     setSelectedPlayerCard(null);
@@ -37,7 +37,7 @@ export default function Queue (props) {
     phase,
     players,
     queue,
-    queueResolutionIndex:qri,
+    queueResolutionIndex: qri,
     queueTargets
   } = gameState;
 
@@ -46,7 +46,6 @@ export default function Queue (props) {
   const [user] = useContext(UserContext);
 
   const isPlayerTurn = activePlayerId === user.id;
-  const isTargettingWindow = queueTargets.length > 0;
 
   return (
     <div className="queue">
@@ -55,7 +54,7 @@ export default function Queue (props) {
           selectedPlayerCard ?
             <span
               className="queue__arrow icon-arrow-left"
-              onClick={ () => handleCardPlayed(0) }
+              onClick={() => handleCardPlayed(0)}
             /> :
             null
         }
@@ -68,8 +67,9 @@ export default function Queue (props) {
                 queue.map((stack, idx) => {
                   const topCard = stack[stack.length - 1];
                   const isResolving = phase === PHASES.RESOLUTION &&
-                                      qri === idx;
-                  const isTarget = queueTargets.includes(idx);
+                    qri === idx;
+                    const isTarget = queueTargets.includes(idx);
+                    const noTargettingIsActive = queueTargets.length === 0;
                   return (
                     <QueueCard
                       card={topCard}
@@ -77,7 +77,7 @@ export default function Queue (props) {
                       isPlayerTurn={isPlayerTurn}
                       isResolving={isResolving}
                       isTarget={isTarget}
-                      isTargettingWindow={isTargettingWindow}
+                      noTargettingIsActive={noTargettingIsActive}
                       qri={qri}
                       key={`queue-card-${idx}`}
                     />
@@ -93,7 +93,7 @@ export default function Queue (props) {
           selectedPlayerCard ?
             <span
               className="queue__arrow icon-arrow-right"
-              onClick={ () => handleCardPlayed(queue.length) }
+              onClick={() => handleCardPlayed(queue.length)}
             /> :
             null
         }
