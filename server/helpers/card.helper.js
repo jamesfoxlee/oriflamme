@@ -1,6 +1,6 @@
 function CardHelper () {
 
-  const cardFuncs = {
+  const cardFunctions = {
     // ambush: require('../cards/ambush'),
     archer: require('../cards/archer'),
     // assassination: require('../cards/assassination'),
@@ -14,19 +14,30 @@ function CardHelper () {
   }
 
   const getInfluenceGain = (card) => {
-    const cf = cardFuncs[card.id];
+    const cf = cardFunctions[card.id];
     return cf.getInfluenceGain(card);
   };
 
-  const getTargetsForAbility = (card, queue) => {
-    const cf = cardFuncs[card.id];
-    return cf.getTargetsForAbility(queue);
+  const getTargetsForAbility = (card, queue, qri) => {
+    const cf = cardFunctions[card.id];
+    return cf.getTargetsForAbility(queue, qri);
+  };
+
+  const getActionForAbility = (card, queue, qri) => {
+    const cf = cardFunctions[card.id];
+    return cf.getActionForAbility(queue, qri);
   }
 
+  const getDiscardAfterAbility = (card, queue, qri) => {
+    const cf = cardFunctions[card.id];
+    return cf.getDiscardAfterAbility(queue, qri);
+  }
 
   return {
     getInfluenceGain,
     getTargetsForAbility,
+    getActionForAbility,
+    getDiscardAfterAbility,
   }
 }
 

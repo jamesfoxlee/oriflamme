@@ -74,11 +74,16 @@ const STARTING_HAND_SIMPLE = [
 ];
 
 const CARD_EFFECTS = {
+  NONE: 'none',
+  GAIN_INFLUENCE: 'gain_influence',
+  STEAL: 'steal',
   ELIMINATE: 'eliminate',
-  STEAL: 'steal'
-}
+  MOVE: 'move',
+  COPY_ABILITY: 'copy_ability'
+};
 
 module.exports = {
+  CARD_EFFECTS,
   INITIAL_GAMESTATE,
   INITIAL_PLAYERSTATE,
   PHASES,

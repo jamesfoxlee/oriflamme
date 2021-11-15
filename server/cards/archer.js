@@ -7,29 +7,25 @@ const archer = {
   getInfluenceGain: (resolvingCard) => {
     return resolvingCard.influence;
   },
-  getTargetsForAbility: (queue) => {
+  getTargetsForAbility: (queue, qri) => {
+    // return an empty array if no targets at all
+    // return array with index of self if targets e.g. inf gain such as Heir, Lord
     const queueStartIdx = 0;
     const queueEndIdx = queue.length - 1;
     const targets = [queueStartIdx];
     queueEndIdx !== queueStartIdx && targets.push(queueEndIdx);
     return targets;
   },
-  onAbility: (queue, selfIndex) => {
-
+  getActionForAbility: (queue, qri) => {
+    // cards like Heir and Lord will need the queue to determine influence gain
+    // return influenceGained prop if this occurs
+    return {
+      type: CARD_EFFECTS.ELIMINATE,
+      influenceGain: 0
+    }
   },
-  afterAbility: () => {
-
-  },
-  beforeRecurrentAction: (queue, selfIndex) => {
-    // return potential targets and actions
-
-  },
-  onRecurrentAction: () => {
-
-  },
-  onElimination: () => {
-
-  }
+  getDiscardAfterAbility: (queue, qri) => false,
+  getActionOnElimination: () => null,
 };
 
 module.exports = archer;
