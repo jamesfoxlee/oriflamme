@@ -83,9 +83,19 @@ export default function Socket() {
       socket.emit(GAME.RESOLUTION.QUEUE.REVEAL, qri);
     }
 
+    function queueConfirmDiscard (discardIndex) {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD);
+      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD, discardIndex);
+    }
+
     function queueConfirmTarget (targetIndex) {
       console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
       socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, targetIndex);
+    }
+
+    function queueConfirmNoTarget () {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET);
+      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET);
     }
 
     //----------------------------------------------------------------
@@ -120,7 +130,9 @@ export default function Socket() {
         playCard,
         queueNoReveal,
         queueReveal,
+        queueConfirmDiscard,
         queueConfirmTarget,
+        queueConfirmNoTarget,
         sendMessage,
       })
     });

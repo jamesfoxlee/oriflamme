@@ -94,12 +94,15 @@ function GameManager () {
     const nextState = {...prevState};
     const {queue, queueResolutionIndex: qri} = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
-    nextState.queueTargets = cardHelper.getTargetsForAbility(resolvingCard, queue, qri);
+    nextState.targets = cardHelper.getTargetsForAbility(resolvingCard, queue, qri);
+    if (!nextState.targets.length) {
+      nextState.targetsNoneValid = true;
+    }
     _returnToPlayer(nextState);
   }
 
   const _applyAbility = (prevState) => {
-    const { queue, queueResolutionIndex: qri, targetIndex } = prevState;
+    const { queue, queueResolutionIndex: qri, targettedIndex } = prevState;
     const resolvingCard = _getTopCardInStack(queue, qri);
     console.log('resolvingCard: ', resolvingCard.name);
     const action = cardHelper.getActionForAbility(resolvingCard, queue, qri);
@@ -109,13 +112,13 @@ function GameManager () {
         nextState = {..._gameState};
         break;
       case CARD_EFFECTS.ELIMINATE:
-        nextState = _eliminate(targetIndex, resolvingCard, action.influenceChange, _gameState);
+        nextState = _eliminate(targettedIndex, resolvingCard, action.influenceChange, _gameState);
         break;
       case CARD_EFFECTS.GAIN_INFLUENCE:
         nextState = _gainInfluence(resolvingCard, action.influenceChange, _gameState);
         break;
       case CARD_EFFECTS.STEAL:
-        nextState = _steal(targetIndex, resolvingCard, action.influenceChange, _gameState);
+        nextState = _steal(targettedIndex, resolvingCard, action.influenceChange, _gameState);
         break;
       case CARD_EFFECTS.MOVE:
         // TODO: implement
@@ -141,7 +144,7 @@ function GameManager () {
         nextState = _discardCard(nextState);
       }
     }
-    nextState.queueTargets = [];
+    nextState.targets = [];
     _checkForAdvanceToNextRound(nextState);
   }
 
@@ -158,17 +161,17 @@ function GameManager () {
 
   // all of these should return an updated nextState to the caller
 
-  const _eliminate = (targetIndex, resolvingCard, influenceChange, prevState) => {
+  const _eliminate = (targettedIndex, resolvingCard, influenceChange, prevState) => {
     console.log('GameManager._eliminate()');
     const nextState = {...prevState};
     const { players, queue, queueResolutionIndex:qri } = nextState;
-    const targetStack = queue[targetIndex];
+    const targetStack = queue[targettedIndex];
     const targetCard = targetStack.pop();
     // if we now have an empty stack, remove it completely
-    if (_getTopCardInStack(queue, targetIndex) === undefined) {
-      queue.splice(targetIndex, 1);
+    if (_getTopCardInStack(queue, targettedIndex) === undefined) {
+      queue.splice(targettedIndex, 1);
       // compensate if splice occurs before / on current qri, otherwise card will be missed
-      if (targetIndex <= qri) {
+      if (targettedIndex <= qri) {
         nextState.queueResolutionIndex -= 1;
       }
     }
@@ -189,7 +192,7 @@ function GameManager () {
     return nextState;
   }
 
-  const _steal = (targetIndex, resolvingCard, influenceToSteal, prevState) => {
+  const _steal = (targettedIndex, resolvingCard, influenceToSteal, prevState) => {
     // console.log('GameManager._steal() stealing: ', influenceToSteal);
     // const nextState = {...prevState};
     // const { players } = nextState;
@@ -303,15 +306,25 @@ function GameManager () {
     _requestTargets(nextState);
   }
 
-  const targetWasConfirmed = (targetIndex) => {
-    console.log('GameManager.targetWasConfirmed() at queue index: ', targetIndex);
+  const targetWasConfirmed = (targettedIndex) => {
+    console.log('GameManager.targetWasConfirmed() at queue index: ', targettedIndex);
     // TODO: Royal Decree - needs further prompt from user, should do anyway
     // to alert other players of final choice
     _applyAbility({
       ..._gameState,
-      targetIndex
+      targettedIndex
     });
   }
+
+  const noValidTargetWasConfirmed = () => {
+    console.log('GameManager.noValidTargetWasConfirmed()');
+
+  };
+
+  const discardWasConfirmed = (discardIndex) => {
+    console.log('GameManager.discardWasConfirmed() at queue index: ', discardIndex);
+
+  };
 
   // const INITIAL_GAMESTATE = {
   //   activePlayerId: null,
@@ -321,9 +334,11 @@ function GameManager () {
   //   players: {},
   //   queue: [],
   //   queueResolutionIndex: 0,
-  //   queueTargets: [],
   //   roomId,
   //   round: 1,
+  //   targets: [],
+  //   targetsNoneValid: false,
+  //   targettedIndex: null,
   //   turnOrder: [],
   //   turnOrderIndex: 0
   // }
@@ -335,6 +350,8 @@ function GameManager () {
     cardWasNotRevealed,
     cardWasRevealed,
     targetWasConfirmed,
+    noValidTargetWasConfirmed,
+    discardWasConfirmed,
   }
 }
 

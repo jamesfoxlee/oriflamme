@@ -13,7 +13,15 @@ const boxStyles = {
 export default function Status(props) {
 
   const { gameState, selectedPlayerCard, user } = props;
-  const { activePlayerId, phase, players, queue, queueResolutionIndex:qri, queueTargets } = gameState;
+  const {
+    activePlayerId,
+    phase,
+    players,
+    queue,
+    queueResolutionIndex:qri,
+    resolvingCardToBeDiscarded,
+    targetsNoneValid,
+  } = gameState;
 
   const activePlayer = players[activePlayerId];
   const playerIsActive = activePlayerId === user.id;
@@ -27,9 +35,6 @@ export default function Status(props) {
   } catch (err) {
     resolvingCard = null;
   }
-
-  const resolvingCardHasNoTarget = resolvingCard &&
-                                   queueTargets.length === 0;
 
   let statusMessage;
   if (phase === PHASES.PLANNING) {
@@ -58,9 +63,12 @@ export default function Status(props) {
     }
 
     if (playerIsActive && resolvingCard && resolvingCard.revealed) {
-      if (resolvingCardHasNoTarget) {
+      if (resolvingCardToBeDiscarded) {
         // currently Ambush / Conspiracy
         statusMessage = `${resolvingCard.name} will now be discarded. Click Confirm to continue.`;
+      }
+      else if (targetsNoneValid) {
+        statusMessage = `No valid targets for ${resolvingCard.name}. Click Confirm to continue.`;
       }
       else if (resolvingCard.id === 'heir' || resolvingCard.id === 'heir') {
         statusMessage = `${resolvingCard.name} may now gain additional influence. Click Confirm to continue.`;

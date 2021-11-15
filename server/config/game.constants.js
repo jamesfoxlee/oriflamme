@@ -11,6 +11,10 @@ const INITIAL_GAMESTATE = {
   queueTargets: [],
   roomId: null,
   round: 1,
+  targets: [],
+  targetsNoneValid: false,
+  targettedIndex: null,
+  targetsNoneValid: null,
   turnOrder: [],
   turnOrderIndex: 0
 }

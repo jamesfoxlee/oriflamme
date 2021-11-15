@@ -16,7 +16,8 @@ export default function QueueCard(props) {
   const handleNoReveal = () => socket.queueNoReveal(qri);
   const handleReveal = () => socket.queueReveal(qri);
   const handleConfirmTarget = () => socket.queueConfirmTarget(indexInQueue);
-  const handleConfirmNoTarget = () => socket.queueConfirmTarget();
+  const handleConfirmNoTarget = () => socket.queueConfirmNoTarget();
+  const handleConfirmDiscard = () => socket.queueConfirmDiscard(indexInQueue);
 
   // PROPS, STATE, CONTEXT etc
 
@@ -25,7 +26,8 @@ export default function QueueCard(props) {
     isPlayerTurn,
     isResolving,
     isTarget,
-    noTargettingIsActive,
+    resolvingCardToBeDiscarded,
+    targetsNoneValid,
     qri
   } = props;
 
@@ -121,9 +123,17 @@ export default function QueueCard(props) {
           null
       }
       {
-        isPlayerTurn && isResolving && isOwned && revealed && noTargettingIsActive ?
+        isPlayerTurn && isResolving && isOwned && revealed && targetsNoneValid ?
           <QCButtons
             onYes={handleConfirmNoTarget}
+            text="Confirm"
+          /> :
+          null
+      }
+      {
+        isPlayerTurn && isResolving && isOwned && revealed && resolvingCardToBeDiscarded ?
+          <QCButtons
+            onYes={handleConfirmDiscard}
             text="Confirm"
           /> :
           null

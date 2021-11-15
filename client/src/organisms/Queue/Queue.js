@@ -38,7 +38,8 @@ export default function Queue(props) {
     players,
     queue,
     queueResolutionIndex: qri,
-    queueTargets
+    targets,
+    targetsNoneValid,
   } = gameState;
 
   const [playerColor, setPlayerColor] = useState(null);
@@ -68,8 +69,7 @@ export default function Queue(props) {
                   const topCard = stack[stack.length - 1];
                   const isResolving = phase === PHASES.RESOLUTION &&
                     qri === idx;
-                    const isTarget = queueTargets.includes(idx);
-                    const noTargettingIsActive = queueTargets.length === 0;
+                    const isTarget = targets.includes(idx);
                   return (
                     <QueueCard
                       card={topCard}
@@ -77,8 +77,8 @@ export default function Queue(props) {
                       isPlayerTurn={isPlayerTurn}
                       isResolving={isResolving}
                       isTarget={isTarget}
-                      noTargettingIsActive={noTargettingIsActive}
                       qri={qri}
+                      targetsNoneValid={targetsNoneValid}
                       key={`queue-card-${idx}`}
                     />
                   )
