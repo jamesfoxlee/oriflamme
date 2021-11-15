@@ -83,14 +83,14 @@ export default function QueueCard(props) {
         style={combinedStyle}
       >
         {
-          !revealed && !isOwned ?
+          !revealed ?
             <div className="queue-card__card-wrapper">
               <div className="queue-card__back">O</div>
             </div> :
             null
         }
         {
-          (revealed || isOwned) && !hovered ?
+          revealed && !hovered ?
             <div className="queue-card__card-wrapper">
               <div className="queue-card__name">{card.name}</div>
             </div> :
