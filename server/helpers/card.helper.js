@@ -3,7 +3,7 @@ function CardHelper () {
   const cardFunctions = {
     // ambush: require('../cards/ambush'),
     archer: require('../cards/archer'),
-    // assassination: require('../cards/assassination'),
+    assassination: require('../cards/assassination'),
     // conspiracy: require('../cards/conspiracy'),
     // heir: require('../cards/heir'),
     // lord: require('../cards/lord'),
@@ -13,9 +13,12 @@ function CardHelper () {
     // spy: require('../cards/spy'),
   }
 
-  const getInfluenceGain = (card) => {
+  // these functions call the respective card function with card, queue, qri
+  // many cards don't need all args (will be ignored) - this is simpler for the caller
+
+  const getInfluenceGainOnReveal = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getInfluenceGain(card);
+    return cf.getInfluenceGainOnReveal(card, queue, qri);
   };
 
   const getTargetsForAbility = (card, queue, qri) => {
@@ -34,7 +37,7 @@ function CardHelper () {
   }
 
   return {
-    getInfluenceGain,
+    getInfluenceGainOnReveal,
     getTargetsForAbility,
     getActionForAbility,
     getDiscardAfterAbility,

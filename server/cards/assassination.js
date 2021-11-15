@@ -1,33 +1,30 @@
 const { CARD_EFFECTS } = require('../config/game.constants');
 
-const archer = {
-  id: 'archer',
-  name: 'Archer',
-  text: 'Eliminate the first or last card from the Queue.',
+const assassination = {
+  id: 'assassination',
+  name: 'Assassination',
+  text: "Elimate any card in the Queue. Discard Assassination.",
   getInfluenceGainOnReveal: (resolvingCard) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
   },
-  getTargetsForAbility: (queue, qri) => {
+  getTargetsForAbility: (queue) => {
     // return an empty array if no targets at all
     // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
     // this enables card highlighting in UI etc
-    const queueStartIdx = 0;
-    const queueEndIdx = queue.length - 1;
-    const targets = [queueStartIdx];
-    queueEndIdx !== queueStartIdx && targets.push(queueEndIdx);
-    return targets;
+
+    // Assassination can target anything - simply return all array indices
+    return queue.map((_, idx) => idx);
   },
-  getActionForAbility: (queue, qri) => {
+  getActionForAbility: () => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceGain prop if this occurs
     return {
       type: CARD_EFFECTS.ELIMINATE,
-      influenceGain: 0
     }
   },
-  getDiscardAfterAbility: (queue, qri) => false,
+  getDiscardAfterAbility: () => true,
   getActionOnElimination: () => null,
 };
 
-module.exports = archer;
+module.exports = assassination;

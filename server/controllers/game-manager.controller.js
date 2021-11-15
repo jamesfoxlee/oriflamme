@@ -24,7 +24,7 @@ function GameManager () {
 
   const _getTopCardInStack = (queue, qri) => {
     const stack = queue[qri];
-    return stack[stack.length - 1];
+    return stack && stack[stack.length - 1];
   };
 
   const _checkForResolutionPhase = (prevState) => {
@@ -46,45 +46,6 @@ function GameManager () {
     }
   }
 
-  const _discardCardAfterAbility = (prevState) => {
-    console.log('GameManager._discardCardAfterAbility()');
-    const nextState = {...prevState};
-    const { players, queue, queueResolutionIndex:qri } = nextState;
-    const discardStack = queue[qri];
-    const discardedCard = discardStack.pop();
-    if (_getTopCardInStack(queue, targetIndex) === undefined) {
-      queue.splice(position, 1);
-      // compensate if splice before or on current qri position
-      targetIndex <= qri && (nextState.queueResolutionIndex -= 1);
-    }
-    const discardedCardOwner = players[discardedCard.ownerId];
-    discardedCardOwner.discardPile.push(targetCard.id);
-    return nextState;
-  }
-
-  const _eliminateCard = (targetIndex, resolvingCard, prevState) => {
-    const nextState = {...prevState};
-    const { players, queue, queueResolutionIndex:qri } = nextState;
-    console.log('GameManager._eliminateCard() queue before eliminate...');
-    console.log(queue);
-    const targetStack = queue[targetIndex];
-    const targetCard = targetStack.pop();
-    if (_getTopCardInStack(queue, targetIndex) === undefined) {
-      queue.splice(targetIndex, 1);
-      // compensate if splice before or on current qri position
-      if (targetIndex <= qri) {
-        nextState.queueResolutionIndex -= 1;
-      }
-    }
-    console.log('GameManager._eliminateCard() queue after eliminate...');
-    console.log(queue);
-    const targetCardOwner = players[targetCard.ownerId];
-    targetCardOwner.discardPile.push(targetCard.id);
-    const resolvingCardOwner = players[resolvingCard.ownerId];
-    resolvingCardOwner.influence += 1;
-    return nextState;
-  }
-
   const _checkForNextRound = (prevState) => {
     console.log('GameManager._checkForNextRound()');
     if (prevState.queueResolutionIndex < prevState.queue.length) {
@@ -97,6 +58,7 @@ function GameManager () {
     }
     // advance the round
     const updatedTurnOrder = prevState.turnOrder.slice(1).concat(prevState.turnOrder.slice(0, 1));
+    // TODO: send a message that "New round started. PLAYER is now the first player."
     return {
       ...prevState,
       activePlayerId: updatedTurnOrder[0],
@@ -107,6 +69,44 @@ function GameManager () {
       turnOrder: updatedTurnOrder,
       turnOrderIndex: 0
     };
+  }
+
+  const _discardCardAfterAbility = (prevState) => {
+    console.log('GameManager._discardCardAfterAbility()');
+    const nextState = {...prevState};
+    const { players, queue, queueResolutionIndex:qri } = nextState;
+    const discardStack = queue[qri];
+    const discardedCard = discardStack.pop();
+    if (_getTopCardInStack(queue, qri) === undefined) {
+      queue.splice(qri, 1);
+      // need to compensate or next card would not get to resolve
+      nextState.queueResolutionIndex -= 1;
+    }
+    const discardedCardOwner = players[discardedCard.ownerId];
+    discardedCardOwner.discardPile.push(discardedCard.id);
+    return nextState;
+  }
+
+  const _eliminateCard = (targetIndex, resolvingCard, prevState) => {
+    console.log('GameManager._eliminateCard()');
+    const nextState = {...prevState};
+    const { players, queue, queueResolutionIndex:qri } = nextState;
+    const targetStack = queue[targetIndex];
+    const targetCard = targetStack.pop();
+    // if we now have an empty stack, remove it completely
+    if (_getTopCardInStack(queue, targetIndex) === undefined) {
+      queue.splice(targetIndex, 1);
+      // compensate if splice occurs before / on current qri, otherwise card will be missed
+      if (targetIndex <= qri) {
+        nextState.queueResolutionIndex -= 1;
+      }
+    }
+    // STAYS SAME EVEN IF AMBUSH IS TARGET CARD
+    const targetCardOwner = players[targetCard.ownerId];
+    targetCardOwner.discardPile.push(targetCard.id);
+    const resolvingCardOwner = players[resolvingCard.ownerId];
+    resolvingCardOwner.influence += 1;
+    return nextState;
   }
 
   // PUBLIC
@@ -190,7 +190,7 @@ function GameManager () {
     console.log('card: ', card.name);
     card.revealed = true;
     // TODO: send message saying 'PLAYER revealed CARD.'
-    const influenceGain = cardHelper.getInfluenceGain(card);
+    const influenceGain = cardHelper.getInfluenceGainOnReveal(card);
     owner.influence += influenceGain;
     // TODO: send message saying 'PLAYER gained INFLUENCE influence accumulated on CARD.'
     nextState.queueTargets = cardHelper.getTargetsForAbility(card, queue, qri);
@@ -231,16 +231,20 @@ function GameManager () {
         nextState = {..._gameState};
         break;
     }
-    _checkDiscardAfterAbility(nextState)
+    _checkDiscardAfterAbility(nextState);
   }
 
   const _checkDiscardAfterAbility = (prevState) => {
     let nextState = {...prevState};
     const { queue, queueResolutionIndex:qri } = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
-    const toDiscard = cardHelper.getDiscardAfterAbility(resolvingCard, queue, qri);
-    if (toDiscard) {
-      nextState = _discardCardAfterAbility(nextState);
+    if (resolvingCard) {
+      // if there isn't a resolvingCard, it has eliminated itself!!
+      // can happen with e.g. Assassination, or Soldier and Archer who may be forced to
+      const toDiscard = cardHelper.getDiscardAfterAbility(resolvingCard, queue, qri);
+      if (toDiscard) {
+        nextState = _discardCardAfterAbility(nextState);
+      }
     }
     // next player / advance round
     nextState.queueResolutionIndex += 1;
