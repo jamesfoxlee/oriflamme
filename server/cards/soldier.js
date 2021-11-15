@@ -1,9 +1,9 @@
 const { CARD_EFFECTS } = require('../config/game.constants');
 
-const archer = {
-  id: 'archer',
-  name: 'Archer',
-  text: 'Eliminate the first or last card from the Queue.',
+const soldier = {
+  id: 'soldier',
+  name: 'Soldier',
+  text: "Eliminate an adjacent card.",
   getInfluenceGainOnReveal: (resolvingCard) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
@@ -12,10 +12,16 @@ const archer = {
     // return an empty array if no targets at all
     // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
     // this enables card highlighting in UI etc
-    const queueStartIdx = 0;
-    const queueEndIdx = queue.length - 1;
-    const targets = [queueStartIdx];
-    queueEndIdx !== queueStartIdx && targets.push(queueEndIdx);
+    let leftIdx = qri - 1;
+    leftIdx = leftIdx < 0 ? 0 : leftIdx; // ensure not off end of queue
+    let rightIdx = qri + 1;
+    rightIdx = rightIdx === queue.length ? queue.length : rightIdx; // ensure not off end of queue
+    const targets = [leftIdx];
+    rightIdx !== leftIdx && targets.push(rightIdx);
+    if (targets.length === 2) {
+      // ignore himself if Soldier has another target - but if he doesn't, he must kill himself!
+      return targets.filter(target => target !== qri);
+    }
     return targets;
   },
   getActionForAbility: (queue, qri) => {
@@ -23,11 +29,11 @@ const archer = {
     // return influenceGain prop if this occurs
     return {
       type: CARD_EFFECTS.ELIMINATE,
-      influenceGain: 1
+      influenceGain: 1,
     }
   },
-  getDiscardAfterAbility: (queue, qri) => false,
+  getDiscardAfterAbility: () => false,
   getActionOnElimination: () => null,
 };
 
-module.exports = archer;
+module.exports = soldier;

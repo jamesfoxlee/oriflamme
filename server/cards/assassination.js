@@ -21,6 +21,7 @@ const assassination = {
     // return influenceGain prop if this occurs
     return {
       type: CARD_EFFECTS.ELIMINATE,
+      influenceGain: 1
     }
   },
   getDiscardAfterAbility: () => true,

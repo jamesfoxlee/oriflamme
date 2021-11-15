@@ -87,7 +87,7 @@ function GameManager () {
     return nextState;
   }
 
-  const _eliminateCard = (targetIndex, resolvingCard, prevState) => {
+  const _eliminateCard = (targetIndex, resolvingCard, influenceGain, prevState) => {
     console.log('GameManager._eliminateCard()');
     const nextState = {...prevState};
     const { players, queue, queueResolutionIndex:qri } = nextState;
@@ -105,7 +105,7 @@ function GameManager () {
     const targetCardOwner = players[targetCard.ownerId];
     targetCardOwner.discardPile.push(targetCard.id);
     const resolvingCardOwner = players[resolvingCard.ownerId];
-    resolvingCardOwner.influence += 1;
+    resolvingCardOwner.influence += influenceGain;
     return nextState;
   }
 
@@ -192,6 +192,7 @@ function GameManager () {
     // TODO: send message saying 'PLAYER revealed CARD.'
     const influenceGain = cardHelper.getInfluenceGainOnReveal(card);
     owner.influence += influenceGain;
+    card.influence = 0;
     // TODO: send message saying 'PLAYER gained INFLUENCE influence accumulated on CARD.'
     nextState.queueTargets = cardHelper.getTargetsForAbility(card, queue, qri);
     // TODO: send message saying 'PLAYER is resolving CARD ability.'
@@ -214,7 +215,7 @@ function GameManager () {
         nextState = {..._gameState};
         break;
       case CARD_EFFECTS.ELIMINATE:
-        nextState = _eliminateCard(targetIndex, resolvingCard, _gameState);
+        nextState = _eliminateCard(targetIndex, resolvingCard, action.influenceGain, _gameState);
         break;
       case CARD_EFFECTS.GAIN_INFLUENCE:
         nextState = _gainInfluence(action.influenceGain, resolvingCard, _gameState);

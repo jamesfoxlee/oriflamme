@@ -9,7 +9,7 @@ function CardHelper () {
     // lord: require('../cards/lord'),
     // royal_decree: require('../cards/royal_decree'),
     // shapeshifter: require('../cards/shapeshifter'),
-    // soldier: require('../cards/soldier'),
+    soldier: require('../cards/soldier'),
     // spy: require('../cards/spy'),
   }
 
