@@ -8,7 +8,7 @@ const conspiracy = {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence * 2;
   },
-  getTargetsForAbility: (queue, qri) => {
+  getTargetsForAbility: () => {
     // return an empty array if no targets at all
     // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
     // this enables card highlighting in UI etc

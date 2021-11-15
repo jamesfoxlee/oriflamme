@@ -109,6 +109,15 @@ function GameManager () {
     return nextState;
   }
 
+  const _gainInfluence = (resolvingCard, influenceGained, prevState) => {
+    console.log('GameManager._gainInfluence() gaining: ', influenceGained);
+    const nextState = {...prevState};
+    const { players } = nextState
+    const resolvingCardOwner = players[resolvingCard.ownerId];
+    resolvingCardOwner.influence += influenceGained;
+    return nextState;
+  }
+
   // PUBLIC
 
   const initialise = (room) => {
@@ -218,7 +227,7 @@ function GameManager () {
         nextState = _eliminateCard(targetIndex, resolvingCard, action.influenceGain, _gameState);
         break;
       case CARD_EFFECTS.GAIN_INFLUENCE:
-        nextState = _gainInfluence(action.influenceGain, resolvingCard, _gameState);
+        nextState = _gainInfluence(resolvingCard, action.influenceGain, _gameState);
         break;
       case CARD_EFFECTS.STEAL:
         nextState = _stealFrom(targetIndex, resolvingCard, _gameState);
