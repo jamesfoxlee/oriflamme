@@ -30,12 +30,6 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD, (discardIndex) => {
-        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD);
-        gameManager.discardWasConfirmed(discardIndex);
-        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
-      });
-
       socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, (targetIndex) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
         gameManager.targetWasConfirmed(targetIndex);
@@ -54,6 +48,17 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
+      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_INTERRUPT, () => {
+        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_INTERRUPT);
+        gameManager.interruptWasConfirmed();
+        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
+      });
+
+      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD, (discardIndex) => {
+        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD);
+        gameManager.discardWasConfirmed(discardIndex);
+        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
+      });
       //----------------------------------------------------------------
       // MESSAGES
       //----------------------------------------------------------------

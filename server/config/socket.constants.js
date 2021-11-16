@@ -14,6 +14,7 @@ const SOCKET_EVENTS = {
     },
     RESOLUTION: {
       QUEUE: {
+        CONFIRM_INTERRUPT: 'game.queue.confirm_interrupt',
         CONFIRM_DISCARD: 'game.queue.confirm_discard',
         CONFIRM_NO_TARGET: 'game.queue.confirm_no_target',
         CONFIRM_TARGET: 'game.queue.confirm_target',

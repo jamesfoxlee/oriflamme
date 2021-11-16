@@ -1,7 +1,7 @@
 function CardHelper () {
 
   const cardFunctions = {
-    // ambush: require('../cards/ambush'),
+    ambush: require('../cards/ambush'),
     archer: require('../cards/archer'),
     assassination: require('../cards/assassination'),
     conspiracy: require('../cards/conspiracy'),
@@ -42,11 +42,17 @@ function CardHelper () {
     return cf.getDiscardAfterResolution(card, queue, qri);
   }
 
+  const getActionOnElimination = (card, queue, qri) => {
+    const cf = cardFunctions[card.id];
+    return cf.getActionOnElimination(card, queue, qri);
+  }
+
   return {
     getInfluenceGainOnReveal,
     getTargets,
     getAction,
     getDiscardAfterResolution,
+    getActionOnElimination,
   }
 }
 
