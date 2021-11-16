@@ -220,11 +220,14 @@ function GameManager () {
   }
 
   const _steal = (targettedIndex, resolvingCard, influenceToSteal, prevState) => {
-    // console.log('GameManager._steal() stealing: ', influenceToSteal);
-    // const nextState = {...prevState};
-    // const { players } = nextState;
-    // const resolvingCardOwner = players[resolvingCard.ownerId];
-    // resolvingCardOwner.influence += influenceToSteal;
+    console.log('GameManager._steal() stealing: ', influenceToSteal);
+    const nextState = {...prevState};
+    const { players, queue } = nextState;
+    const targetCard = _getTopCardInStack(queue, targettedIndex);
+    const targetCardOwner = players[targetCard.ownerId];
+    const resolvingCardOwner = players[resolvingCard.ownerId];
+    targetCardOwner.influence -= influenceToSteal;
+    resolvingCardOwner.influence += influenceToSteal;
     return nextState;
   }
 

@@ -9,6 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  z-index: var(--layer-3);
   margin: 0 auto;
 }
 

@@ -10,7 +10,7 @@ function CardHelper () {
     // royal_decree: require('../cards/royal_decree'),
     // shapeshifter: require('../cards/shapeshifter'),
     soldier: require('../cards/soldier'),
-    // spy: require('../cards/spy'),
+    spy: require('../cards/spy'),
   }
 
   // these functions call the respective card function with card, queue, qri
@@ -23,7 +23,7 @@ function CardHelper () {
 
   const getTargets = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    const t = cf.getTargets(queue, qri);
+    const t = cf.getTargets(card, queue, qri);
     return {
       targets: t.targets || [],
       targetsNoneValid: t.targetsNoneValid || false,

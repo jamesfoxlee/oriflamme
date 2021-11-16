@@ -48,7 +48,7 @@
   right: 0.6rem;
   width: 4rem;
   height: 4rem;
-  z-index: var(--layer-5);
+  z-index: var(--layer-2);
   padding: 0.5rem;
   border: 1px solid var(--color-gold);
   border-radius: 50%;
