@@ -93,6 +93,11 @@ export default function Socket() {
       socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, targetIndex);
     }
 
+    function queueConfirmTargetSelf () {
+      console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET_SELF);
+      socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET_SELF);
+    }
+
     function queueConfirmNoTarget () {
       console.log('EMITTING EVENT: ', GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET);
       socket.emit(GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET);
@@ -132,6 +137,7 @@ export default function Socket() {
         queueReveal,
         queueConfirmDiscard,
         queueConfirmTarget,
+        queueConfirmTargetSelf,
         queueConfirmNoTarget,
         sendMessage,
       })

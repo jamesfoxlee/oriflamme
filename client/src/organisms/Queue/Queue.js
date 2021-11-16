@@ -40,6 +40,7 @@ export default function Queue(props) {
     queueResolutionIndex: qri,
     targets,
     targetsNoneValid,
+    targetsSelf,
   } = gameState;
 
   const [playerColor, setPlayerColor] = useState(null);
@@ -79,6 +80,7 @@ export default function Queue(props) {
                       isTarget={isTarget}
                       qri={qri}
                       targetsNoneValid={targetsNoneValid}
+                      targetsSelf={targetsSelf}
                       key={`queue-card-${idx}`}
                     />
                   )

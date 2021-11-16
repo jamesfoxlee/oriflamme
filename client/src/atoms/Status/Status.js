@@ -65,12 +65,12 @@ export default function Status(props) {
     if (playerIsActive && resolvingCard && resolvingCard.revealed) {
       if (resolvingCardToBeDiscarded) {
         // currently Ambush / Conspiracy
-        statusMessage = `${resolvingCard.name} will now be discarded. Click Confirm to continue.`;
+        statusMessage = `${resolvingCard.name} will now be discarded. Click Discard to continue.`;
       }
       else if (targetsNoneValid) {
         statusMessage = `No valid targets for ${resolvingCard.name}. Click Confirm to continue.`;
       }
-      else if (resolvingCard.id === 'heir' || resolvingCard.id === 'heir') {
+      else if (resolvingCard.id === 'heir' || resolvingCard.id === 'lord') {
         statusMessage = `${resolvingCard.name} may now gain additional influence. Click Confirm to continue.`;
       }
       else {

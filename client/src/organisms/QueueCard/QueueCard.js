@@ -17,6 +17,7 @@ export default function QueueCard(props) {
   const handleReveal = () => socket.queueReveal(qri);
   const handleConfirmTarget = () => socket.queueConfirmTarget(indexInQueue);
   const handleConfirmNoTarget = () => socket.queueConfirmNoTarget();
+  const handleConfirmTargetSelf = () => socket.queueConfirmTargetSelf();
   const handleConfirmDiscard = () => socket.queueConfirmDiscard(indexInQueue);
 
   // PROPS, STATE, CONTEXT etc
@@ -28,6 +29,7 @@ export default function QueueCard(props) {
     isTarget,
     resolvingCardToBeDiscarded,
     targetsNoneValid,
+    targetsSelf,
     qri
   } = props;
 
@@ -101,7 +103,7 @@ export default function QueueCard(props) {
         }
         {
           (revealed || isOwned) && hovered ?
-            <div className="queue-card__card-wrapper">
+          <div className="queue-card__card-wrapper">
               <div className="queue-card__text">{card.text}</div>
               <div className="queue-card__name">{card.name}</div>
             </div> :
@@ -109,23 +111,39 @@ export default function QueueCard(props) {
         }
         {
           card.influence ?
-            <span className="queue-card__influence">{card.influence}</span> :
+          <span className="queue-card__influence">{card.influence}</span> :
             null
-        }
+          }
       </div>
       {
         isPlayerTurn && isResolving && isOwned && !revealed ?
           <QCButtons
-            onYes={handleReveal}
-            onNo={handleNoReveal}
-            text="Reveal?"
+          onYes={handleReveal}
+          onNo={handleNoReveal}
+          text="Reveal?"
+          /> :
+          null
+        }
+        {
+          isPlayerTurn && isTarget ?
+            <QCButtons
+              onYes={handleConfirmTarget}
+              text="Target?"
+            /> :
+            null
+        }
+      {
+        isPlayerTurn && isResolving && isOwned && revealed && targetsNoneValid ?
+        <QCButtons
+            onYes={handleConfirmNoTarget}
+            text="Confirm"
           /> :
           null
       }
       {
-        isPlayerTurn && isResolving && isOwned && revealed && targetsNoneValid ?
+        isPlayerTurn && isResolving && isOwned && revealed && targetsSelf ?
           <QCButtons
-            onYes={handleConfirmNoTarget}
+            onYes={handleConfirmTargetSelf}
             text="Confirm"
           /> :
           null
@@ -134,15 +152,7 @@ export default function QueueCard(props) {
         isPlayerTurn && isResolving && isOwned && revealed && resolvingCardToBeDiscarded ?
           <QCButtons
             onYes={handleConfirmDiscard}
-            text="Confirm"
-          /> :
-          null
-      }
-      {
-        isPlayerTurn && isTarget ?
-          <QCButtons
-            onYes={handleConfirmTarget}
-            text="Target?"
+            text="Discard"
           /> :
           null
       }
