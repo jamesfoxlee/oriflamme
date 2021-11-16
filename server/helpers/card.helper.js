@@ -6,7 +6,7 @@ function CardHelper () {
     assassination: require('../cards/assassination'),
     conspiracy: require('../cards/conspiracy'),
     heir: require('../cards/heir'),
-    // lord: require('../cards/lord'),
+    lord: require('../cards/lord'),
     // royal_decree: require('../cards/royal_decree'),
     // shapeshifter: require('../cards/shapeshifter'),
     soldier: require('../cards/soldier'),
@@ -34,12 +34,12 @@ function CardHelper () {
 
   const getAction = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getAction(queue, qri);
+    return cf.getAction(card, queue, qri);
   }
 
   const getDiscardAfterResolution = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getDiscardAfterResolution(queue, qri);
+    return cf.getDiscardAfterResolution(card, queue, qri);
   }
 
   return {

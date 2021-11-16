@@ -332,7 +332,7 @@ function GameManager () {
     console.log('card: ', card.name);
     card.revealed = true;
     // TODO: send message saying 'PLAYER revealed CARD.'
-    const influenceChange = cardHelper.getInfluenceGainOnReveal(card);
+    const influenceChange = cardHelper.getInfluenceGainOnReveal(card, queue, qri);
     owner.influence += influenceChange;
     card.influence = 0;
     // TODO: send message saying 'PLAYER gained INFLUENCE influence accumulated on CARD.'

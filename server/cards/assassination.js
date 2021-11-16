@@ -4,11 +4,11 @@ const assassination = {
   id: 'assassination',
   name: 'Assassination',
   text: "Elimate any card in the Queue. Discard Assassination.",
-  getInfluenceGainOnReveal: (resolvingCard) => {
+  getInfluenceGainOnReveal: (assassinationCard) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
-    return resolvingCard.influence;
+    return assassinationCard.influence;
   },
-  getTargets: (resolvingCard, queue, qri) => {
+  getTargets: (assassinationCard, queue, qri) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     const allIndices = queue.map((_, idx) => idx);

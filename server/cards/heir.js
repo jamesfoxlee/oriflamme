@@ -4,20 +4,19 @@ const heir = {
   id: 'heir',
   name: 'Heir',
   text: "If there is no other card revealed with the same name, gain 2 influence.",
-  getInfluenceGainOnReveal: (resolvingCard) => {
+  getInfluenceGainOnReveal: (heirCard) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
-    return resolvingCard.influence;
+    return heirCard.influence;
   },
   getTargets: () => {
     // return an empty array if no targets at all
     // return array with index of self if it's a "self-target" e.g. inf gain such as Heir, Lord
     // this enables card highlighting in UI etc
     return {
-      targets: [],
       targetsSelf: true,
     };
   },
-  getAction: (queue, qri) => {
+  getAction: (heirCard, queue, qri) => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
 

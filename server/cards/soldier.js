@@ -4,11 +4,11 @@ const soldier = {
   id: 'soldier',
   name: 'Soldier',
   text: "Eliminate an adjacent card.",
-  getInfluenceGainOnReveal: (resolvingCard) => {
+  getInfluenceGainOnReveal: (soldierCard) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
-    return resolvingCard.influence;
+    return soldierCard.influence;
   },
-  getTargets: (resolvingCard, queue, qri) => {
+  getTargets: (soldierCard, queue, qri) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     let leftIdx = qri - 1;
