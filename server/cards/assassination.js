@@ -8,14 +8,16 @@ const assassination = {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
   },
-  getTargetsForAbility: (queue) => {
+  getTargets: (queue) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
 
     // Assassination can target anything - simply return all array indices
-    return queue.map((_, idx) => idx);
+    return {
+      targets: queue.map((_, idx) => idx),
+    }
   },
-  getActionForAbility: () => {
+  getAction: () => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
     return {
@@ -23,7 +25,7 @@ const assassination = {
       influenceChange: 1
     }
   },
-  getDiscardAfterAbility: () => true,
+  getDiscardAfterResolution: () => true,
   getActionOnElimination: () => null,
 };
 

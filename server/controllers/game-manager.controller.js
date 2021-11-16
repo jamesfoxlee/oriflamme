@@ -53,8 +53,13 @@ function GameManager () {
 
   const _checkForAdvanceToNextRound = (prevState) => {
     console.log('GameManager._checkForAdvanceToNextRound()');
-    const nextState = {...prevState};
-    nextState.queueResolutionIndex += 1;
+    const nextState = {
+      ...prevState,
+      queueResolutionIndex: prevState.queueResolutionIndex + 1,
+      resolvingCardToBeDiscarded: false,
+      targets: [],
+      targetsNoneValid: false,
+    };
     const { queue, queueResolutionIndex: qri } = nextState;
     if (qri < queue.length) {
       _resolveNextCard(nextState);
@@ -94,57 +99,77 @@ function GameManager () {
     const nextState = {...prevState};
     const {queue, queueResolutionIndex: qri} = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
-    nextState.targets = cardHelper.getTargetsForAbility(resolvingCard, queue, qri);
-    if (!nextState.targets.length) {
-      nextState.targetsNoneValid = true;
+    const {
+      targets,
+      targetsNoneValid,
+      targetsNothing,
+      targetsSelf
+    } = cardHelper.getTargets(resolvingCard, queue, qri);
+    if (targetsNothing) {
+      _checkForDiscardAfterResolution(nextState);
     }
-    _returnToPlayer(nextState);
+    else {
+      _returnToPlayer({
+        ...nextState,
+        targets,
+        targetsNoneValid,
+        targetsSelf,
+      });
+    }
   }
 
   const _applyAbility = (prevState) => {
     const { queue, queueResolutionIndex: qri, targettedIndex } = prevState;
     const resolvingCard = _getTopCardInStack(queue, qri);
     console.log('resolvingCard: ', resolvingCard.name);
-    const action = cardHelper.getActionForAbility(resolvingCard, queue, qri);
+    const action = cardHelper.getAction(resolvingCard, queue, qri);
     let nextState;
     switch (action.type) {
       case CARD_EFFECTS.NONE:
-        nextState = {..._gameState};
+        nextState = {...prevState};
         break;
       case CARD_EFFECTS.ELIMINATE:
-        nextState = _eliminate(targettedIndex, resolvingCard, action.influenceChange, _gameState);
+        nextState = _eliminate(targettedIndex, resolvingCard, action.influenceChange, prevState);
         break;
       case CARD_EFFECTS.GAIN_INFLUENCE:
-        nextState = _gainInfluence(resolvingCard, action.influenceChange, _gameState);
+        nextState = _gainInfluence(resolvingCard, action.influenceChange, prevState);
         break;
       case CARD_EFFECTS.STEAL:
-        nextState = _steal(targettedIndex, resolvingCard, action.influenceChange, _gameState);
+        nextState = _steal(targettedIndex, resolvingCard, action.influenceChange, prevState);
         break;
       case CARD_EFFECTS.MOVE:
         // TODO: implement
-        nextState = {..._gameState};
+        nextState = {...prevState};
         break;
       case CARD_EFFECTS.COPY_ABILITY:
         // TODO: implement
-        nextState = {..._gameState};
+        nextState = {...prevState};
         break;
+      default:
+        nextState = {...prevState};
     }
     _checkForDiscardAfterResolution(nextState);
   }
 
   const _checkForDiscardAfterResolution = (prevState) => {
-    let nextState = {...prevState};
+    let nextState = {
+      ...prevState,
+      targets: [],
+      targetsNoneValid: false,
+      targetsNothing: false,
+      targetsSelf: false,
+    };
     const { queue, queueResolutionIndex:qri } = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
     if (resolvingCard) {
       // if there isn't a resolvingCard, it has eliminated itself!!
-      // can happen with e.g. Assassination, or Soldier and Archer who may be forced to
-      const toDiscard = cardHelper.getDiscardAfterAbility(resolvingCard, queue, qri);
+      // can happen with e.g. Assassination, or Archer who may be forced to kill themselves
+      const toDiscard = cardHelper.getDiscardAfterResolution(resolvingCard, queue, qri);
       if (toDiscard) {
-        nextState = _discardCard(nextState);
+        nextState.resolvingCardToBeDiscarded = true;
+        _returnToPlayer(nextState);
       }
     }
-    nextState.targets = [];
     _checkForAdvanceToNextRound(nextState);
   }
 
@@ -203,7 +228,10 @@ function GameManager () {
 
   const _discardCard = (prevState) => {
     console.log('GameManager._discardCard()');
-    const nextState = {...prevState};
+    const nextState = {
+      ...prevState,
+      resolvingCardToBeDiscarded: false,
+    };
     const { players, queue, queueResolutionIndex:qri } = nextState;
     const discardStack = queue[qri];
     const discardedCard = discardStack.pop();
@@ -316,14 +344,22 @@ function GameManager () {
     });
   }
 
+  const targetSelfWasConfirmed = () => {
+    console.log('GameManager.targetSelfWasConfirmed()');
+    // TODO: Royal Decree - needs further prompt from user, should do anyway
+    // to alert other players of final choice
+    _applyAbility(_gameState);
+  }
+
   const noValidTargetWasConfirmed = () => {
     console.log('GameManager.noValidTargetWasConfirmed()');
-
+    _checkForAdvanceToNextRound(_gameState);
   };
 
   const discardWasConfirmed = (discardIndex) => {
     console.log('GameManager.discardWasConfirmed() at queue index: ', discardIndex);
-
+    const nextState = _discardCard(_gameState);
+    _checkForAdvanceToNextRound(nextState);
   };
 
   // const INITIAL_GAMESTATE = {
@@ -334,6 +370,7 @@ function GameManager () {
   //   players: {},
   //   queue: [],
   //   queueResolutionIndex: 0,
+  //   resolvingCardToBeDiscarded: false
   //   roomId,
   //   round: 1,
   //   targets: [],
@@ -350,6 +387,7 @@ function GameManager () {
     cardWasNotRevealed,
     cardWasRevealed,
     targetWasConfirmed,
+    targetSelfWasConfirmed,
     noValidTargetWasConfirmed,
     discardWasConfirmed,
   }

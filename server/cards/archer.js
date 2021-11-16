@@ -8,16 +8,20 @@ const archer = {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
   },
-  getTargetsForAbility: (queue, qri) => {
+  getTargets: (queue, qri) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     const queueStartIdx = 0;
     const queueEndIdx = queue.length - 1;
     const targets = [queueStartIdx];
     queueEndIdx !== queueStartIdx && targets.push(queueEndIdx);
+    return {
+      targets,
+      targetsNoneValid: false, // will always be himself to kill
+    }
     return targets;
   },
-  getActionForAbility: (queue, qri) => {
+  getAction: (queue, qri) => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
     return {
@@ -25,7 +29,7 @@ const archer = {
       influenceChange: 1
     }
   },
-  getDiscardAfterAbility: (queue, qri) => false,
+  getDiscardAfterResolution: (queue, qri) => false,
   getActionOnElimination: () => null,
 };
 

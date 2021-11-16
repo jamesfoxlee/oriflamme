@@ -42,6 +42,12 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
+      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET_SELF, () => {
+        console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET_SELF);
+        gameManager.targetSelfWasConfirmed();
+        socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
+      });
+
       socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET, () => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_NO_TARGET);
         gameManager.noValidTargetWasConfirmed();

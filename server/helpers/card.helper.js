@@ -21,26 +21,32 @@ function CardHelper () {
     return cf.getInfluenceGainOnReveal(card, queue, qri);
   };
 
-  const getTargetsForAbility = (card, queue, qri) => {
+  const getTargets = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getTargetsForAbility(queue, qri);
+    const t = cf.getTargets(queue, qri);
+    return {
+      targets: t.targets || [],
+      targetsNoneValid: t.targetsNoneValid || false,
+      targetsNothing: t.targetsNothing || false,
+      targetsSelf: t.targetsSelf || false,
+    }
   };
 
-  const getActionForAbility = (card, queue, qri) => {
+  const getAction = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getActionForAbility(queue, qri);
+    return cf.getAction(queue, qri);
   }
 
-  const getDiscardAfterAbility = (card, queue, qri) => {
+  const getDiscardAfterResolution = (card, queue, qri) => {
     const cf = cardFunctions[card.id];
-    return cf.getDiscardAfterAbility(queue, qri);
+    return cf.getDiscardAfterResolution(queue, qri);
   }
 
   return {
     getInfluenceGainOnReveal,
-    getTargetsForAbility,
-    getActionForAbility,
-    getDiscardAfterAbility,
+    getTargets,
+    getAction,
+    getDiscardAfterResolution,
   }
 }
 

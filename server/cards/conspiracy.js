@@ -8,19 +8,22 @@ const conspiracy = {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence * 2;
   },
-  getTargetsForAbility: () => {
+  getTargets: () => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
-    return [];
+    return {
+      targets: [],
+      targetsNothing: true,
+    };
   },
-  getActionForAbility: () => {
+  getAction: () => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
     return {
       type: CARD_EFFECTS.NONE,
     }
   },
-  getDiscardAfterAbility: () => true,
+  getDiscardAfterResolution: () => true,
   getActionOnElimination: () => null,
 };
 

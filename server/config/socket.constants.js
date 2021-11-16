@@ -17,6 +17,7 @@ const SOCKET_EVENTS = {
         CONFIRM_DISCARD: 'game.queue.confirm_discard',
         CONFIRM_NO_TARGET: 'game.queue.confirm_no_target',
         CONFIRM_TARGET: 'game.queue.confirm_target',
+        CONFIRM_TARGET_SELF: 'game.queue.confirm_target_self',
         NO_REVEAL: 'game.queue.no_reveal',
         REVEAL: 'game.queue.reveal',
       }
