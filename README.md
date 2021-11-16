@@ -1,10 +1,10 @@
 # oriflamme
 
-This is the solo project I wrote whilst on the intensive and brilliant Codeworks Software Engineering Immersive program. I really enjoy modern boardgames and wanted to lean about WebSockets so a game was the obvious choice.
+This is the solo project I wrote whilst on the intensive and brilliant Codeworks Software Engineering Immersive program. I really enjoy modern boardgames and wanted to learn about WebSockets so a game was the obvious choice.
 
-The game in question is Oriflamme by Studio H Games (video overview [here](https://youtu.be/RWJh259QSEc?t=36)).
+The game in question is Oriflamme by Studio H Games (short video overview [here](https://youtu.be/RWJh259QSEc?t=36)).
 
-Players find themselves in the middle of a medieval feud over the French royal crown. The King is dead! Long live the King! As heads of influential families, the players strive to come to power with cunning, malice, strength, virtue and infamy. Their goal: the king’s throne!
+Players find themselves in the middle of a medieval feud over the French royal crown. The King is dead - long live the King! As heads of influential families, the players strive to come to power with cunning, malice, strength, virtue and infamy. The player with the most Influence after 6 rounds wins the game, and the throne!
 
 
 # Back end (`/server` directory)
