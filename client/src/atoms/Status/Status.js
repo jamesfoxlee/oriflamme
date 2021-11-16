@@ -14,6 +14,7 @@ export default function Status(props) {
 
   const { gameState, selectedPlayerCard, user } = props;
   const {
+    abilityInterrupt,
     activePlayerId,
     phase,
     players,
@@ -73,7 +74,11 @@ export default function Status(props) {
     }
 
     if (playerIsActive && resolvingCard && resolvingCard.revealed) {
-      if (resolvingCardToBeDiscarded) {
+
+      if (abilityInterrupt) {
+        statusMessage = `Elimination interrupted by ${resolvingCard.name}. Click Confirm to continue.`;
+      }
+      else if (resolvingCardToBeDiscarded) {
         statusMessage = `${resolvingCard.name} will now be discarded. Click Discard to continue.`;
       }
       else if (targetsNoneValid) {

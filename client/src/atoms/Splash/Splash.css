@@ -1,0 +1,43 @@
+.splash {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+  color: var(--color-white);
+}
+
+.splash__image {
+  height: 20vh;
+  width: 20vh;
+  background-image: url('../../assets/wax-seal.png');
+  background-size: cover;
+}
+
+.splash__title {
+  font-family: var(--font-family-gothic);
+  font-size: 12rem;
+}
+
+.splash__headline {
+  padding: 3rem;
+  font-family: var(--font-family-regular);
+  font-size: 6rem;
+}
+
+.splash__text {
+  padding: 2rem;
+  font-family: var(--font-family-regular);
+  font-size: 2.6rem;
+}
+
+.splash__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  padding: 3rem;
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-bigger);
+}

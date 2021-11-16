@@ -5,6 +5,7 @@ import Game from './views/Game/Game';
 import Rooms from './organisms/Rooms/Rooms';
 import Nav from './molecules/Nav/Nav';
 import Loading from './atoms/Loading/Loading';
+import Splash from './atoms/Splash/Splash';
 
 import Socket from './services/socket.service';
 import StorageService from './services/storage.service';
@@ -39,6 +40,7 @@ function App() {
     setGameStarted(true);
   };
 
+  const [showSplash, setShowSplash] = useState(true);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({ id: null, name: null});
   const [activeRoomId, setActiveRoomId] = useState(null);
@@ -67,6 +69,11 @@ function App() {
 
   return (
     <div className="app" id="app">
+      {
+        showSplash ?
+          <Splash show={showSplash} dismiss={ () => setShowSplash(false)} /> :
+          null
+      }
       <SocketProvider value={socket}>
         <UserProvider value={[user, setUser]}>
           <Nav />

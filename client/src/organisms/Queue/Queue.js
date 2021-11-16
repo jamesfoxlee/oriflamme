@@ -33,6 +33,7 @@ export default function Queue(props) {
 
   const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
   const {
+    abilityInterrupt,
     activePlayerId,
     phase,
     players,
@@ -74,6 +75,7 @@ export default function Queue(props) {
                     const isTarget = targets.includes(idx);
                   return (
                     <QueueCard
+                      abilityInterrupt={abilityInterrupt}
                       card={topCard}
                       indexInQueue={idx}
                       isPlayerTurn={isPlayerTurn}
