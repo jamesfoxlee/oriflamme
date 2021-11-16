@@ -38,9 +38,15 @@ export default function Status(props) {
 
   let statusMessage;
   if (phase === PHASES.PLANNING) {
+
+    // OTHER PLAYER'S TURN
+
     if (!playerIsActive) {
       statusMessage = `Waiting for ${playerName} to play a card...`;
     }
+
+    // PLAYER IS ACTIVE
+
     if (playerIsActive && !selectedPlayerCard ) {
       statusMessage =  'Select a card to play to either end of the Queue.';
     }
@@ -50,6 +56,8 @@ export default function Status(props) {
   }
   else if (phase === PHASES.RESOLUTION) {
 
+    // OTHER PLAYER'S TURN
+
     if (!playerIsActive && resolvingCard && !resolvingCard.revealed) {
       statusMessage = `Waiting for ${playerName} to choose whether to reveal the current card...`;
     }
@@ -58,13 +66,14 @@ export default function Status(props) {
       statusMessage = `Waiting for ${playerName} to resolve the effect of ${resolvingCard.name}...`;
     }
 
+    // PLAYER IS ACTIVE
+
     if (playerIsActive && resolvingCard && !resolvingCard.revealed) {
       statusMessage = `Reveal ${resolvingCard.name} to apply its effect, or place 1 influence on it.`;
     }
 
     if (playerIsActive && resolvingCard && resolvingCard.revealed) {
       if (resolvingCardToBeDiscarded) {
-        // currently Ambush / Conspiracy
         statusMessage = `${resolvingCard.name} will now be discarded. Click Discard to continue.`;
       }
       else if (targetsNoneValid) {

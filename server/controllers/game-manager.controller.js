@@ -161,16 +161,18 @@ function GameManager () {
     };
     const { queue, queueResolutionIndex:qri } = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
-    if (resolvingCard) {
+    if (!resolvingCard) {
       // if there isn't a resolvingCard, it has eliminated itself!!
-      // can happen with e.g. Assassination, or Archer who may be forced to kill themselves
-      const toDiscard = cardHelper.getDiscardAfterResolution(resolvingCard, queue, qri);
-      if (toDiscard) {
-        nextState.resolvingCardToBeDiscarded = true;
-        _returnToPlayer(nextState);
-      }
+      // can happen with e.g. Archer who may be forced to kill themselves
+      _checkForAdvanceToNextRound(nextState);
     }
-    _checkForAdvanceToNextRound(nextState);
+    const toDiscard = cardHelper.getDiscardAfterResolution(resolvingCard, queue, qri);
+    if (toDiscard) {
+      nextState.resolvingCardToBeDiscarded = true;
+      _returnToPlayer(nextState);
+    } else {
+      _checkForAdvanceToNextRound(nextState);
+    }
   }
 
   const _returnToPlayer = (prevState) => {

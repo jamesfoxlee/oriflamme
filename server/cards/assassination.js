@@ -8,13 +8,14 @@ const assassination = {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
   },
-  getTargets: (queue) => {
+  getTargets: (queue, qri) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
-
-    // Assassination can target anything - simply return all array indices
+    const allIndices = queue.map((_, idx) => idx);
+    const targets = allIndices.filter(target => target !== qri); // exclude Assassination
     return {
-      targets: queue.map((_, idx) => idx),
+      targets,
+      targetsNoneValid: targets.length === 0,
     }
   },
   getAction: () => {

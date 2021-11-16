@@ -38,6 +38,7 @@ export default function Queue(props) {
     players,
     queue,
     queueResolutionIndex: qri,
+    resolvingCardToBeDiscarded,
     targets,
     targetsNoneValid,
     targetsSelf,
@@ -79,6 +80,7 @@ export default function Queue(props) {
                       isResolving={isResolving}
                       isTarget={isTarget}
                       qri={qri}
+                      resolvingCardToBeDiscarded={resolvingCardToBeDiscarded}
                       targetsNoneValid={targetsNoneValid}
                       targetsSelf={targetsSelf}
                       key={`queue-card-${idx}`}
