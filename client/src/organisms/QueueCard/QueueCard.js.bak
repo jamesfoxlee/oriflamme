@@ -6,8 +6,7 @@ import QCButtons from '../../atoms/QCButtons/QCButtons';
 
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
-import { getDataForCardFronts, getDataForCardBacks } from '../../services/card-image.service';
-import { QUEUE_CARD as QC } from '../../config/ui.constants';
+import { QUEUE_CARD } from '../../config/ui.constants';
 
 export default function QueueCard(props) {
 
@@ -46,35 +45,27 @@ export default function QueueCard(props) {
 
   // DYNAMIC STYLES
 
-  const width = QC.WIDTH;
-  const hoverWidth = width * QC.HOVER_SCALE;
-  const baseDims = getDataForCardFronts(card.id, card.ownerColor, width);
-  const hoverDims = getDataForCardFronts(card.id, card.ownerColor, hoverWidth);
-  const backDims = getDataForCardBacks(card.id, card.ownerColor, width);
-  const backHoverDims = getDataForCardBacks(card.id, card.ownerColor, hoverWidth);
+  const width = QUEUE_CARD.WIDTH;
+  const height = width * QUEUE_CARD.HEIGHT_SCALE;
 
   const notRevealedStyles = {
-    backgroundPosition: hovered ?
-                        `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px` :
-                        `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
+    backgroundColor: card.ownerColor,
   };
 
   const revealedStyles = {
-    backgroundPosition: hovered ?
-                        `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px` :
-                        `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
+    backgroundColor: card.ownerColor,
   };
 
   const noHoverStyles = {
     width: `${width}px`,
-    height: `${baseDims.cardHeight}px`,
-    backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`,
+    maxWidth: QUEUE_CARD.MAX_WIDTH,
+    height: `${height}px`,
   };
 
   const hoverStyles = {
-    width: `${hoverWidth}px`,
-    height: `${hoverDims.cardHeight}px`,
-    backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`,
+    width: `${width * QUEUE_CARD.HOVER_SCALE}px`,
+    height: `${height * QUEUE_CARD.HOVER_SCALE}px`,
+    backgroundColor: card.ownerColor,
   };
 
   const resolvingStyles = {
@@ -100,8 +91,22 @@ export default function QueueCard(props) {
         style={combinedStyle}
       >
         {
-          isOwned && hovered ?
+          !revealed ?
             <div className="queue-card__card-wrapper">
+              <div className="queue-card__back">O</div>
+            </div> :
+            null
+        }
+        {
+          revealed && !hovered ?
+            <div className="queue-card__card-wrapper">
+              <div className="queue-card__name">{card.name}</div>
+            </div> :
+            null
+        }
+        {
+          (revealed || isOwned) && hovered ?
+          <div className="queue-card__card-wrapper">
               <div className="queue-card__text">{card.text}</div>
               <div className="queue-card__name">{card.name}</div>
             </div> :

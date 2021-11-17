@@ -12,8 +12,6 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  margin: 0 auto;
-  background-image: url('../../assets/oriflamme-cards');
 }
 
 .queue-card__card-wrapper {
@@ -21,6 +19,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.queue-card__back {
+  font-family: var(--font-family-gothic);
+  font-size: var(--font-size-biggest);
+  font-weight: var(--font-weight-regular);
 }
 
 .queue-card__text {
@@ -30,7 +35,7 @@
 }
 
 .queue-card__name {
-  font-size: var(--font-size-mid);
+  font-size: var(--font-size-smaller);
   font-weight: var(--font-weight-chunky);
 }
 

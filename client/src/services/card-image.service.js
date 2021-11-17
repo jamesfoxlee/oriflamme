@@ -27,14 +27,14 @@ const CARDFRONTS_BOTTOM_OFFSET = {
 };
 
 const CARDBACKS_RIGHT_OFFSET = {
-  black: 5, // zero offset from bottom of sheet
-  gold: 4,
-  blue: 3,
-  green: 2,
   red: 1,
+  green: 2,
+  blue: 3,
+  gold: 4,
+  black: 5,
 };
 
-const CARDBACKS_BOTTOM_OFFSET = 6;
+const CARDBACKS_BOTTOM_OFFSET = 7;
 
 export function getDataForCardFronts (cardId, color, cardWidth) {
   const cardHeight = cardWidth * HEIGHT_SCALE;
@@ -47,6 +47,13 @@ export function getDataForCardFronts (cardId, color, cardWidth) {
   }
 }
 
-// export function getDataForCardBacks (cardId, color, cardWidth) {
-
-// }
+export function getDataForCardBacks (cardId, color, cardWidth) {
+  const cardHeight = cardWidth * HEIGHT_SCALE;
+  return {
+    cardHeight,
+    sheetWidth: CARDS_IN_ROW * cardWidth,
+    sheetHeight: CARDS_IN_COLUMN * cardHeight,
+    rightOffset: CARDBACKS_RIGHT_OFFSET[cardId] * cardWidth,
+    bottomOffset: CARDBACKS_BOTTOM_OFFSET[color] * cardHeight,
+  }
+}

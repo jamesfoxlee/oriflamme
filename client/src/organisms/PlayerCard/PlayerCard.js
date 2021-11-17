@@ -25,14 +25,13 @@ export default function PlayerCard(props) {
 
   const width = PC.WIDTH;
   const hoverWidth = width * PC.HOVER_SCALE;
-  const baseDims = getDataForCardFronts(cardId, 'blue', width);
-  const hoverDims = getDataForCardFronts(cardId, 'blue', hoverWidth);
+  const baseDims = getDataForCardFronts(cardId, cardColor, width);
+  const hoverDims = getDataForCardFronts(cardId, cardColor, hoverWidth);
 
   const noHoverStyles = {
     card: {
       width: `${width}px`,
       height: `${baseDims.cardHeight}px`,
-      // backgroundColor: cardColor,
       backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
       backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`,
     }
@@ -43,7 +42,7 @@ export default function PlayerCard(props) {
       marginBottom: `${hoverWidth}px`,
       width: `${hoverWidth}px`,
       height: `${hoverDims.cardHeight}px`,
-      backgroundPosition: `top ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
+      backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
       backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`,
     }
   };
