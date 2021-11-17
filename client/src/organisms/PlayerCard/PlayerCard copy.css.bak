@@ -11,9 +11,7 @@
   align-items: center;
   z-index: var(--layer-3);
   margin: 0 auto;
-  background-image: url('../../assets/oriflamme-cards');
 }
-
 
 .player-card__text {
   padding: 3rem 0.5rem;

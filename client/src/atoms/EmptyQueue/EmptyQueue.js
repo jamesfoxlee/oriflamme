@@ -18,8 +18,7 @@ export default function EmptyQueue (props) {
         <div className="empty-queue__phantom-card" style={phantomStyles}></div>
         <div className="empty-queue__phantom-card" style={phantomStyles}></div>
       </div>
-      <div className="empty-queue__text">In the Planning Phase, cards are played to either end of the Queue.</div>
-      <div className="empty-queue__text">In the Resolution Phase, revealed cards are resolved from left to right.</div>
+      <div className="empty-queue__text">In the Planning Phase, cards are played to either end of the Queue. In the Resolution Phase, revealed cards are resolved from left to right.</div>
     </div>
   );
 }

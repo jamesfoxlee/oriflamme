@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import './PlayerCard.css';
 
 import { CardsContext } from '../../context/cards.context';
-import { getDataForCardFronts } from '../../services/card-image.service';
 import { PLAYER_CARD as PC } from '../../config/ui.constants';
 
 export default function PlayerCard(props) {
@@ -24,27 +23,23 @@ export default function PlayerCard(props) {
   // DYNAMIC STYLES
 
   const width = PC.WIDTH;
-  const hoverWidth = width * PC.HOVER_SCALE;
-  const baseDims = getDataForCardFronts(cardId, 'blue', width);
-  const hoverDims = getDataForCardFronts(cardId, 'blue', hoverWidth);
+  const height = width * PC.HEIGHT_SCALE;
 
   const noHoverStyles = {
     card: {
       width: `${width}px`,
-      height: `${baseDims.cardHeight}px`,
-      // backgroundColor: cardColor,
-      backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-      backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`,
+      height: `${height}px`,
+      backgroundColor: cardColor,
     }
   };
 
   const hoverStyles = {
     card: {
-      marginBottom: `${hoverWidth}px`,
-      width: `${hoverWidth}px`,
-      height: `${hoverDims.cardHeight}px`,
-      backgroundPosition: `top ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
-      backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`,
+      marginBottom: `${width}px`,
+      width: `${width * PC.HOVER_SCALE}px`,
+      height: `${height * PC.HOVER_SCALE}px`,
+      maxWidth: PC.MAX_WIDTH,
+      backgroundColor: cardColor,
     }
   };
 
@@ -74,6 +69,12 @@ export default function PlayerCard(props) {
         onClick={() => handleCardClicked(card)}
         style={combinedStyle}
       >
+        {
+          hovered ?
+            <div className="player-card__text">{card.text}</div> :
+            null
+        }
+        <div className="player-card__name">{card.name}</div>
       </div>
     </div>
   );
