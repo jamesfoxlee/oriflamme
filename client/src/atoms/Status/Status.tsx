@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Props } from './Props';
 import './Status.css';
 
 import { PHASES } from '../../config/game.constants';
@@ -10,7 +10,9 @@ const boxStyles = {
   color: 'hsla(213, 62%, 15%, 1)',
 }
 
-export default function Status(props) {
+
+
+export default function Status(props: Props) {
 
   const { gameState, selectedPlayerCard, user } = props;
   const {
@@ -19,7 +21,7 @@ export default function Status(props) {
     phase,
     players,
     queue,
-    queueResolutionIndex:qri,
+    queueResolutionIndex: qri,
     resolvingCardToBeDiscarded,
     targetsNoneValid,
   } = gameState;
@@ -97,7 +99,7 @@ export default function Status(props) {
     <div className="status">
       <div className="status__inner">
         <div className="status__phase">{phaseText}</div>
-          <div className="status__message" style={playerIsActive ? boxStyles : null}>
+          <div className="status__message" style={playerIsActive ? boxStyles : undefined}>
             {statusMessage}
           </div>
       </div>
