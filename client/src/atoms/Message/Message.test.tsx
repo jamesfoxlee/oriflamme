@@ -31,5 +31,6 @@ test('loads and displays message', async () => {
 		render(<Message {...props} />, container);
 	});
 
+	expect(container.querySelector('.message__from')!.textContent).toBe('John Fitzgerald Kennedy:');
 	expect(container.querySelector('.message__content')!.textContent).toBe('I feel a pang in my head.');
 })
