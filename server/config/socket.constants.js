@@ -4,7 +4,6 @@ const SOCKET_EVENTS = {
     CONNECTION: 'connection',
     DISCONNECT: 'disconnect',
     DISCONNECTING: 'disconnecting',
-
   },
   GAME: {
     GAMESTATE_CHANGED: 'game.gamestate_changed',

@@ -35,7 +35,7 @@ function GameManager () {
   // GAME LOOP
   //----------------------------------------------------------------
 
-  // should call _returnToPlayer() if need "break out" of game loop
+  // should call _returnToPlayer() if need to "break out" of game loop
 
   const _checkForAdvanceToResolutionPhase = (prevState) => {
     console.log('GameManager._checkForAdvanceToResolutionPhase()');
@@ -366,24 +366,6 @@ function GameManager () {
     const nextState = _discardCard(_gameState);
     _checkForAdvanceToNextRound(nextState);
   };
-
-  // const INITIAL_GAMESTATE = {
-  //   activePlayerId: null,
-  //   numPlayers: 0,
-  //   phase: 'planning',
-  //   planningPhasePlayed: 0,
-  //   players: {},
-  //   queue: [],
-  //   queueResolutionIndex: 0,
-  //   resolvingCardToBeDiscarded: false
-  //   roomId,
-  //   round: 1,
-  //   targets: [],
-  //   targetsNoneValid: false,
-  //   targettedIndex: null,
-  //   turnOrder: [],
-  //   turnOrderIndex: 0
-  // }
 
   return {
     initialise,
