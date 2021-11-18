@@ -42,7 +42,7 @@ export type Props = {
 		turnOrder: string[];
 		turnOrderIndex: number;
 	};
-	selectedPlayerCard: Card;
+	selectedPlayerCard?: Card;
 	user: {
 		id: string;
 	};

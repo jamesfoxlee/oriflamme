@@ -10,8 +10,6 @@ const boxStyles = {
   color: 'hsla(213, 62%, 15%, 1)',
 }
 
-
-
 export default function Status(props: Props) {
 
   const { gameState, selectedPlayerCard, user } = props;
