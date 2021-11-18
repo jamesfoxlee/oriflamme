@@ -1,6 +1,7 @@
+import Round, { Props } from './Round';
+
 import '@testing-library/jest-dom';
 import React from 'react';
-import Message, { Props } from './Message';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import { render, unmountComponentAtNode } from 'react-dom';
@@ -20,20 +21,20 @@ afterEach(() => {
 
 test('loads and displays message', async () => {
 	const props: Props = {
-		from: 'John Fitzgerald Kennedy',
-		message: {
-			content: 'I feel a pang in my head.'
-		}
+		round: 3
 	};
 
 	act(() => {
-		render(<Message {...props} />, container);
+		render(<Round {...props} />, container);
 	});
+	expect(container.querySelector('.round__text')!.textContent).toBe('Round 3');
+  
+  const props2: Props = {
+		round: 6
+	};
 
-	expect(container.querySelector('.message__from')!.textContent).toBe(
-		'John Fitzgerald Kennedy:'
-	);
-	expect(container.querySelector('.message__content')!.textContent).toBe(
-		'I feel a pang in my head.'
-	);
+	act(() => {
+		render(<Round {...props2} />, container);
+	});
+	expect(container.querySelector('.round__text')!.textContent).toBe('Final Round');
 });
