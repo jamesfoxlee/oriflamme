@@ -6,7 +6,7 @@ import Queue from '../../organisms/Queue/Queue';
 import PlayerArea from '../../molecules/PlayerArea/PlayerArea';
 import Messages from '../../organisms/Messages/Messages';
 import Round from '../../atoms/Round/Round';
-import Status from '../../atoms/Status/Status.js';
+import Status from '../../atoms/Status/Status';
 import Loading from '../../atoms/Loading/Loading';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
@@ -25,9 +25,8 @@ export default function Game(props) {
   // "METHODS"
 
   const handleGameStateChanged = (newGameState) => {
-    console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
+    console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED, newGameState);
     setGameState(newGameState);
-    console.log(newGameState);
     if (loading) {
       setLoading(false);
     }

@@ -16,7 +16,7 @@ export default function Status(props: Props) {
 
   const { gameState, selectedPlayerCard, user } = props;
   const {
-    abilityInterrupt,
+    abilityInterrupted,
     activePlayerId,
     phase,
     players,
@@ -25,7 +25,6 @@ export default function Status(props: Props) {
     resolvingCardToBeDiscarded,
     targetsNoneValid,
   } = gameState;
-
   const activePlayer = players[activePlayerId];
   const playerIsActive = activePlayerId === user.id;
   const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
@@ -77,7 +76,7 @@ export default function Status(props: Props) {
 
     if (playerIsActive && resolvingCard && resolvingCard.revealed) {
 
-      if (abilityInterrupt) {
+      if (abilityInterrupted) {
         statusMessage = `Elimination interrupted by ${resolvingCard.name}. Click Confirm to continue.`;
       }
       else if (resolvingCardToBeDiscarded) {

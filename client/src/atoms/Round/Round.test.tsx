@@ -19,7 +19,7 @@ afterEach(() => {
 	container.remove();
 });
 
-test('loads and displays message', async () => {
+test('displays round message', async () => {
 	const props: Props = {
 		round: 3
 	};

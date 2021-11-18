@@ -7,7 +7,7 @@ import modalStyles from '../../styles/modal';
 
 // import { UserContext } from '../../context/user.context';
 
-// ReactModal.setAppElement('#root');
+ReactModal.setAppElement('#root');
 
 const FORM_INITIAL_STATE = {
   roomName: '',
