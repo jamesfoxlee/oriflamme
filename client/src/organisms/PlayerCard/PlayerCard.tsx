@@ -13,6 +13,20 @@ export type Props = {
 	cardId: string;
 };
 
+export function getStyle(cardId: string, cardColor: string) {
+  const width = PC.WIDTH;
+	const hoverWidth = width * PC.HOVER_SCALE;
+	const baseDims = getDataForCardFronts(cardId, cardColor, width);
+	const hoverDims = getDataForCardFronts(cardId, cardColor, hoverWidth);
+
+  return { 
+    width,
+    hoverWidth,
+    baseDims,
+    hoverDims
+  }
+}
+
 export default function PlayerCard (props: Props) {
 	const { canPlayCard, cardColor, cardId } = props;
 
@@ -29,11 +43,7 @@ export default function PlayerCard (props: Props) {
 	};
 
 	// DYNAMIC STYLES
-
-	const width = PC.WIDTH;
-	const hoverWidth = width * PC.HOVER_SCALE;
-	const baseDims = getDataForCardFronts(cardId, cardColor, width);
-	const hoverDims = getDataForCardFronts(cardId, cardColor, hoverWidth);
+  const { width, hoverWidth, baseDims, hoverDims } = getStyle(cardId, cardColor);
 
 	const noHoverStyles = {
 		card: {
@@ -81,6 +91,7 @@ export default function PlayerCard (props: Props) {
 	return (
 		<div data-testid='player-card' className='player-card__wrapper'>
 			<div
+        data-testid='player-card__card'
 				className='player-card__card'
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
