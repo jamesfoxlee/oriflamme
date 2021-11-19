@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
 import { Card } from '../../types/index';
 import './PlayerCard.css';
 
@@ -32,14 +31,14 @@ export default function PlayerCard (props: Props) {
 
 	// "METHODS"
 
-	const handleMouseEnter: React.MouseEventHandler<HTMLDivElement> = (e) =>
+	const handleMouseEnter: React.MouseEventHandler<HTMLDivElement> = () =>
 		setHovered(true);
 
-	const handleMouseLeave: React.MouseEventHandler<HTMLDivElement> = (e) =>
+	const handleMouseLeave: React.MouseEventHandler<HTMLDivElement> = () =>
 		setHovered(false);
 
 	const handleCardClicked = (card: Card) => {
-		canPlayCard && handlePlayerCardClicked(card);
+		if (canPlayCard) handlePlayerCardClicked(card);
 	};
 
 	// DYNAMIC STYLES
