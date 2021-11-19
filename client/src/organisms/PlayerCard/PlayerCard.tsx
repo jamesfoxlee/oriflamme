@@ -46,28 +46,22 @@ export default function PlayerCard (props: Props) {
   const { width, hoverWidth, baseDims, hoverDims } = getStyle(cardId, cardColor);
 
 	const noHoverStyles = {
-		card: {
-			width: `${width}px`,
-			height: `${baseDims.cardHeight}px`,
-			backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-			backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
-		}
+    width: `${width}px`,
+    height: `${baseDims.cardHeight}px`,
+    backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
+    backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
 	};
 
 	const hoverStyles = {
-		card: {
-			marginBottom: `${hoverWidth}px`,
-			width: `${hoverWidth}px`,
-			height: `${hoverDims.cardHeight}px`,
-			backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
-			backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
-		}
+    marginBottom: `${hoverWidth}px`,
+    width: `${hoverWidth}px`,
+    height: `${hoverDims.cardHeight}px`,
+    backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
+    backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
 	};
 
 	const selectedStyles = {
-		card: {
-			boxShadow: '0 0 1rem 1rem var(--color-white)'
-		}
+    boxShadow: '0 0 1rem 1rem var(--color-white)'
 	};
 
 	// STATE, CONTEXT etc
@@ -84,8 +78,8 @@ export default function PlayerCard (props: Props) {
 
 	const card = cards[cardId];
 	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
-	const currentHoverStyle = hovered ? hoverStyles.card : noHoverStyles.card;
-	const currentSelectedStyle = isSelected ? selectedStyles.card : {};
+	const currentHoverStyle = hovered ? hoverStyles : noHoverStyles;
+	const currentSelectedStyle = isSelected ? selectedStyles : {};
 	const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
 	return (
