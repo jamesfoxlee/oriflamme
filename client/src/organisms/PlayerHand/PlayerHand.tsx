@@ -3,7 +3,13 @@ import React from 'react';
 import './PlayerHand.css';
 import PlayerCard from '../PlayerCard/PlayerCard';
 
-export default function PlayerHand (props) {
+export type Props = { 
+	cardColor: string;
+	hand: string[];
+	isActive: boolean;
+};
+
+export default function PlayerHand (props: Props) {
 	const { cardColor, hand, isActive } = props;
 
 	return (
