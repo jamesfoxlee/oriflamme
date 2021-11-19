@@ -21,7 +21,7 @@ export default function Player (props: Props) {
   }
 
   return (
-    <div className={playerStyle} style={imageStyles}>
+    <div data-testid="player" className={playerStyle} style={imageStyles}>
       <div className="player__name" style={{backgroundColor: color}}>{name}</div>
       <div className="player__window">
         <span
