@@ -1,5 +1,3 @@
-import { Card } from './index';
-
 export type PlayerType = {
 	color: string;
 	discardPile: string[];
