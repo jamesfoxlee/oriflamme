@@ -65,7 +65,7 @@ export default function PlayerCard(props) {
   const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 
   return (
-    <div className="player-card__wrapper">
+    <div data-testid="player-card" className="player-card__wrapper">
       <div
         className="player-card__card"
         onMouseEnter={handleMouseEnter}
