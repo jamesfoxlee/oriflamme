@@ -76,7 +76,7 @@ export default function Game(props) {
       }
       {
         !loading && gameState ?
-          <CardsProvider value={[cards, selectedPlayerCard, handlePlayerCardClicked]} >
+          <CardsProvider value={{cards, selectedPlayerCard, handlePlayerCardClicked}} >
             <div className="game__table">
               <div className="game__top-bar">
                 <Round round={gameState.round} />

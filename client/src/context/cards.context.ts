@@ -1,11 +1,12 @@
 import { CARDS as cards } from '../config/cards.constants';
+import { Card } from '../types/index';
 import React from 'react';
 
-export const CardsContext = React.createContext([
+export const CardsContext = React.createContext({
 	cards,
-	null,
-	() => {
+	selectedPlayerCard: cards.ambush,
+	handlePlayerCardClicked: (card: Card) => {
 		return;
 	}
-]);
+});
 export const CardsProvider = CardsContext.Provider;

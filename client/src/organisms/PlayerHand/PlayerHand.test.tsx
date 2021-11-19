@@ -19,13 +19,11 @@ beforeEach(() => {
 });
 
 test('PlayerHand instantiates PlayerCard elements', () => {
-  const { getAllByTestId } = render(<PlayerHand {...props} />);
+	const { getAllByTestId } = render(<PlayerHand {...props} />);
 	expect(getAllByTestId('player-card')).not.toHaveLength(0);
 });
 
 test('PlayerHand instantiates none if hand empty', () => {
-  const { queryByTestId } = render(
-    <PlayerHand {...{ ...props, hand: [] }} />
-  );
-  expect(queryByTestId('player-card')).toBeNull();
+	const { queryByTestId } = render(<PlayerHand {...{ ...props, hand: [] }} />);
+	expect(queryByTestId('player-card')).toBeNull();
 });
