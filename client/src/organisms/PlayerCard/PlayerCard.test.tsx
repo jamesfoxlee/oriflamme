@@ -37,8 +37,8 @@ beforeEach(() => {
 
 test('player-card__card div gets correct styling', () => {
   const { getByTestId } = render(<PlayerCard {...props} />);
-  expect(getByTestId('player-card__card').getAttribute('style')).toBe(noHoverStyles);
+  expect(getByTestId('player-card__card')).toHaveStyle(noHoverStyles);
 
   userEvent.hover(getByTestId('player-card__card'));
-  expect(getByTestId('player-card__card').getAttribute('style')).toBe(hoverStyles);
+  expect(getByTestId('player-card__card')).toHaveStyle(hoverStyles);
 });
