@@ -1,12 +1,18 @@
 import React, { useContext} from 'react';
-
+import { Players } from '../../types/index'
 import './PlayerArea.css';
 import PlayerHand from '../../organisms/PlayerHand/PlayerHand';
 import Player from '../Player/Player';
 
 import { UserContext } from '../../context/user.context';
 
-export default function PlayerArea (props) {
+export type Props = {
+  activePlayerId: string;
+  phase: string;
+  players: Players;
+}
+
+export default function PlayerArea (props: Props) {
 
   const { activePlayerId, phase, players } = props;
   const [user] = useContext(UserContext);
