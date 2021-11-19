@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
-
+import { PlayerType } from '../../types/index';
 import './Player.css';
 
-import { CardsContext } from '../../context/cards.context';
+// import { CardsContext } from '../../context/cards.context';
 
-export default function Player (props) {
+export type Props = {
+  isActivePlayer: boolean;
+  player: PlayerType;
+}
+
+export default function Player (props: Props) {
 
   const { isActivePlayer, player } = props;
   const { name, influence, imageUrl, discardPile, color } = player;
-  const [cards] = useContext(CardsContext);
+  // const [cards] = useContext(CardsContext);
 
   const playerStyle = 'player' + (isActivePlayer ? ' player--active' : '');
   const imageStyles = {
@@ -35,7 +40,7 @@ export default function Player (props) {
               key={`player-discarded-card-${idx}`}
               style={{backgroundColor: color}}
             >
-              {cards[card].name.slice(0, 2)}
+              {card.substr(0, 2)}
             </div>
           )
         }) :

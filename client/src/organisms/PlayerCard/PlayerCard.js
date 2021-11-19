@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './PlayerCard.css';
 
-import { CardsContext } from '../../context/cards.context';
+import { CardsContext } from '../../context/cards.context.ts';
 import { getDataForCardFronts } from '../../services/card-image.service';
 import { PLAYER_CARD as PC } from '../../config/ui.constants';
 

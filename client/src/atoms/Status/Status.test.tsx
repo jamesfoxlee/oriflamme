@@ -1,26 +1,16 @@
 import Status from './Status';
-import { Card, Player, Players, Props } from './Props';
+import { Card, PlayerType } from '../../types';
+import { cards } from '../../mocks/cards.mocks';
+import { Props } from './Status';
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-const cardMock: Card = {
-	id: 'conspiracy',
-	name: 'Conspiracy',
-	text:
-		'Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.'
-};
-const cardMock2 = {
-	id: 'assassination',
-	name: 'Assassination',
-	text: 'Elimate any card in the Queue. Discard Assassination.',
-	revealed: false
-};
+const [cardMock, cardMock2] = cards;
 
-const playerMock: Player = {
+const playerMock: PlayerType = {
 	color: 'red',
 	discardPile: [],
 	hand: [
@@ -112,9 +102,8 @@ test('displays status message', async () => {
 		`Play ${cardMock.name} to either end of the Queue, or select another card.`
 	);
 
-	props.selectedPlayerCard = undefined;
 	act(() => {
-		render(<Status {...props} />, container);
+		render(<Status {...{...props, selectedPlayerCard: undefined}} />, container);
 	});
 	expect(container.querySelector('.status__message')!.textContent).toBe(
 		'Select a card to play to either end of the Queue.'
@@ -172,10 +161,11 @@ test('displays status message', async () => {
 	expect(container.querySelector('.status__message')!.textContent).toBe(
 		`No valid targets for ${props.gameState.queue[0][0].name}. Click Confirm to continue.`
 	);
-
-  props.gameState.resolvingCardToBeDiscarded = true;
+	
+	const gameState = {...props.gameState};
+  gameState.resolvingCardToBeDiscarded = true;
   act(() => {
-		render(<Status {...props} />, container);
+		render(<Status {...{...props, gameState}} />, container);
 	});
 	expect(container.querySelector('.status__message')!.textContent).toBe(
 		`${props.gameState.queue[0][0].name} will now be discarded. Click Discard to continue.`

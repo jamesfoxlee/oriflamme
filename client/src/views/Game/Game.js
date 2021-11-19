@@ -12,7 +12,7 @@ import Loading from '../../atoms/Loading/Loading';
 import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
-import { CardsProvider } from '../../context/cards.context';
+import { CardsProvider } from '../../context/cards.context.ts';
 // TODO: remove cards to server?
 import { CARDS as cards } from '../../config/cards.constants';
 
