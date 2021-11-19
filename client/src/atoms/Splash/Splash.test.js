@@ -1,4 +1,4 @@
-import {getByText, render, screen} from '@testing-library/react'
+import { render, screen} from '@testing-library/react'
 import Splash from './Splash'
 import * as React from 'react'
 import userEvent from '@testing-library/user-event';
