@@ -1,5 +1,6 @@
 import Status from './Status';
 import { Card, PlayerType } from '../../types';
+import { players } from '../../mocks/players.mocks';
 import { cards } from '../../mocks/cards.mocks';
 import { Props } from './Status';
 import '@testing-library/jest-dom';
@@ -10,21 +11,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 
 const [cardMock, cardMock2] = cards;
 
-const playerMock: PlayerType = {
-	color: 'red',
-	discardPile: [],
-	hand: [
-		'archer',
-		'assassination',
-		'conspiracy'
-	],
-	id: 'n5EKpbcQWdoDvn8lAAAF',
-	imageUrl:
-		'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',
-	influence: 1,
-	name: 'JFK',
-	roomId: '3b805350-4897-11ec-af1c-139452ba1c4c'
-};
+const playerMock = players[0];
 
 const propsMock: Props = {
 	gameState: {
