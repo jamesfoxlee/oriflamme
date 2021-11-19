@@ -7,7 +7,7 @@ import { CardsContext } from '../../context/cards.context';
 import { getDataForCardFronts } from '../../services/card-image.service';
 import { PLAYER_CARD as PC } from '../../config/ui.constants';
 
-type Props = {
+export type Props = {
 	canPlayCard: boolean;
 	cardColor: string;
 	cardId: string;
@@ -90,15 +90,3 @@ export default function PlayerCard (props: Props) {
 		</div>
 	);
 }
-
-//----------------------------------------------------------------
-// PROPS
-//----------------------------------------------------------------
-
-const { bool, string } = PropTypes;
-
-PlayerCard.propTypes = {
-	canPlayCard: bool.isRequired,
-	cardColor: string.isRequired,
-	cardId: string.isRequired
-};
