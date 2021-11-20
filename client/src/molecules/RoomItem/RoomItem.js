@@ -4,7 +4,6 @@ import './RoomItem.css';
 import Button from '../../atoms/Button/Button';
 
 export default function RoomItem (props) {
-
   const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
 
   const { roomId, ownerName, roomName, players, started } = room;
