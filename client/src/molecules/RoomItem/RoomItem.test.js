@@ -6,8 +6,14 @@ import userEvent from '@testing-library/user-event';
 describe('RoomItem component', ()=>{
     const btnFunc= jest.fn();
     const prop=
-        {activeRoomId:3,
-         joinRoom: btnFunc,
+        {activeRoomId:"a54966c0-495d-11ec-b4c4-25889b714c05",
+         joinRoom: (roomId) => {
+            if (!user.name) {
+              togglePlayerNameForm();
+            } else {
+              joinRoom(roomId, user);
+            }
+          },
          leaveRoom: btnFunc,
          playerIsOwner:true,
          room:{
@@ -43,22 +49,10 @@ describe('RoomItem component', ()=>{
          test('Should not show the Start button if activeRoomId===roomId and !playerIsOwner', async ()=>{
             render(<RoomItem activeRoomId={2} joinRoom={prop.activeRoomId} leaveRoom={prop.leaveRoom} playerIsOwner={false} room={prop.room} startGame={prop.startGame}/>)
              const testButton=  screen.queryByRole("button",{name:/start/i});
-            //  await userEvent.click(testButton);
              expect(testButton).toBeNull();
          })
          test('Should  show the Join button if !activeRoomId && !room.started', async ()=>{
            const {getByText}= render(<RoomItem activeRoomId={false} joinRoom={prop.activeRoomId} leaveRoom={prop.leaveRoom} playerIsOwner={false} room={prop.room} startGame={prop.startGame}/>)
-            //  const testButton=  screen.getByRole("button",{name:/join/i});
-            //  await userEvent.click(testButton);
-            //  expect(btnFunc).toHaveBeenCalledTimes(3);
              expect(getByText("Join")).toBeTruthy();
-         })
-
-         
-         
-         
-
- 
-
-    
+         })    
     })
