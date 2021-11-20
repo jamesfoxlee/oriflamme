@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 
-import './QueueCard.css';
-import QCButtons from '../../atoms/QCButtons/QCButtons';
+import "./QueueCard.css";
+import QCButtons from "../../atoms/QCButtons/QCButtons";
 
-import { SocketContext } from '../../context/socket.context';
-import { UserContext } from '../../context/user.context';
-import { getDataForCardFronts, getDataForCardBacks } from '../../services/card-image.service';
-import { QUEUE_CARD as QC } from '../../config/ui.constants';
+import { SocketContext } from "../../context/socket.context";
+import { UserContext } from "../../context/user.context";
+import {
+  getDataForCardFronts,
+  getDataForCardBacks,
+} from "../../services/card-image.service";
+import { QUEUE_CARD as QC } from "../../config/ui.constants";
 
 export default function QueueCard(props) {
-
   const handleMouseEnter = (e) => setHovered(true);
   const handleMouseLeave = (e) => setHovered(false);
 
@@ -34,7 +36,7 @@ export default function QueueCard(props) {
     resolvingCardToBeDiscarded,
     targetsNoneValid,
     targetsSelf,
-    qri
+    qri,
   } = props;
 
   const [hovered, setHovered] = useState(false);
@@ -51,18 +53,22 @@ export default function QueueCard(props) {
   const baseDims = getDataForCardFronts(card.id, card.ownerColor, width);
   const hoverDims = getDataForCardFronts(card.id, card.ownerColor, hoverWidth);
   const backDims = getDataForCardBacks(card.id, card.ownerColor, width);
-  const backHoverDims = getDataForCardBacks(card.id, card.ownerColor, hoverWidth);
+  const backHoverDims = getDataForCardBacks(
+    card.id,
+    card.ownerColor,
+    hoverWidth
+  );
 
   const notRevealedStyles = {
-    backgroundPosition: hovered ?
-                        `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px` :
-                        `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
+    backgroundPosition: hovered
+      ? `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px`
+      : `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
   };
 
   const revealedStyles = {
-    backgroundPosition: hovered ?
-                        `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px` :
-                        `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
+    backgroundPosition: hovered
+      ? `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`
+      : `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
   };
 
   const noHoverStyles = {
@@ -78,16 +84,20 @@ export default function QueueCard(props) {
   };
 
   const resolvingStyles = {
-    boxShadow: '0 0 1rem 1rem var(--color-white)',
+    boxShadow: "0 0 1rem 1rem var(--color-white)",
   };
 
   const targettedStyles = {
-    boxShadow: '0 0 1rem 1rem var(--color-gold)',
+    boxShadow: "0 0 1rem 1rem var(--color-gold)",
   };
 
   const revStyle = card.revealed ? revealedStyles : notRevealedStyles;
   const hovStyle = hovered ? hoverStyles : noHoverStyles;
-  const resStyle = isResolving ? (isTarget ? targettedStyles : resolvingStyles) : {};
+  const resStyle = isResolving
+    ? isTarget
+      ? targettedStyles
+      : resolvingStyles
+    : {};
   const tarStyle = isTarget ? targettedStyles : {};
   const combinedStyle = { ...revStyle, ...hovStyle, ...resStyle, ...tarStyle };
 
@@ -99,76 +109,45 @@ export default function QueueCard(props) {
         onMouseLeave={handleMouseLeave}
         style={combinedStyle}
       >
-        {
-          isOwned && hovered ?
-            <div className="queue-card__card-wrapper">
-              <div className="queue-card__text">{card.text}</div>
-              <div className="queue-card__name">{card.name}</div>
-            </div> :
-            null
-        }
-        {
-          card.influence ?
-          <span className="queue-card__influence">{card.influence}</span> :
-            null
-          }
+        {isOwned && hovered ? (
+          <div className="queue-card__card-wrapper">
+            <div className="queue-card__text">{card.text}</div>
+            <div className="queue-card__name">{card.name}</div>
+          </div>
+        ) : null}
+        {card.influence ? (
+          <span className="queue-card__influence">{card.influence}</span>
+        ) : null}
       </div>
-      {
-        isPlayerTurn && isResolving && isOwned && !revealed ?
-          <QCButtons
-          onYes={handleReveal}
-          onNo={handleNoReveal}
-          text="Reveal?"
-          /> :
-          null
-        }
-        {
-          isPlayerTurn && isTarget ?
-            <QCButtons
-              onYes={handleConfirmTarget}
-              text="Target?"
-            /> :
-            null
-        }
-      {
-        isPlayerTurn && isResolving && isOwned && revealed && targetsNoneValid ?
-        <QCButtons
-            onYes={handleConfirmNoTarget}
-            text="Confirm"
-          /> :
-          null
-      }
-      {
-        isPlayerTurn && isResolving && isOwned && revealed && targetsSelf ?
-          <QCButtons
-            onYes={handleConfirmTargetSelf}
-            text="Confirm"
-          /> :
-          null
-      }
-      {
-        isPlayerTurn && isResolving && revealed && abilityInterrupt ?
-          <QCButtons
-            onYes={handleConfirmInterrupt}
-            text="Confirm"
-          /> :
-          null
-      }
-      {
-        isPlayerTurn && isResolving && isOwned && revealed && resolvingCardToBeDiscarded ?
-          <QCButtons
-            onYes={handleConfirmDiscard}
-            text="Discard"
-          /> :
-          null
-      }
+      {isPlayerTurn && isResolving && isOwned && !revealed ? (
+        <QCButtons onYes={handleReveal} onNo={handleNoReveal} text="Reveal?" />
+      ) : null}
+      {isPlayerTurn && isTarget ? (
+        <QCButtons onYes={handleConfirmTarget} text="Target?" />
+      ) : null}
+      {isPlayerTurn &&
+      isResolving &&
+      isOwned &&
+      revealed &&
+      targetsNoneValid ? (
+        <QCButtons onYes={handleConfirmNoTarget} text="Confirm" />
+      ) : null}
+      {isPlayerTurn && isResolving && isOwned && revealed && targetsSelf ? (
+        <QCButtons onYes={handleConfirmTargetSelf} text="Confirm" />
+      ) : null}
+      {isPlayerTurn && isResolving && revealed && abilityInterrupt ? (
+        <QCButtons onYes={handleConfirmInterrupt} text="Confirm" />
+      ) : null}
+      {isPlayerTurn &&
+      isResolving &&
+      isOwned &&
+      revealed &&
+      resolvingCardToBeDiscarded ? (
+        <QCButtons onYes={handleConfirmDiscard} text="Discard" />
+      ) : null}
     </div>
   );
 }
-
-//----------------------------------------------------------------
-// PROPS
-//----------------------------------------------------------------
 
 const { bool, object } = PropTypes;
 
