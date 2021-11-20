@@ -1,14 +1,13 @@
-import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
 
-import './Nav.css';
+import "./Nav.css";
 
-import { UserContext } from '../../context/user.context';
+import { UserContext } from "../../context/user.context";
 
-export default function Nav(props) {
-
+export default function Nav() {
   const [user] = useContext(UserContext);
-  const userForDisplay = user && user.name ? user.name : 'Guest';
+  const userForDisplay = user && user.name ? user.name : "Guest";
 
   return (
     <div className="nav">
@@ -20,15 +19,10 @@ export default function Nav(props) {
   );
 }
 
-//----------------------------------------------------------------
-// PROPS
-//----------------------------------------------------------------
-
 const { string, shape } = PropTypes;
-
 Nav.propTypes = {
   user: shape({
     id: string,
-    name: string
+    name: string,
   }),
 };
