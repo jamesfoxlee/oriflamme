@@ -13,7 +13,7 @@ export default function Messages({ messages, players, socket }) {
   const handleMessageSend = (e) => {
     e.preventDefault();
     if (message.length) {
-      socket.postMessage(message);
+      // socket.postMessage(message);
       setMessage('');
     }
   }

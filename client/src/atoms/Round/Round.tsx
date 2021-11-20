@@ -2,7 +2,9 @@ import React from 'react';
 
 import './Round.css';
 
-export default function Round (props) {
+export type Props = { round: number }
+
+export default function Round (props: Props) {
 
   const { round } = props;
 
