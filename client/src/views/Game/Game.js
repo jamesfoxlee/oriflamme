@@ -6,13 +6,13 @@ import Queue from '../../organisms/Queue/Queue';
 import PlayerArea from '../../molecules/PlayerArea/PlayerArea';
 import Messages from '../../organisms/Messages/Messages';
 import Round from '../../atoms/Round/Round';
-import Status from '../../atoms/Status/Status.js';
+import Status from '../../atoms/Status/Status';
 import Loading from '../../atoms/Loading/Loading';
 
 import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
-import { CardsProvider } from '../../context/cards.context';
+import { CardsProvider } from '../../context/cards.context.ts';
 // TODO: remove cards to server?
 import { CARDS as cards } from '../../config/cards.constants';
 
@@ -25,9 +25,8 @@ export default function Game(props) {
   // "METHODS"
 
   const handleGameStateChanged = (newGameState) => {
-    console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED);
+    console.log('EVENT RECEIVED: ', GAME.GAMESTATE_CHANGED, newGameState);
     setGameState(newGameState);
-    console.log(newGameState);
     if (loading) {
       setLoading(false);
     }
@@ -77,7 +76,7 @@ export default function Game(props) {
       }
       {
         !loading && gameState ?
-          <CardsProvider value={[cards, selectedPlayerCard, handlePlayerCardClicked]} >
+          <CardsProvider value={{cards, selectedPlayerCard, handlePlayerCardClicked}} >
             <div className="game__table">
               <div className="game__top-bar">
                 <Round round={gameState.round} />
