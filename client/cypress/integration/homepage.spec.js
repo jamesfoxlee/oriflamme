@@ -1,4 +1,4 @@
-
+//Test
 describe("renders the home page",()=>{
     cy.beforeEach(()=>{
         cy.visit("/")
