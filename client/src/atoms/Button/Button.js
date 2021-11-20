@@ -15,6 +15,7 @@ export default function Button (props) {
 
   return (
     <button
+      aria-label={props.text}
       autoComplete="off"
       className={buttonClass}
       disabled={props.disabled}

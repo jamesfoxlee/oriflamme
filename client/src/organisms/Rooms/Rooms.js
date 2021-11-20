@@ -17,7 +17,6 @@ const { LOBBY } = SOCKET_EVENTS;
 const storageService = StorageService();
 
 export default function Rooms(props) {
-
   const {
     activeRoomId,
     joinRoom,
