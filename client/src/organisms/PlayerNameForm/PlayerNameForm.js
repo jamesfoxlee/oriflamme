@@ -6,7 +6,6 @@ import Button from "../../atoms/Button/Button";
 import modalStyles from "../../styles/modal";
 
 // import { UserContext } from '../../context/user.context';
-if (process.env.NODE_ENV !== "test") ReactModal.setAppElement("#app");
 
 ReactModal.setAppElement("#root");
 
