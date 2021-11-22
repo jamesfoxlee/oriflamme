@@ -1,10 +1,11 @@
 /* LINK https://stackoverflow.com/questions/43919067/make-flex-items-overlap */
 .player-card__wrapper {
   height: 100%;
-  width: 14.35%;
+  width: 14.33%;
   overflow: hidden;
   display: flex;
   align-items: flex-end;
+  justify-content: center;
 }
 
 .player-card__wrapper:last-child, .player-card__wrapper:hover {
