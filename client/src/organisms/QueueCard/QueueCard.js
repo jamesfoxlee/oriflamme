@@ -102,7 +102,7 @@ export default function QueueCard(props) {
   const combinedStyle = { ...revStyle, ...hovStyle, ...resStyle, ...tarStyle };
 
   return (
-    <div className="queue-card">
+    <div data-testid="queue-card" className="queue-card">
       <div
         className="queue-card__card"
         onMouseEnter={handleMouseEnter}

@@ -49,7 +49,6 @@ export default function Queue(props) {
   const [user] = useContext(UserContext);
 
   const isPlayerTurn = activePlayerId === user.id;
-
   return (
     <div className="queue">
       <div className="queue__endzone queue__endzone--left">
