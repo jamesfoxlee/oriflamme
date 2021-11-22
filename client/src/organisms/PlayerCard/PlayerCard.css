@@ -1,7 +1,7 @@
 .player-card__wrapper {
   display: flex;
   align-items: center;
-  flex: 1 1 0;
+  /* flex: 1 1 0; */
 }
 
 .player-card__card {
