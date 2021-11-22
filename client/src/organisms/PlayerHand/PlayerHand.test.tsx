@@ -10,10 +10,7 @@ let props: Props;
 beforeEach(() => {
 	props = {
 		cardColor: 'red',
-		hand: [
-			'assassination',
-			'conspiracy'
-		],
+		hand: [ 'assassination', 'conspiracy' ],
 		isActive: false
 	};
 });

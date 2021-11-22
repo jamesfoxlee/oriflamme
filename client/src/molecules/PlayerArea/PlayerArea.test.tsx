@@ -14,15 +14,8 @@ beforeEach(() => {
 		players: {
 			n5EKpbcQWdoDvn8lAAAF: {
 				color: 'red',
-				discardPile: [
-					'assassination',
-					'conspiracy'
-				],
-				hand: [
-					'archer',
-					'assassination',
-					'conspiracy'
-				],
+				discardPile: [ 'assassination', 'conspiracy' ],
+				hand: [ 'archer', 'assassination', 'conspiracy' ],
 				id: 'n5EKpbcQWdoDvn8lAAAF',
 				imageUrl:
 					'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',
@@ -35,6 +28,10 @@ beforeEach(() => {
 });
 
 test('PlayerArea element should instantiate correct components', () => {
-	const { getAllByTestId } = render(<UserContext.Provider value={[{id: 'n5EKpbcQWdoDvn8lAAAF'}]}><PlayerArea {...props} /></UserContext.Provider>);
+	const { getAllByTestId } = render(
+		<UserContext.Provider value={[ { id: 'n5EKpbcQWdoDvn8lAAAF' } ]}>
+			<PlayerArea {...props} />
+		</UserContext.Provider>
+	);
 	expect(getAllByTestId('player')).not.toHaveLength(0);
 });

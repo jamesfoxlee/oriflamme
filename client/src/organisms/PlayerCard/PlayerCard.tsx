@@ -12,18 +12,18 @@ export type Props = {
 	cardId: string;
 };
 
-export function getStyle(cardId: string, cardColor: string) {
-  const width = PC.WIDTH;
+export function getStyle (cardId: string, cardColor: string) {
+	const width = PC.WIDTH;
 	const hoverWidth = width * PC.HOVER_SCALE;
 	const baseDims = getDataForCardFronts(cardId, cardColor, width);
 	const hoverDims = getDataForCardFronts(cardId, cardColor, hoverWidth);
 
-  return { 
-    width,
-    hoverWidth,
-    baseDims,
-    hoverDims
-  }
+	return {
+		width,
+		hoverWidth,
+		baseDims,
+		hoverDims
+	};
 }
 
 export default function PlayerCard (props: Props) {
@@ -42,38 +42,36 @@ export default function PlayerCard (props: Props) {
 	};
 
 	// DYNAMIC STYLES
-  const { width, hoverWidth, baseDims, hoverDims } = getStyle(cardId, cardColor);
+	const { width, hoverWidth, baseDims, hoverDims } = getStyle(
+		cardId,
+		cardColor
+	);
 
 	const noHoverStyles = {
-    width: `${width}px`,
-    height: `${baseDims.cardHeight}px`,
-    backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-    backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
+		width: `${width}px`,
+		height: `${baseDims.cardHeight}px`,
+		backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
+		backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
 	};
 
 	const hoverStyles = {
-    marginBottom: `${hoverWidth}px`,
-    width: `${hoverWidth}px`,
-    height: `${hoverDims.cardHeight}px`,
-    backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
-    backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
+		marginBottom: `${hoverWidth}px`,
+		width: `${hoverWidth}px`,
+		height: `${hoverDims.cardHeight}px`,
+		backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
+		backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
 	};
 
 	const selectedStyles = {
-    boxShadow: '0 0 1rem 1rem var(--color-white)'
+		boxShadow: '0 0 1rem 1rem var(--color-white)'
 	};
 
 	// STATE, CONTEXT etc
 
-	const [
-		hovered,
-		setHovered
-	] = useState(false);
-	const {
-		cards,
-		selectedPlayerCard,
-		handlePlayerCardClicked
-   } = useContext(CardsContext);
+	const [ hovered, setHovered ] = useState(false);
+	const { cards, selectedPlayerCard, handlePlayerCardClicked } = useContext(
+		CardsContext
+	);
 
 	const card = cards[cardId];
 	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
@@ -84,7 +82,7 @@ export default function PlayerCard (props: Props) {
 	return (
 		<div data-testid='player-card' className='player-card__wrapper'>
 			<div
-        data-testid='player-card__card'
+				data-testid='player-card__card'
 				className='player-card__card'
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
