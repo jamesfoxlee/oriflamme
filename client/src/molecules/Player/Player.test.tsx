@@ -11,15 +11,8 @@ beforeEach(() => {
 		isActivePlayer: false,
 		player: {
 			color: 'red',
-			discardPile: [
-        'assassination',
-        'conspiracy'
-      ],
-			hand: [
-				'archer',
-				'assassination',
-				'conspiracy'
-			],
+			discardPile: [ 'assassination', 'conspiracy' ],
+			hand: [ 'archer', 'assassination', 'conspiracy' ],
 			id: 'n5EKpbcQWdoDvn8lAAAF',
 			imageUrl:
 				'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',
@@ -49,7 +42,9 @@ test('player__name div should display the correct name', () => {
 
 test('player__name div should have the correct style', () => {
 	const { container } = render(<Player {...props} />);
-	expect(container.querySelector('.player__name')!.getAttribute('style')).toBe(`background-color: ${props.player.color};`);
+	expect(container.querySelector('.player__name')!.getAttribute('style')).toBe(
+		`background-color: ${props.player.color};`
+	);
 });
 
 test('player__influence div should display the influence number', () => {
@@ -58,7 +53,11 @@ test('player__influence div should display the influence number', () => {
 });
 
 test('player__discard div should display correct card name characters', () => {
-  const { getByText } = render(<Player {...props} />);
-	expect(getByText(`${props.player.discardPile[0].substr(0, 2)}`)).toBeInTheDocument();
-  expect(getByText(`${props.player.discardPile[1].substr(0, 2)}`)).toBeInTheDocument();
+	const { getByText } = render(<Player {...props} />);
+	expect(
+		getByText(`${props.player.discardPile[0].substr(0, 2)}`)
+	).toBeInTheDocument();
+	expect(
+		getByText(`${props.player.discardPile[1].substr(0, 2)}`)
+	).toBeInTheDocument();
 });

@@ -48,8 +48,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@testing-library/react": "^11.2.7",
-    "@types/jest": "^27.0.3",
-    "@types/mocha": "^9.0.0",
+    "@types/jest": "^27.0.2",
     "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",
     "eslint-config-airbnb": "^18.2.1",
