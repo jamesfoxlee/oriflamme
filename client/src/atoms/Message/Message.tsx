@@ -2,7 +2,14 @@ import React from 'react';
 
 import './Message.css';
 
-export default function Message (props) {
+export type Props = {
+  from: string,
+  message: {
+    content: string,
+  }
+}
+
+export default function Message (props: Props) {
   return (
     <div className="message">
         <span className="message__badge icon-message"></span>
