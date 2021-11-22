@@ -16,7 +16,29 @@ const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
-export default function Rooms(props) {
+type Props={
+  activeRoomId: string;
+  joinRoom: (roomId:string,player:string)=>void;
+  leaveRoom: (roomId:string,player:string)=>void;
+  setActiveRoomId: (id:string)=>void
+  startGame:(roomId:string)=>void
+}
+type WaitPlayer={
+  id: string,
+  name: string,
+  socketId: string,
+}
+type Room={
+    roomId: string,
+    ownerId: string,
+    players: WaitPlayer[]
+    roomName: string,
+    ownerName: string,
+    started: boolean  
+}
+
+
+export default function Rooms(props:Props) {
   const {
     activeRoomId,
     joinRoom,
@@ -24,10 +46,27 @@ export default function Rooms(props) {
     setActiveRoomId,
     startGame
   } = props;
+  // STATE, CONTEXT etc
+
+  useEffect(() => {
+    socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
+    socket.getRooms();    
+    // TODO: change to cleanup useEffect to unregister listener
+    return function teardownListeners() {
+      socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const [loading, setLoading] = useState(true);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [showPlayerNameForm, setShowPlayerNameForm] = useState(false);
+  const socket = useContext(SocketContext);
+  const [user, setUser] = useContext(UserContext);
+
 
   // "METHODS"
 
-  const handleAddPlayerName = (playerName) => {
+  const handleAddPlayerName = (playerName:string) => {
     storageService.set('user.name', playerName);
     setUser({
       ...user,
@@ -36,7 +75,7 @@ export default function Rooms(props) {
     togglePlayerNameForm();
   }
 
-  const handleJoinRoom = (roomId) => {
+  const handleJoinRoom = (roomId:string) => {
     if (!user.name) {
       togglePlayerNameForm();
     } else {
@@ -44,7 +83,7 @@ export default function Rooms(props) {
     }
   }
 
-  const handleLeaveRoom = (roomId) => {
+  const handleLeaveRoom = (roomId:string) => {
     leaveRoom(roomId, user);
   }
 
@@ -56,7 +95,7 @@ export default function Rooms(props) {
       // listen for acknowledgement of room create so we can set it as active
       socket.registerOneShotListener(
         LOBBY.ROOM_CREATED,
-        (roomId) => {
+        (roomId:string) => {
           joinRoom(roomId, user);
           setActiveRoomId(roomId);
         }
@@ -70,7 +109,7 @@ export default function Rooms(props) {
     }
   }
 
-  const handleRoomsChanged = (rooms) => {
+  const handleRoomsChanged = (rooms:Room[]) => {
     setRooms(rooms);
     if (loading) {
       setLoading(false);
@@ -81,22 +120,7 @@ export default function Rooms(props) {
     setShowPlayerNameForm(!showPlayerNameForm);
   }
 
-  // STATE, CONTEXT etc
 
-  const [loading, setLoading] = useState(true);
-  const [rooms, setRooms] = useState([]);
-  const [showPlayerNameForm, setShowPlayerNameForm] = useState(false);
-  const socket = useContext(SocketContext);
-  const [user, setUser] = useContext(UserContext);
-
-  useEffect(() => {
-    socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
-    socket.getRooms();    
-    // TODO: change to cleanup useEffect to unregister listener
-    return function teardownListeners() {
-      socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // TODO: New Room button stays disabled after server reconnect / reflash of rooms if
   // user had previously created one
@@ -151,8 +175,8 @@ export default function Rooms(props) {
             <Button
               disabled={!!activeRoomId}
               onClick={handleNewRoom}
-              text="New Room">
-            </Button>
+              text="New Room"
+              />                   
           </div> :
           null
       }
