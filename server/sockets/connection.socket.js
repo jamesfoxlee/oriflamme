@@ -9,6 +9,7 @@ const lobbyManager = LobbyManager();
 function registerConnectionEventHandlers (socketServer) {
 
   socketServer.on(CONNECTIVITY.CONNECTION, (socket) => {
+    console.log(socket.id)
     socket.join('lobby');
     registerLobbyEventHandlers(lobbyManager, socket, socketServer);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());

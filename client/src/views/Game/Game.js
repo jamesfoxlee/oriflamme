@@ -73,7 +73,7 @@ console.log("EVENT RECEIVED: ", GAME.GAMESTATE_CHANGED);
 {loading ? <Loading message={"Starting game..."} /> : null}
       {!loading && gameState ? (
         <CardsProvider
-          value={[cards, selectedPlayerCard, handlePlayerCardClicked]}
+          value={{cards, selectedPlayerCard, handlePlayerCardClicked}}
         >
           <div className="game__table">
             <div className="game__top-bar">
