@@ -2,7 +2,6 @@ const SOCKET_EVENTS = require('../config/socket.constants');
 const { LOBBY } = SOCKET_EVENTS;
 
 module.exports = function registerLobbyEventHandlers(lobbyManager, socket, socketServer) {
-
   socket.on(LOBBY.ROOMS_GET, () => {
     console.log('EVENT RECEIVED: ', LOBBY.ROOMS_GET);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());

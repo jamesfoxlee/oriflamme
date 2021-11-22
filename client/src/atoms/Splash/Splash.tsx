@@ -1,15 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactModal from 'react-modal';
 
 import './Splash.css';
 import Button from '../Button/Button';
 
-export default function Splash (props) {
+type Props={
+  show:boolean;
+  dismiss: ()=>void
+}
 
+export default function Splash (props:Props) {
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#app');
+    ReactModal.setAppElement('#root');
+  });
 
+console.log(props);
   const { show, dismiss } = props;
 
-  const splashModalStyles = {
+  type SplashModalStyles = {
     overlay: {
       zIndex: 100,
       padding: 0,
@@ -25,6 +34,21 @@ export default function Splash (props) {
     }
   };
 
+ const splashModalStyles: SplashModalStyles={
+  overlay: {
+    zIndex: 100,
+    padding: 0,
+    backgroundColor: 'var(--color-blue-midnight)',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: '0 auto',
+    border: 'none',
+    backgroundColor: 'var(--color-blue-midnight)',
+  }
+};
   return (
     <ReactModal
       isOpen={show}
