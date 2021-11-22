@@ -41,12 +41,6 @@ export default function PlayerCard (props: Props) {
 		if (canPlayCard) handlePlayerCardClicked(card);
 	};
 
-	// DYNAMIC STYLES
-
-	const selectedStyles = {
-		boxShadow: '0 0 1rem 1rem white'
-	};
-
 	// STATE, CONTEXT etc
 
 	const [ hovered, setHovered ] = useState(false);
@@ -56,7 +50,6 @@ export default function PlayerCard (props: Props) {
 
 	const card = cards[cardId];
 	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
-	const currentSelectedStyle = isSelected ? selectedStyles : {};
 	const cardImgUrl = getUrlCardFront(cardId, cardColor);
 
 	return (
@@ -68,7 +61,6 @@ export default function PlayerCard (props: Props) {
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				onClick={() => handleCardClicked(card)}
-				style={currentSelectedStyle}
 			/>
 		</div>
 	);

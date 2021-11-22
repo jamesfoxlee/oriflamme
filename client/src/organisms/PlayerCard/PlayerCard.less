@@ -6,17 +6,19 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+
+  &:last-child, &:hover {
+    overflow: visible;
+  }
 }
-.player-card__wrapper:last-child,
-.player-card__wrapper:hover {
-  overflow: visible;
-}
+
 .player-card__card {
   height: 100%;
   border-radius: 5px;
-}
-.player-card__card:hover {
-  height: 150%;
-  z-index: var(--layer-4);
-  box-shadow: 0 0 1rem 1rem white;
+
+  &:hover {
+    height: 150%;
+    z-index: var(--layer-4);
+    box-shadow: 0 0 1rem 1rem white;
+  }
 }
