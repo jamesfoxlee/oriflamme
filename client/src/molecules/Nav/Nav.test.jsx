@@ -1,7 +1,7 @@
 import Nav from "./Nav";
 import React from "react";
 import { render } from "@testing-library/react";
-import { UserContext, UserProvider } from "../../context/user.context";
+import { UserProvider } from "../../context/user.context";
 
 const user = { id: 1, name: "John Doe" };
 const noUser = { id: 1, name: "" };

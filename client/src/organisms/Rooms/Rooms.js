@@ -91,7 +91,7 @@ export default function Rooms(props) {
 
   useEffect(() => {
     socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
-    socket.getRooms();
+    socket.getRooms();    
     // TODO: change to cleanup useEffect to unregister listener
     return function teardownListeners() {
       socket.unregisterListeners(LOBBY.ROOMS_CHANGED);
