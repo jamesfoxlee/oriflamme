@@ -42,29 +42,9 @@ export default function PlayerCard (props: Props) {
 	};
 
 	// DYNAMIC STYLES
-	// const { width, hoverWidth, baseDims, hoverDims } = getStyle(
-	// 	cardId,
-	// 	cardColor
-	// );
-	
-
-	// const noHoverStyles = {
-	// 	width: `${width}px`,
-	// 	height: `${baseDims.cardHeight}px`,
-	// 	backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-	// 	backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
-	// };
-
-	// const hoverStyles = {
-	// 	marginBottom: `${hoverWidth}px`,
-	// 	width: `${hoverWidth}px`,
-	// 	height: `${hoverDims.cardHeight}px`,
-	// 	backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
-	// 	backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
-	// };
 
 	const selectedStyles = {
-		boxShadow: '0 0 1rem 1rem var(--color-white)'
+		boxShadow: '0 0 1rem 1rem white'
 	};
 
 	// STATE, CONTEXT etc
@@ -76,14 +56,11 @@ export default function PlayerCard (props: Props) {
 
 	const card = cards[cardId];
 	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
-	// const currentHoverStyle = hovered ? hoverStyles : noHoverStyles;
 	const currentSelectedStyle = isSelected ? selectedStyles : {};
-	// const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
 	const cardImgUrl = getUrlCardFront(cardId, cardColor);
-	// const combinedStyle = { backgroundImage: cardImgUrl, ...currentSelectedStyle };
 
 	return (
-		<div data-testid='player-card' className='player-card__wrapper'>
+		<div className="player-card__wrapper">
 			<img
 				data-testid='player-card__card'
 				className='player-card__card'

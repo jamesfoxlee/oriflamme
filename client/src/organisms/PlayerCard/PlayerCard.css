@@ -1,15 +1,22 @@
+/* LINK https://stackoverflow.com/questions/43919067/make-flex-items-overlap */
 .player-card__wrapper {
+  height: 100%;
+  width: 14.35%;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  /* flex: 1 1 0; */
+  align-items: flex-end;
+}
+
+.player-card__wrapper:last-child, .player-card__wrapper:hover {
+  overflow: visible;
 }
 
 .player-card__card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: var(--layer-3);
-  margin: 0 auto;
-  background-image: url('../../assets/oriflamme-cards');
+  height: 100%;
+  border-radius: 5px;
+}
+
+.player-card__card:hover {
+  height: 150%;
+  z-index: var(--layer-4);
 }
