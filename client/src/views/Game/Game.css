@@ -28,11 +28,11 @@
 }
 
 .game__sidebar {
-  height: 100%;
-  width: 20%;
+  height: calc(100% - var(--size-navbar-height));
+  width: 19%;
   position: absolute;
   right: 0;
-  top: 0;
+  top: var(--size-navbar-height);
   /* flex: 1 0 0; */
   /* border: 1px solid red; */
 }
