@@ -1,6 +1,6 @@
 export type Card = {
-	id: string;
-	name: string;
+  id: string;
+  name: string;
   text: string;
-	revealed?: boolean;
+  revealed?: boolean;
 };

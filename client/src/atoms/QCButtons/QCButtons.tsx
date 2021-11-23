@@ -1,28 +1,33 @@
 import React from "react";
 import "./QCButtons.css";
 
-export default function QCButtons(props) {
+export type Props = {
+  text?: string;
+  onYes?: () => void;
+  onNo?: () => void;
+};
+export default function QCButtons(props: Props) {
+  const { text, onYes, onNo } = props;
+
   return (
     <div className="qc-buttons__prompt">
-      {props.text}
+      {text}
       <div className="qc-buttons__buttons">
-        {props.onYes ? (
+        {onYes ? (
           <button
             data-testid="onYes-button"
-            autoComplete="off"
             className="qc-buttons__button"
-            onClick={() => props.onYes()}
+            onClick={() => onYes()}
             type="button"
           >
             <span className="qc-buttons__button-icon icon-check" />
           </button>
         ) : null}
-        {props.onNo ? (
+        {onNo ? (
           <button
             data-testid="onNo-button"
-            autoComplete="off"
             className="qc-buttons__button"
-            onClick={() => props.onNo()}
+            onClick={() => onNo()}
             type="button"
           >
             <span className="qc-buttons__button-icon icon-cross" />
