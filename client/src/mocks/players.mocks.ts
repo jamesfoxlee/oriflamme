@@ -1,7 +1,24 @@
 import { PlayerType } from '../types/index';
 
-export const players: PlayerType[] = [
-	{
+type PlayerMocks = {
+  [key: string]: PlayerType;
+}
+
+export const playerMocks: PlayerMocks = {
+  placeholder: {
+    color: '',
+    discardPile: [],
+    hand: [
+      '',
+    ],
+    id: '',
+    imageUrl:
+      '',
+    influence: 0,
+    name: 'placeholder',
+    roomId: ''
+  },
+	simple: {
 		color: 'red',
     discardPile: [],
     hand: [
@@ -16,4 +33,4 @@ export const players: PlayerType[] = [
     name: 'JFK',
     roomId: '3b805350-4897-11ec-af1c-139452ba1c4c'
 	}
-];
+};
