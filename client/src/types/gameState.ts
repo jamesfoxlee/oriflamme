@@ -1,4 +1,4 @@
-import { Players, Card } from './index';
+import { Players, QCard } from "./index";
 
 export type GameState = {
   abilityInterrupted: boolean;
@@ -7,13 +7,13 @@ export type GameState = {
   phase: string;
   planningPhasePlayed: number;
   players: Players;
-  queue: Card[][];
+  queue: QCard[][];
   queueResolutionIndex: number;
   queueTargets?: [];
   resolvingCardToBeDiscarded?: boolean;
   roomId: null;
   round: number;
-  targets?: [];
+  targets?: any[];
   targetsNoneValid: boolean;
   targetsNothing?: boolean;
   targetsSelf: boolean;

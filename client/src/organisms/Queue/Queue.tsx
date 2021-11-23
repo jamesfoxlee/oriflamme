@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, SetStateAction, Dispatch } from "react";
 
 import "./Queue.css";
 import QueueCard from "../QueueCard/QueueCard";
@@ -7,17 +7,24 @@ import EmptyQueue from "../../atoms/EmptyQueue/EmptyQueue";
 import { SocketContext } from "../../context/socket.context";
 import { UserContext } from "../../context/user.context";
 import { PHASES } from "../../config/game.constants";
+import { GameState, Card } from "../../types";
 
-export default function Queue(props) {
-  const handleCardPlayed = (position) => {
+export type Props = {
+  gameState: GameState;
+  selectedPlayerCard: Card;
+  setSelectedPlayerCard: Dispatch<SetStateAction<Card | null>>;
+};
+export default function Queue(props: Props) {
+  const handleCardPlayed = (position: number) => {
     setSelectedPlayerCard(null);
     let color = playerColor;
+
     if (!playerColor) {
       const player = players[user.id];
       color = player.color;
       setPlayerColor(player.color);
     }
-    // card data held client-side already has id,  name, text
+
     const card = {
       ...selectedPlayerCard,
       influence: 0,
@@ -32,7 +39,7 @@ export default function Queue(props) {
 
   const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
   const {
-    abilityInterrupt,
+    abilityInterrupted,
     activePlayerId,
     phase,
     players,
@@ -44,7 +51,7 @@ export default function Queue(props) {
     targetsSelf,
   } = gameState;
 
-  const [playerColor, setPlayerColor] = useState(null);
+  const [playerColor, setPlayerColor] = useState<string>("");
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
 
@@ -65,10 +72,10 @@ export default function Queue(props) {
             {queue.map((stack, idx) => {
               const topCard = stack[stack.length - 1];
               const isResolving = phase === PHASES.RESOLUTION && qri === idx;
-              const isTarget = targets.includes(idx);
+              const isTarget = targets && targets.includes(idx);
               return (
                 <QueueCard
-                  abilityInterrupt={abilityInterrupt}
+                  abilityInterrupted={abilityInterrupted}
                   card={topCard}
                   indexInQueue={idx}
                   isPlayerTurn={isPlayerTurn}

@@ -2,7 +2,7 @@ import React from "react";
 import "./QCButtons.css";
 
 export type Props = {
-  text: string;
+  text?: string;
   onYes?: () => void;
   onNo?: () => void;
 };
