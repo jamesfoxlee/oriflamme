@@ -6,32 +6,32 @@ import Rooms from "./organisms/Rooms/Rooms";
 import Nav from "./molecules/Nav/Nav";
 import Loading from "./atoms/Loading/Loading";
 import Splash from "./atoms/Splash/Splash";
-
-import Socket from "./services/socket.service";
+import Socket, { SocketFunctionTypes } from "./services/socket.service";
 import StorageService from "./services/storage.service";
 import { SocketProvider } from "./context/socket.context";
 import { UserProvider } from "./context/user.context";
 import { SOCKET_EVENTS } from "./config/socket.constants";
+import { PlayerType, User } from "./types";
+
 const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
-export let socket;
-
+export let socket: SocketFunctionTypes;
 function App() {
   // "METHODS"
 
-  const joinRoom = (roomId, player) => {
+  const joinRoom = (roomId: null, player: PlayerType) => {
     socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
     socket.joinRoom(roomId, player);
     setActiveRoomId(roomId);
   };
 
-  const leaveRoom = (roomId, player) => {
+  const leaveRoom = (roomId: null, player: PlayerType) => {
     socket.leaveRoom(roomId, player);
     setActiveRoomId(null);
   };
 
-  const startGame = (roomId) => {
+  const startGame = (roomId: null) => {
     socket.startGame(roomId);
   };
 
@@ -41,7 +41,7 @@ function App() {
 
   const [showSplash, setShowSplash] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState({ id: null, name: null });
+  const [user, setUser] = useState<User>({ id: "", name: "" });
   const [activeRoomId, setActiveRoomId] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
 
@@ -64,8 +64,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  console.log(socket);
   return (
     <div className="app" id="app">
       {showSplash ? (
