@@ -52,8 +52,7 @@ function App() {
         const userId = storageService.get("user.id");
         const userName = storageService.get("user.name");
         const socketId = socket.getSocketId();
-        // if no user data in localStorage, we store socketId as user.id
-        // allows persistence of player's names
+
         if (!userId) {
           storageService.set("user.id", socketId);
         }

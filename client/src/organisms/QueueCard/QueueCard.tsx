@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, SyntheticEvent } from "react";
 import PropTypes from "prop-types";
 
 import "./QueueCard.css";
@@ -11,10 +11,23 @@ import {
   getDataForCardBacks,
 } from "../../services/card-image.service";
 import { QUEUE_CARD as QC } from "../../config/ui.constants";
+import { QCard } from "../../types/queueCard";
 
-export default function QueueCard(props) {
-  const handleMouseEnter = (e) => setHovered(true);
-  const handleMouseLeave = (e) => setHovered(false);
+export type Props = {
+  abilityInterrupted: boolean;
+  card: QCard;
+  indexInQueue: number;
+  isPlayerTurn: boolean;
+  isResolving: boolean;
+  isTarget: boolean | undefined;
+  resolvingCardToBeDiscarded: boolean | undefined;
+  targetsNoneValid: boolean;
+  targetsSelf: boolean;
+  qri: number;
+};
+export default function QueueCard(props: Props) {
+  const handleMouseEnter = (e: SyntheticEvent) => setHovered(true);
+  const handleMouseLeave = (e: SyntheticEvent) => setHovered(false);
 
   const handleNoReveal = () => socket.queueNoReveal(qri);
   const handleReveal = () => socket.queueReveal(qri);
@@ -27,7 +40,7 @@ export default function QueueCard(props) {
   // PROPS, STATE, CONTEXT etc
 
   const {
-    abilityInterrupt,
+    abilityInterrupted,
     card,
     indexInQueue,
     isPlayerTurn,
@@ -135,7 +148,7 @@ export default function QueueCard(props) {
       {isPlayerTurn && isResolving && isOwned && revealed && targetsSelf ? (
         <QCButtons onYes={handleConfirmTargetSelf} text="Confirm" />
       ) : null}
-      {isPlayerTurn && isResolving && revealed && abilityInterrupt ? (
+      {isPlayerTurn && isResolving && revealed && abilityInterrupted ? (
         <QCButtons onYes={handleConfirmInterrupt} text="Confirm" />
       ) : null}
       {isPlayerTurn &&
