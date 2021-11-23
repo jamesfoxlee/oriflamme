@@ -11,15 +11,15 @@ import StorageService from '../../services/storage.service';
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { SOCKET_EVENTS } from '../../config/socket.constants';
-
+import { PlayerType } from '../../types';
 const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
 
 type Props={
   activeRoomId: string;
-  joinRoom: (roomId:string,player:string)=>void;
-  leaveRoom: (roomId:string,player:string)=>void;
+  joinRoom: (roomId:string,player:PlayerType)=>void;
+  leaveRoom: (roomId:string,player:PlayerType)=>void;
   setActiveRoomId: (id:string)=>void
   startGame:(roomId:string)=>void
 }
