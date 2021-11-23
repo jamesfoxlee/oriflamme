@@ -7,7 +7,7 @@ import Queue from "../../organisms/Queue/Queue";
 import PlayerArea from "../../molecules/PlayerArea/PlayerArea";
 import Round from "../../atoms/Round/Round";
 import Loading from "../../atoms/Loading/Loading";
-import SideBar from './SideBar';
+import SideBar from "./SideBar";
 
 import { SOCKET_EVENTS } from "../../config/socket.constants";
 import { SocketContext } from "../../context/socket.context";
@@ -98,7 +98,12 @@ export default function Game() {
               />
             </div>
           </div>
-          <SideBar gameState={gameState} messages={messages} selectedPlayerCard={selectedPlayerCard} user={user} />
+          <SideBar
+            gameState={gameState}
+            messages={messages}
+            selectedPlayerCard={selectedPlayerCard}
+            user={user}
+          />
         </CardsProvider>
       ) : null}
     </div>
