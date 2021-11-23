@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
 
+// import { GameState } from '../../types/index';
 import "./Game.css";
 import OpponentArea from "../../molecules/OpponentArea/OpponentArea";
 import Queue from "../../organisms/Queue/Queue";
 import PlayerArea from "../../molecules/PlayerArea/PlayerArea";
-import Messages from "../../organisms/Messages/Messages";
 import Round from "../../atoms/Round/Round";
-import Status from "../../atoms/Status/Status";
 import Loading from "../../atoms/Loading/Loading";
+import SideBar from './SideBar';
 
 import { SOCKET_EVENTS } from "../../config/socket.constants";
 import { SocketContext } from "../../context/socket.context";
 import { UserContext } from "../../context/user.context";
-import { CardsProvider } from "../../context/cards.context.ts";
+import { CardsProvider } from "../../context/cards.context";
 
 // TODO: remove cards to server?
 import { CARDS as cards } from "../../config/cards.constants";
 
 const { LOBBY, GAME } = SOCKET_EVENTS;
 
-export default function Game(props) {
+export default function Game() {
   // const { activeRoomId, leaveRoom } = props;
 
   // "METHODS"
@@ -98,22 +98,7 @@ export default function Game(props) {
               />
             </div>
           </div>
-          <div className="game__sidebar">
-            <div className="game__status">
-              <Status
-                gameState={gameState}
-                selectedPlayerCard={selectedPlayerCard}
-                user={user}
-              />
-            </div>
-            <div className="game__messages">
-              <Messages
-                messages={messages}
-                players={gameState.players}
-                socket={socket}
-              />
-            </div>
-          </div>
+          <SideBar gameState={gameState} messages={messages} selectedPlayerCard={selectedPlayerCard} user={user} />
         </CardsProvider>
       ) : null}
     </div>

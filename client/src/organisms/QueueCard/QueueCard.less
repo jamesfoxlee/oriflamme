@@ -6,6 +6,7 @@
   padding: 0 1rem;
   margin: 1%;
 }
+
 .queue-card__card {
   height: 100%;
   display: flex;
@@ -15,6 +16,7 @@
   position: relative;
   margin: 0 auto;
 }
+
 .queue-card__card-wrapper {
   height: 100%;
   width: 100px;
@@ -22,23 +24,27 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & img {
+    height: 100%;
+    position: absolute;
+    border-radius: 5px;
+  }
 }
-.queue-card__card-wrapper img {
-  height: 100%;
-  position: absolute;
-  border-radius: 5px;
-}
+
 .queue-card__text {
   padding: 0.5rem;
   font-size: var(--font-size-smaller);
   z-index: var(--layer-1);
   text-align: center;
 }
+
 .queue-card__name {
   font-size: var(--font-size-mid);
   z-index: var(--layer-1);
   font-weight: var(--font-weight-chunky);
 }
+
 .queue-card__influence {
   display: flex;
   justify-content: center;
