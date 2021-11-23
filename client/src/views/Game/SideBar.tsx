@@ -1,16 +1,15 @@
-import { User, GameState, Card } from '../../types/index';
+import { User, GameState, Card, MessageType } from '../../types/index';
 import Messages from "../../organisms/Messages/Messages";
 import Status from "../../atoms/Status/Status";
 
 type Props = {
   gameState: GameState,
-  messages,
+  messages: MessageType[],
   selectedPlayerCard: Card,
-  socket,
   user: User
 }
 
-export default function SideBar ({gameState, messages, selectedPlayerCard, socket, user}: Props) {
+export default function SideBar ({gameState, messages, selectedPlayerCard, user}: Props) {
 	return (
 		<div className='game__sidebar'>
 			<div className='game__status'>
@@ -24,7 +23,6 @@ export default function SideBar ({gameState, messages, selectedPlayerCard, socke
 				<Messages
 					messages={messages}
 					players={gameState.players}
-					socket={socket}
 				/>
 			</div>
 		</div>
