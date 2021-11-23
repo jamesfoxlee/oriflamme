@@ -1,6 +1,7 @@
 import React, { useState, useContext, SetStateAction, Dispatch } from "react";
 
 import "./Queue.css";
+import { cardMocks } from '../../mocks/cards.mocks';
 import QueueCard from "../QueueCard/QueueCard";
 import EmptyQueue from "../../atoms/EmptyQueue/EmptyQueue";
 
@@ -12,11 +13,12 @@ import { GameState, Card } from "../../types";
 export type Props = {
   gameState: GameState;
   selectedPlayerCard: Card;
-  setSelectedPlayerCard: Dispatch<SetStateAction<Card | null>>;
+  setSelectedPlayerCard: Dispatch<SetStateAction<Card>>;
 };
+
 export default function Queue(props: Props) {
   const handleCardPlayed = (position: number) => {
-    setSelectedPlayerCard(null);
+    setSelectedPlayerCard(cardMocks.fake);
     let color = playerColor;
 
     if (!playerColor) {
