@@ -9,9 +9,7 @@ export type Props = {
 	isActive: boolean;
 };
 
-export default function PlayerHand (props: Props) {
-	const { cardColor, hand, isActive } = props;
-
+export default function PlayerHand ({ cardColor, hand, isActive }: Props) {
 	return (
 		<div data-testid='player-hand' className='player-hand'>
 			{hand.map((cardId, idx) => {

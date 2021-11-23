@@ -13,18 +13,18 @@
 
 .game__top-bar {
   display: flex;
-  height: calc( (100vh - var(--size-navbar-height)) * 0.2);
+  height: calc((100vh - var(--size-navbar-height)) * 0.2);
 }
 
 .game__queue {
-  height: calc( (100vh - var(--size-navbar-height)) * 0.45);
+  height: calc((100vh - var(--size-navbar-height)) * 0.45);
   background-color: var(--color-blue-midnight-darkest);
 }
 
 .game__bottom-bar {
   width: 100%;
   align-self: center;
-  height: calc( (100vh - var(--size-navbar-height)) * 0.333);
+  height: calc((100vh - var(--size-navbar-height)) * 0.333);
 }
 
 .game__sidebar {
@@ -38,11 +38,11 @@
 }
 
 .game__status {
-  height: calc( (100vh - var(--size-navbar-height)) * 0.25);
+  height: calc((100vh - var(--size-navbar-height)) * 0.25);
   /* border: 1px solid red; */
 }
 
 .game__messages {
-  height: calc( (100vh - var(--size-navbar-height)) * 0.75);
+  height: calc((100vh - var(--size-navbar-height)) * 0.75);
   /* border: 1px solid red; */
 }

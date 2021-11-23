@@ -4,3 +4,4 @@ export type { PlayerType } from "./player";
 export type { Players } from "./players";
 export type { GameState } from "./gameState";
 export type { QCard } from "./queueCard";
+export type { MessageType } from "./message";

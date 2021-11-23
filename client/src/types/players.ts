@@ -1,5 +1,5 @@
-import { PlayerType } from './index';
+import { PlayerType } from "./index";
 
 export type Players = {
-	[key: string]: PlayerType;
+  [key: string]: PlayerType;
 };

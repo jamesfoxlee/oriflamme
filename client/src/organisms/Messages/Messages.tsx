@@ -1,16 +1,21 @@
+import { MessageType, Players } from '../../types/index'
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import './Messages.css';
 import Message from '../../atoms/Message/Message';
 
-export default function Messages({ messages, players, socket }) {
+type Props = {
+  messages: MessageType[];
+  players: Players;
+}
 
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
+export default function Messages({ messages, players }: Props) {
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessage(e.target.value);
   }
 
-  const handleMessageSend = (e) => {
+  const handleMessageSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (message.length) {
       // socket.postMessage(message);
@@ -62,20 +67,3 @@ export default function Messages({ messages, players, socket }) {
     </div>
   );
 }
-
-//----------------------------------------------------------------
-// PROPS
-//----------------------------------------------------------------
-
-const { object, arrayOf } = PropTypes;
-
-Messages.propTypes = {
-  messages: arrayOf(object),
-  players: arrayOf(object),
-  socket: object.isRequired,
-};
-
-Messages.defaultProps = {
-  messages: [],
-  players: []
-};

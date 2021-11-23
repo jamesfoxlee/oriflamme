@@ -5,7 +5,7 @@ import React from 'react';
 export const CardsContext = React.createContext({
 	cards,
 	selectedPlayerCard: cards.ambush,
-	handlePlayerCardClicked: (card: Card) => {
+	handlePlayerCardClicked: (_: Card) => {
 		return;
 	}
 });

@@ -1,4 +1,23 @@
-export const messages = [
+import { MessageType } from '../types/index';
+
+type MessageMocks = {
+  [key: string]: MessageType;
+}
+
+export const messageMocks: MessageMocks = {
+  placeholder: {
+    from: '',
+    content: '',
+    timestamp: ''
+  },
+  simple: {
+    from: 'be',
+    content: 'gl',
+    timestamp: '2021-11-01T15:21:13.892Z'
+  }
+}
+
+const messages: MessageType[] = [
   {
     from: 'be',
     content: 'gl',
