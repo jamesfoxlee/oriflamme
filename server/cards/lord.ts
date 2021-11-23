@@ -1,10 +1,12 @@
-const { CARD_EFFECTS } = require('../config/game.constants');
+import  { CARD_EFFECTS } from '../config/game.constants';
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const lord = {
+export const lord: CardDetail = {
   id: 'lord',
   name: 'Lord',
   text: 'Earn 1 influence, plus 1 per adjacent card that is in your family.',
-  getInfluenceGainOnReveal: (resolvingCard) => {
+  getInfluenceGainOnReveal: (resolvingCard:Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return resolvingCard.influence;
   },
@@ -15,7 +17,7 @@ const lord = {
       targetsSelf: true,
     }
   },
-  getAction: (lordCard, queue, qri) => {
+  getAction: (lordCard:Card, queue:Card[][], qri:number) => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
 
@@ -26,7 +28,7 @@ const lord = {
     rightIdx = rightIdx >= queue.length ? queue.length - 1 : rightIdx;
     const indices = [leftIdx];
     rightIdx !== leftIdx && indices.push(rightIdx);
-    const adjacentFamilyIndices = indices.filter(adjIdx => {
+    const adjacentFamilyIndices = indices.filter((adjIdx:number) => {
       // can't be the Lord itself
       const adjacentCardOwnerId = queue[adjIdx][0].ownerId;
       return adjIdx !== qri && adjacentCardOwnerId === lordCard.ownerId;
@@ -40,5 +42,3 @@ const lord = {
   getDiscardAfterResolution: () => false,
   getActionOnElimination: () => null,
 };
-
-module.exports = lord;

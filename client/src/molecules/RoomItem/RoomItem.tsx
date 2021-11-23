@@ -3,7 +3,30 @@ import React from 'react';
 import './RoomItem.css';
 import Button from '../../atoms/Button/Button';
 
-export default function RoomItem (props) {
+type WaitPlayer={
+  id: string,
+  name: string,
+  socketId: string,
+}
+
+type Props={
+  activeRoomId: string,
+  joinRoom:(id: string)=> void,
+  playerIsOwner: boolean,
+  room:{
+    roomId: string,
+    ownerId: string,
+    players: WaitPlayer[]
+    roomName: string,
+    ownerName: string,
+    started: boolean 
+  },
+  leaveRoom: (id:string)=>void,
+  startGame: (id:string)=>void
+
+}
+
+export default function RoomItem (props:Props) {
   const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
 
   const { roomId, ownerName, roomName, players, started } = room;
