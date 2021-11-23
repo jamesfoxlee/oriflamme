@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Card } from '../../types/index';
 import './PlayerCard.css';
 
 import { CardsContext } from '../../context/cards.context';
-import { getDataForCardFronts, getUrlCardFront } from '../../services/card-image.service';
-import { PLAYER_CARD as PC } from '../../config/ui.constants';
+import { getUrlCardFront } from '../../services/card-image.service';
 
 export type Props = {
 	canPlayCard: boolean;
@@ -12,30 +11,8 @@ export type Props = {
 	cardId: string;
 };
 
-export function getStyle (cardId: string, cardColor: string) {
-	const width = PC.WIDTH;
-	const hoverWidth = width * PC.HOVER_SCALE;
-	const baseDims = getDataForCardFronts(cardId, cardColor, width);
-	const hoverDims = getDataForCardFronts(cardId, cardColor, hoverWidth);
-
-	return {
-		width,
-		hoverWidth,
-		baseDims,
-		hoverDims
-	};
-}
-
-export default function PlayerCard (props: Props) {
-	const { canPlayCard, cardColor, cardId } = props;
-
+export default function PlayerCard ({ canPlayCard, cardColor, cardId }: Props) {
 	// "METHODS"
-
-	const handleMouseEnter: React.MouseEventHandler<HTMLDivElement> = () =>
-		setHovered(true);
-
-	const handleMouseLeave: React.MouseEventHandler<HTMLDivElement> = () =>
-		setHovered(false);
 
 	const handleCardClicked = (card: Card) => {
 		if (canPlayCard) handlePlayerCardClicked(card);
@@ -43,13 +20,14 @@ export default function PlayerCard (props: Props) {
 
 	// STATE, CONTEXT etc
 
-	const [ hovered, setHovered ] = useState(false);
-	const { cards, selectedPlayerCard, handlePlayerCardClicked } = useContext(
+	const { cards, handlePlayerCardClicked } = useContext(
 		CardsContext
 	);
 
 	const card = cards[cardId];
-	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
+	if (card === undefined) {
+		throw new Error('Invalid card has been clicked.');
+	}
 	const cardImgUrl = getUrlCardFront(cardId, cardColor);
 
 	return (
@@ -58,8 +36,6 @@ export default function PlayerCard (props: Props) {
 				data-testid='player-card__card'
 				className='player-card__card'
 				src={`${process.env.PUBLIC_URL}/${cardImgUrl}`}
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
 				onClick={() => handleCardClicked(card)}
 			/>
 		</div>
