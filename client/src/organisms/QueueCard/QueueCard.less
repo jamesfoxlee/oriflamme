@@ -7,30 +7,40 @@
 }
 
 .queue-card__card {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   margin: 0 auto;
-  background-image: url('../../assets/oriflamme-cards');
 }
 
 .queue-card__card-wrapper {
+  height: 100%;
+  width: 101px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  & img {
+    height: 100%;
+    position: absolute;
+    border-radius: 5px;
+  }
 }
 
 .queue-card__text {
   padding: 0.5rem;
   font-size: var(--font-size-smaller);
+  z-index: var(--layer-1);
   text-align: center;
 }
 
 .queue-card__name {
   font-size: var(--font-size-mid);
+  z-index: var(--layer-1);
   font-weight: var(--font-weight-chunky);
 }
 
