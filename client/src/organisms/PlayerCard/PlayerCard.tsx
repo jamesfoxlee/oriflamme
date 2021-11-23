@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Card } from '../../types/index';
 import './PlayerCard.css';
 
@@ -20,7 +20,7 @@ export default function PlayerCard ({ canPlayCard, cardColor, cardId }: Props) {
 
 	// STATE, CONTEXT etc
 
-	const { cards, handlePlayerCardClicked } = useContext(
+	const { cards, selectedPlayerCard, handlePlayerCardClicked } = useContext(
 		CardsContext
 	);
 
@@ -30,8 +30,33 @@ export default function PlayerCard ({ canPlayCard, cardColor, cardId }: Props) {
 	}
 	const cardImgUrl = getUrlCardFront(cardId, cardColor);
 
+	// DYNAMIC STYLE
+
+	const selectedCardStyle = {
+		height: '150%',
+		zIndex: 'var(--layer-4)',
+		boxShadow: '0 0 1rem 1rem white'
+	};
+
+	const selectedWrapperStyle = {
+		overflow: 'visible'
+	};
+
+	if (selectedPlayerCard && selectedPlayerCard.id === cardId) {
+		return (
+			<div className='player-card__wrapper' style={selectedWrapperStyle}>
+				<img
+					data-testid='player-card__card'
+					className='player-card__card'
+					src={`${process.env.PUBLIC_URL}/${cardImgUrl}`}
+					onClick={() => handleCardClicked(card)}
+					style={selectedCardStyle}
+				/>
+			</div>
+		);
+	}
 	return (
-		<div className="player-card__wrapper">
+		<div className='player-card__wrapper'>
 			<img
 				data-testid='player-card__card'
 				className='player-card__card'
