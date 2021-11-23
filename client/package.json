@@ -40,14 +40,15 @@
     "react-dom": "^17.0.2",
     "react-modal": "^3.14.3",
     "react-scripts": "^3.4.4",
-    "socket.io-client": "^4.3.2",
+    "socket.io-client": "^4.4.0",
     "typescript": "^3.2.1",
     "web-vitals": "^1.1.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@testing-library/react": "^11.2.7",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
+    "@types/mocha": "^9.0.0",
     "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",
     "@types/react-modal": "^3.13.1",
