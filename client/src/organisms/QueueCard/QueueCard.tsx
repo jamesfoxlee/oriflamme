@@ -1,4 +1,4 @@
-import React, { useState, useContext, SyntheticEvent } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 
 import "./QueueCard.css";
@@ -6,11 +6,11 @@ import QCButtons from "../../atoms/QCButtons/QCButtons";
 
 import { SocketContext } from "../../context/socket.context";
 import { UserContext } from "../../context/user.context";
-import {
-  getDataForCardFronts,
-  getDataForCardBacks,
-} from "../../services/card-image.service";
-import { QUEUE_CARD as QC } from "../../config/ui.constants";
+// import {
+//   getUrlCardFront,
+//   getUrlCardBack
+// } from "../../services/card-image.service";
+// import { QUEUE_CARD as QC } from "../../config/ui.constants";
 import { QCard } from "../../types/queueCard";
 
 export type Props = {
@@ -26,8 +26,8 @@ export type Props = {
   qri: number;
 };
 export default function QueueCard(props: Props) {
-  const handleMouseEnter = (e: SyntheticEvent) => setHovered(true);
-  const handleMouseLeave = (e: SyntheticEvent) => setHovered(false);
+  const handleMouseEnter = () => setHovered(true);
+  const handleMouseLeave = () => setHovered(false);
 
   const handleNoReveal = () => socket.queueNoReveal(qri);
   const handleReveal = () => socket.queueReveal(qri);
@@ -59,68 +59,12 @@ export default function QueueCard(props: Props) {
   const { revealed } = card;
   const isOwned = card.ownerId === user.id;
 
-  // DYNAMIC STYLES
-
-  const width = QC.WIDTH;
-  const hoverWidth = width * QC.HOVER_SCALE;
-  const baseDims = getDataForCardFronts(card.id, card.ownerColor, width);
-  const hoverDims = getDataForCardFronts(card.id, card.ownerColor, hoverWidth);
-  const backDims = getDataForCardBacks(card.id, card.ownerColor, width);
-  const backHoverDims = getDataForCardBacks(
-    card.id,
-    card.ownerColor,
-    hoverWidth
-  );
-
-  const notRevealedStyles = {
-    backgroundPosition: hovered
-      ? `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px`
-      : `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
-  };
-
-  const revealedStyles = {
-    backgroundPosition: hovered
-      ? `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`
-      : `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-  };
-
-  const noHoverStyles = {
-    width: `${width}px`,
-    height: `${baseDims.cardHeight}px`,
-    backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`,
-  };
-
-  const hoverStyles = {
-    width: `${hoverWidth}px`,
-    height: `${hoverDims.cardHeight}px`,
-    backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`,
-  };
-
-  const resolvingStyles = {
-    boxShadow: "0 0 1rem 1rem var(--color-white)",
-  };
-
-  const targettedStyles = {
-    boxShadow: "0 0 1rem 1rem var(--color-gold)",
-  };
-
-  const revStyle = card.revealed ? revealedStyles : notRevealedStyles;
-  const hovStyle = hovered ? hoverStyles : noHoverStyles;
-  const resStyle = isResolving
-    ? isTarget
-      ? targettedStyles
-      : resolvingStyles
-    : {};
-  const tarStyle = isTarget ? targettedStyles : {};
-  const combinedStyle = { ...revStyle, ...hovStyle, ...resStyle, ...tarStyle };
-
   return (
     <div data-testid="queue-card" className="queue-card">
       <div
         className="queue-card__card"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={combinedStyle}
       >
         {isOwned && hovered ? (
           <div className="queue-card__card-wrapper">
