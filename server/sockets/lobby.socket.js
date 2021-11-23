@@ -1,4 +1,4 @@
-const SOCKET_EVENTS = require('../config/socket.constants');
+import  SOCKET_EVENTS from '../config/socket.constants';
 const { LOBBY } = SOCKET_EVENTS;
 
 module.exports = function registerLobbyEventHandlers(lobbyManager, socket, socketServer) {

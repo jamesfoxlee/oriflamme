@@ -13,7 +13,6 @@ const INITIAL_GAMESTATE = {
   targets: [],
   targetsNoneValid: false,
   targettedIndex: null,
-  targetsNoneValid: false,
   targetsSelf: false,
   turnOrder: [],
   turnOrderIndex: 0
@@ -96,3 +95,5 @@ module.exports = {
   STARTING_HAND_FULL,
   STARTING_HAND_SIMPLE,
 }
+
+

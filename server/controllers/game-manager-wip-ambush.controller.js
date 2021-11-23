@@ -1,8 +1,6 @@
-const { v1: uuidv1 } = require('uuid');
-
-const { Room } = require('../models/room.model');
-const CardHelper = require('../helpers/card.helper');
-const { CARD_EFFECTS } = require('../config/game.constants');
+import { Room } from '../models/room.model';
+import CardHelper from '../helpers/card.helper';
+import { CARD_EFFECTS } from '../config/game.constants';
 
 const {
   INITIAL_GAMESTATE,

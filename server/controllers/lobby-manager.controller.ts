@@ -1,20 +1,36 @@
+import { Server, Socket } from "socket.io";
+import { Player } from "../types/player";
+import { Room } from "../types/index";
+import  { Room as RoomModel } from '../models/room.model';
 const { v1: uuidv1 } = require('uuid');
 
 const registerGameEventHandlers = require('../sockets/game.socket');
 const GameManager = require('./game-manager.controller');
-const { Room } = require('../models/room.model');
 
-function LobbyManager () {
 
-  const _rooms = {};
+
+type RoomData={
+  roomName: string,
+  ownerName: string,
+  ownerId: string,
+}
+
+interface Rooms{
+ [id:string]: Room
+}
+
+
+export default function LobbyManager(){
+
+  const _rooms:Rooms = {};
   const _gameManagers = {};
 
   // "METHODS"
 
-  const _getNumberOfRooms = () => Object.keys(_rooms).length;
+  // const _getNumberOfRooms = () => Object.keys(_rooms).length;
 
   const getRooms = () => {
-    return Object.values(_rooms).map(room => {
+    return Object.values(_rooms).map((room:Room) => {
       const { roomId, ownerId, ownerName, roomName, players, started } = room;
       return {
         roomId,
@@ -27,7 +43,7 @@ function LobbyManager () {
     });
   };
 
-  const createRoom = async (roomData) => {
+  const createRoom = async (roomData:RoomData) => {
     console.log('LobbyManager.createRoom()')
     try {
       const roomId = uuidv1();
@@ -46,7 +62,7 @@ function LobbyManager () {
     }
   };
 
-  const joinRoom = async (roomId, socket, player) => {
+  const joinRoom = async (roomId:string, socket:Socket, player:Player) => {
     // TODO: limit adding if > 5 players
     console.log('LobbyManager.joinRoom()');
     const room = _rooms[roomId];
@@ -57,7 +73,7 @@ function LobbyManager () {
     });
   };
 
-  const leaveRoom = (roomId, socket, leavingPlayer) => {
+  const leaveRoom = (roomId:string, socket:Socket, leavingPlayer:Player) => {
     console.log(`LobbyManager.leaveRoom() with roomId: ${roomId}`);
     socket.leave(roomId);
     const room = _rooms[roomId];
@@ -76,7 +92,7 @@ function LobbyManager () {
     }
   };
 
-  const leaveAllRooms = (socket) => {
+  const leaveAllRooms = (socket:Socket) => {
     console.log(`LobbyManager.leaveAllRooms() for socket.id: ${socket.id}`);
     for (let roomId of socket.rooms) {
       // no need to to delete own room of socket
@@ -95,7 +111,7 @@ function LobbyManager () {
     }
   }
 
-  const startGame = async (roomId, socketServer) => {
+  const startGame = async (roomId:string, socketServer:Server) => {
     try {
       const room = _rooms[roomId];
       room.started = true;
@@ -104,7 +120,7 @@ function LobbyManager () {
       gameManager.initialise(room);
       await registerGameEventHandlers(roomId, gameManager, socketServer);
       _gameManagers[roomId] = gameManager;
-      const rm = new Room(room);
+      const rm = new RoomModel(room);
       await rm.save();
     } catch (err) {
       console.log(err);
@@ -123,4 +139,6 @@ function LobbyManager () {
   }
 };
 
-module.exports = LobbyManager;
+
+
+// module.exports = LobbyManager;

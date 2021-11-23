@@ -4,7 +4,7 @@ const ambush = {
   id: 'ambush',
   name: 'Ambush',
   text: 'If eliminated by an opponent\'s character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush.',
-  getInfluenceGainOnReveal: (ambushCard) => {
+  getInfluenceGainOnReveal: () => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return 1;
   },

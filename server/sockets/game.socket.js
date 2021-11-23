@@ -1,4 +1,4 @@
-const SOCKET_EVENTS = require('../config/socket.constants');
+import  SOCKET_EVENTS from '../config/socket.constants';
 const { GAME, MESSAGE } = SOCKET_EVENTS;
 
 module.exports = async function registerGameEventHandlers (roomId, gameManager, socketServer) {

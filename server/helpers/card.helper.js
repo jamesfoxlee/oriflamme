@@ -1,4 +1,4 @@
-function CardHelper () {
+export default function CardHelper () {
 
   const cardFunctions = {
     ambush: require('../cards/ambush'),
@@ -55,5 +55,3 @@ function CardHelper () {
     getActionOnElimination,
   }
 }
-
-module.exports = CardHelper;

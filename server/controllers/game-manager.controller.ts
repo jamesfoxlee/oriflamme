@@ -12,7 +12,32 @@ const {
   PLAYER_IMAGES,
   PLAYER_COLORS
 } = require('../config/game.constants');
-
+type GameState = {
+  abilityInterrupted: boolean;
+  activePlayerId: string|null;
+  numPlayers: number;
+  phase: string;
+  planningPhasePlayed:number;
+  players: {};
+  queue: Card[][];
+  queueResolutionIndex:number;
+  queueTargets: [];
+  roomId: string|null;
+  round: 1;
+  targets: [];
+  targetsNoneValid: false;
+  targettedIndex: null;
+  targetsSelf: false;
+  turnOrder: [];
+  turnOrderIndex:number;
+}
+type Card={
+  id: string;
+	name: string;
+  text: string;
+  ownerId: string;
+	revealed?: boolean;
+}
 const cardHelper = CardHelper();
 
 function GameManager () {
@@ -24,7 +49,9 @@ function GameManager () {
   // GETTERS
   //----------------------------------------------------------------
 
-  const _getTopCardInStack = (queue, qri) => {
+  const _getTopCardInStack = (queue:Card[][], qri:number) => {
+    console.log("QUEUE",queue,qri)
+    console.log("QRIIIII",qri)
     const stack = queue[qri];
     return stack && stack[stack.length - 1];
   };
@@ -37,7 +64,7 @@ function GameManager () {
 
   // should call _returnToPlayer() if need to "break out" of game loop
 
-  const _checkForAdvanceToResolutionPhase = (prevState) => {
+  const _checkForAdvanceToResolutionPhase = (prevState:GameState) => {
     console.log('GameManager._checkForAdvanceToResolutionPhase()');
     const nextState = {...prevState};
     if (nextState.planningPhasePlayed === nextState.numPlayers) {
@@ -51,7 +78,7 @@ function GameManager () {
     }
   }
 
-  const _checkForAdvanceToNextRound = (prevState) => {
+  const _checkForAdvanceToNextRound = (prevState:GameState) => {
     console.log('GameManager._checkForAdvanceToNextRound()');
     const nextState = {
       ...prevState,
@@ -81,7 +108,7 @@ function GameManager () {
     }
   }
 
-  const _resolveNextCard = (prevState) => {
+  const _resolveNextCard = (prevState:GameState) => {
     const nextState = {...prevState};
     const { queue, queueResolutionIndex: qri } = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
@@ -95,7 +122,7 @@ function GameManager () {
     }
   };
 
-  const _requestTargets = (prevState) => {
+  const _requestTargets = (prevState:GameState) => {
     const nextState = {...prevState};
     const {queue, queueResolutionIndex: qri} = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);

@@ -2,9 +2,9 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const io = require('socket.io').Server;
-
 const router = require('./routes');
-const registerConnectionEventHandlers = require('./sockets/connection.socket');
+import registerConnectionEventHandlers from './sockets/connection.socket';
+import { Request, Response, NextFunction } from 'express';
 
 require('dotenv').config();
 const port = process.env.PORT || 3000;
@@ -12,7 +12,7 @@ const staticPath = path.join(__dirname, './public');
 
 // 1. create Express app instance, configure static assets & routes
 const expressApp = express();
-expressApp.use((req, res, next) => {
+expressApp.use((req:Request, res:Response, next:NextFunction) => {
   console.log(`${req.method} received for URL: ${req.url}`);
   next();
 });

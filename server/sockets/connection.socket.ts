@@ -1,3 +1,4 @@
+import { Server, Socket } from "socket.io";
 const SOCKET_EVENTS = require('../config/socket.constants');
 const LobbyManager = require('../controllers/lobby-manager.controller');
 const registerLobbyEventHandlers = require('./lobby.socket');
@@ -6,15 +7,15 @@ const { CONNECTIVITY, LOBBY } = SOCKET_EVENTS;
 
 const lobbyManager = LobbyManager();
 
-function registerConnectionEventHandlers (socketServer) {
+export default function registerConnectionEventHandlers (socketServer: Server) {
 
-  socketServer.on(CONNECTIVITY.CONNECTION, (socket) => {
+  socketServer.on(CONNECTIVITY.CONNECTION, (socket:Socket) => {
     console.log(socket.id)
     socket.join('lobby');
     registerLobbyEventHandlers(lobbyManager, socket, socketServer);
     socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
 
-    socket.on(CONNECTIVITY.DISCONNECTING, (reason) => {
+    socket.on(CONNECTIVITY.DISCONNECTING, () => {
       socket.leave('lobby');
       lobbyManager.leaveAllRooms(socket);
       socketServer.to('lobby').emit(LOBBY.ROOMS_CHANGED, lobbyManager.getRooms());
@@ -37,4 +38,4 @@ function registerConnectionEventHandlers (socketServer) {
   });
 }
 
-module.exports = registerConnectionEventHandlers;
+// module.exports = registerConnectionEventHandlers;

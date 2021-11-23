@@ -1,7 +1,7 @@
 const db = require('./db');
 const { Schema } = db;
 
-const RoomSchema = db.Schema({
+export const RoomSchema = db.Schema({
   players: [{
     id: { type: String, required: true },
     name: { type: String, required: true }
@@ -13,9 +13,9 @@ const RoomSchema = db.Schema({
   started: {type: Boolean, required: false, default: false }
 });
 
-const Room = db.model('Room', RoomSchema);
+export const Room = db.model('Room', RoomSchema);
 
-module.exports = {
-  Room,
-  RoomSchema
-};
+// module.exports = {
+//   Room,
+//   RoomSchema
+// };

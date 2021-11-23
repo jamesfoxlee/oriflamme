@@ -27,7 +27,6 @@ type Props={
 }
 
 export default function RoomItem (props:Props) {
-  console.log(props);
   const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
 
   const { roomId, ownerName, roomName, players, started } = room;

@@ -39,5 +39,4 @@ const SOCKET_EVENTS = {
     CREATE: 'message.create',
   },
 };
-
-module.exports = SOCKET_EVENTS;
+module.exports=SOCKET_EVENTS
