@@ -1,3 +1,4 @@
+import React from 'react';
 import { User, GameState, Card, MessageType } from '../../types/index';
 import Messages from "../../organisms/Messages/Messages";
 import Status from "../../atoms/Status/Status";
