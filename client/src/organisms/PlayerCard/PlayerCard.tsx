@@ -3,7 +3,7 @@ import { Card } from '../../types/index';
 import './PlayerCard.css';
 
 import { CardsContext } from '../../context/cards.context';
-import { getDataForCardFronts } from '../../services/card-image.service';
+import { getDataForCardFronts, getUrlCardFront } from '../../services/card-image.service';
 import { PLAYER_CARD as PC } from '../../config/ui.constants';
 
 export type Props = {
@@ -41,31 +41,6 @@ export default function PlayerCard (props: Props) {
 		if (canPlayCard) handlePlayerCardClicked(card);
 	};
 
-	// DYNAMIC STYLES
-	const { width, hoverWidth, baseDims, hoverDims } = getStyle(
-		cardId,
-		cardColor
-	);
-
-	const noHoverStyles = {
-		width: `${width}px`,
-		height: `${baseDims.cardHeight}px`,
-		backgroundPosition: `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
-		backgroundSize: `${baseDims.sheetWidth}px ${baseDims.sheetHeight}px`
-	};
-
-	const hoverStyles = {
-		marginBottom: `${hoverWidth}px`,
-		width: `${hoverWidth}px`,
-		height: `${hoverDims.cardHeight}px`,
-		backgroundPosition: `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px`,
-		backgroundSize: `${hoverDims.sheetWidth}px ${hoverDims.sheetHeight}px`
-	};
-
-	const selectedStyles = {
-		boxShadow: '0 0 1rem 1rem var(--color-white)'
-	};
-
 	// STATE, CONTEXT etc
 
 	const [ hovered, setHovered ] = useState(false);
@@ -75,19 +50,17 @@ export default function PlayerCard (props: Props) {
 
 	const card = cards[cardId];
 	const isSelected = selectedPlayerCard && selectedPlayerCard.id === cardId;
-	const currentHoverStyle = hovered ? hoverStyles : noHoverStyles;
-	const currentSelectedStyle = isSelected ? selectedStyles : {};
-	const combinedStyle = { ...currentHoverStyle, ...currentSelectedStyle };
+	const cardImgUrl = getUrlCardFront(cardId, cardColor);
 
 	return (
-		<div data-testid='player-card' className='player-card__wrapper'>
-			<div
+		<div className="player-card__wrapper">
+			<img
 				data-testid='player-card__card'
 				className='player-card__card'
+				src={`${process.env.PUBLIC_URL}/${cardImgUrl}`}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				onClick={() => handleCardClicked(card)}
-				style={combinedStyle}
 			/>
 		</div>
 	);

@@ -1,18 +1,19 @@
 .game {
-  display: flex;
+  /* display: flex; */
   height: 100%;
 }
 
 .game__table {
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 4 4 0;
+  flex-shrink: 1;
 }
 
 .game__top-bar {
   display: flex;
-  height: calc( (100vh - var(--size-navbar-height)) * 0.25);
+  height: calc( (100vh - var(--size-navbar-height)) * 0.2);
 }
 
 .game__queue {
@@ -21,13 +22,18 @@
 }
 
 .game__bottom-bar {
-  align-self: center;
   width: 100%;
-  height: calc( (100vh - var(--size-navbar-height)) * 0.3);
+  align-self: center;
+  height: calc( (100vh - var(--size-navbar-height)) * 0.333);
 }
 
 .game__sidebar {
-  flex: 1 0 0;
+  height: calc(100% - var(--size-navbar-height));
+  width: 19%;
+  position: absolute;
+  right: 0;
+  top: var(--size-navbar-height);
+  /* flex: 1 0 0; */
   /* border: 1px solid red; */
 }
 

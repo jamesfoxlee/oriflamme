@@ -4,10 +4,10 @@
 }
 
 .player-area__player {
-  flex: 1 1 0;
   padding: 2rem;
 }
 
 .player-area__hand {
-  flex: 6 6 0;
+  min-width: 60%;
+  max-width: 75%;
 }

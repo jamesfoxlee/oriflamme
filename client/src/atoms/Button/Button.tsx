@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './Button.css';
-
-export default function Button (props) {
-
+type Props={
+  buttonStyle: string;
+  disabled: boolean|undefined;
+  extraStyles: {};
+  text: string;
+  children?:string;
+  onClick: ()=>void
+}
+export default function Button (props:Props) {
+  console.log(props)
   const handleClick = () => {
     if (!props.disabled) {
       props.onClick();
@@ -16,7 +23,7 @@ export default function Button (props) {
   return (
     <button
       aria-label={props.text}
-      autoComplete="off"
+      // autoComplete="off"
       className={buttonClass}
       disabled={props.disabled}
       onClick={handleClick}
