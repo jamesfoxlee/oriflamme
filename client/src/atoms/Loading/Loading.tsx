@@ -4,7 +4,7 @@ import "./Loading.css";
 
 export type Message = { message: string };
 
-export default function Loading({ message }: { message: Message }) {
+export default function Loading(props: Message) {
   return (
     <div className="loading">
       <div className="loading__image">
@@ -16,7 +16,7 @@ export default function Loading({ message }: { message: Message }) {
           />
         </svg>
       </div>
-      <div className="loading__message">{message || "Loading"}</div>
+      <div className="loading__message">{props.message || "Loading"}</div>
     </div>
   );
 }
