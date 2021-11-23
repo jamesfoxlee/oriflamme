@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import './Loading.css';
+import "./Loading.css";
 
-export default function Loading (props) {
+export type Message = { message: string };
 
-  const loadingMessage = props.message || 'Loading';
-
+export default function Loading({ message }: { message: Message }) {
   return (
     <div className="loading">
       <div className="loading__image">
@@ -17,7 +16,7 @@ export default function Loading (props) {
           />
         </svg>
       </div>
-      <div className="loading__message">{loadingMessage}</div>
-  </div>
+      <div className="loading__message">{message || "Loading"}</div>
+    </div>
   );
 }
