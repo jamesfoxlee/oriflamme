@@ -1,11 +1,12 @@
 import { Server, Socket } from "socket.io";
-const SOCKET_EVENTS = require('../config/socket.constants');
-const LobbyManager = require('../controllers/lobby-manager.controller');
-const registerLobbyEventHandlers = require('./lobby.socket');
+import { SOCKET_EVENTS } from '../config/socket.constants';
+import LobbyManager from '../controllers/lobby-manager.controller';
+import { LobbyManagerType } from '../types/index';
+import { registerLobbyEventHandlers } from './lobby.socket';
 
 const { CONNECTIVITY, LOBBY } = SOCKET_EVENTS;
 
-const lobbyManager = LobbyManager();
+const lobbyManager: LobbyManagerType = LobbyManager();
 
 export default function registerConnectionEventHandlers (socketServer: Server) {
 

@@ -1,15 +1,16 @@
 import  {SOCKET_EVENTS} from '../config/socket.constants';
 import { Card } from "../types/index";
 import { GameManager as GMType } from "../types/index";
-import { Server, Socket } from "socket.io";
+import { Server, Socket,RemoteSocket } from "socket.io";
+import { DefaultEventsMap, EventsMap } from 'socket.io/dist/typed-events';
 const { GAME, MESSAGE } = SOCKET_EVENTS;
 
 export default async function registerGameEventHandlers (roomId:string, gameManager:GMType, socketServer:Server) {
 
   try {
-    let socket;
+    
     const socketsInRoom = await socketServer.in(roomId).fetchSockets();
-    for ( socket of socketsInRoom) {
+     socketsInRoom.forEach((socket:any)=>{
 
       socket.on(GAME.GAMESTATE_GET, () => {
         console.log('EVENT RECEIVED: ', GAME.GAMESTATE_GET);
@@ -72,7 +73,7 @@ export default async function registerGameEventHandlers (roomId:string, gameMana
         console.log('EVENT RECEIVED: ', MESSAGE.CREATE);
         console.log(message);
       });
-    }
+    })
   } catch (err) {
     console.error('ERROR registerGameEventHandlers() : ', err);
   }

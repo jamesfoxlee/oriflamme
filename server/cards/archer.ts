@@ -1,14 +1,16 @@
-const { CARD_EFFECTS } = require('../config/game.constants');
+import  { CARD_EFFECTS } from '../config/game.constants';
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const archer = {
+export const archer: CardDetail = {
   id: 'archer',
   name: 'Archer',
   text: 'Eliminate the first or last card from the Queue.',
-  getInfluenceGainOnReveal: (archerCard) => {
+  getInfluenceGainOnReveal: (archerCard:Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return archerCard.influence;
   },
-  getTargets: (archerCard, queue, qri) => {
+  getTargets: (card: Card, queue: Card[][]) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     const queueStartIdx = 0;
@@ -31,5 +33,3 @@ const archer = {
   getDiscardAfterResolution: () => false,
   getActionOnElimination: () => null,
 };
-
-module.exports = archer;

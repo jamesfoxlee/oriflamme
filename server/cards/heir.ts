@@ -1,10 +1,12 @@
 const { CARD_EFFECTS } = require('../config/game.constants');
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const heir = {
+export const heir: CardDetail = {
   id: 'heir',
   name: 'Heir',
   text: "If there is no other card revealed with the same name, gain 2 influence.",
-  getInfluenceGainOnReveal: (heirCard) => {
+  getInfluenceGainOnReveal: (heirCard: Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return heirCard.influence;
   },
@@ -16,14 +18,14 @@ const heir = {
       targetsSelf: true,
     };
   },
-  getAction: (heirCard, queue, qri) => {
+  getAction: (heirCard: Card, queue: Card[][], qri: number) => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
 
     const otherHeirs = queue.map(stack => {
     // check top card only - we can ignore revealed heirs that are covered in a Stack
       return stack[0];
-    }).filter((queueCard, idx) => {
+    }).filter((queueCard: Card, idx: number) => {
       return queueCard.revealed &&
              idx !== qri &&
              queueCard.name === heir.name;
@@ -38,5 +40,3 @@ const heir = {
   getDiscardAfterResolution: () => false,
   getActionOnElimination: () => null,
 };
-
-module.exports = heir;

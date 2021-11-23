@@ -82,7 +82,8 @@ export const CARD_EFFECTS = {
   STEAL: 'steal',
   ELIMINATE: 'eliminate',
   MOVE: 'move',
-  COPY_ABILITY: 'copy_ability'
+  COPY_ABILITY: 'copy_ability',
+  ELIMINATE_ATTACKER: 'eliminate_attacker',
 };
 
 
