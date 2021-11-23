@@ -4,7 +4,7 @@ type PlayerMocks = {
   [key: string]: PlayerType;
 }
 
-export const players: PlayerMocks = {
+export const playerMocks: PlayerMocks = {
   placeholder: {
     color: '',
     discardPile: [],

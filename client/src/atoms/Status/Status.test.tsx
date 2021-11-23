@@ -1,7 +1,7 @@
 import Status from './Status';
-import { Card, PlayerType } from '../../types';
-import { players } from '../../mocks/players.mocks';
-import { cards } from '../../mocks/cards.mocks';
+import { playerMocks } from '../../mocks/players.mocks';
+import { cardMocks } from '../../mocks/cards.mocks';
+import { qCardMocks } from '../../mocks/qcards.mocks';
 import { Props } from './Status';
 import '@testing-library/jest-dom';
 
@@ -9,9 +9,9 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-const [cardMock, cardMock2] = cards;
+const {simple, hidden} = qCardMocks;
 
-const playerMock = players[0];
+const playerMock = playerMocks.simple;
 
 const propsMock: Props = {
 	gameState: {
@@ -23,7 +23,7 @@ const propsMock: Props = {
 		players: { n5EKpbcQWdoDvn8lAAAF: playerMock },
 		queue: [
 			[
-				cardMock
+				simple
 			]
 		],
 		queueResolutionIndex: 0,
@@ -37,7 +37,7 @@ const propsMock: Props = {
 		],
 		turnOrderIndex: 1
 	},
-	selectedPlayerCard: cardMock,
+	selectedPlayerCard: simple,
 	user: {
 		id: 'n5EKpbcQWdoDvn8lAAAF'
 	}
@@ -46,7 +46,7 @@ const propsMock: Props = {
 let props = { ...propsMock };
 let container: HTMLElement;
 beforeEach(() => {
-	// card = cardMock;
+	// card = simple;
 	// player = playerMock;
 	// props = propsMock;
 	// setup a DOM element as a render target
@@ -86,7 +86,7 @@ test('displays status message', async () => {
 		render(<Status {...props} />, container);
 	});
 	expect(container.querySelector('.status__message')!.textContent).toBe(
-		`Play ${cardMock.name} to either end of the Queue, or select another card.`
+		`Play ${simple.name} to either end of the Queue, or select another card.`
 	);
 
 	act(() => {
@@ -108,7 +108,7 @@ test('displays status message', async () => {
 
   // INACTIVE PLAYER
 	props.gameState.phase = 'resolution';
-  props.gameState.queue = [[cardMock2]];
+  props.gameState.queue = [[hidden]];
 	act(() => {
 		render(<Status {...props} />, container);
 	});
