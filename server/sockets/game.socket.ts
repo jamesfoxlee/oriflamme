@@ -1,36 +1,40 @@
-import  SOCKET_EVENTS from '../config/socket.constants';
+import  {SOCKET_EVENTS} from '../config/socket.constants';
+import { Card } from "../types/index";
+import { GameManager as GMType } from "../types/index";
+import { Server, Socket } from "socket.io";
 const { GAME, MESSAGE } = SOCKET_EVENTS;
 
-module.exports = async function registerGameEventHandlers (roomId, gameManager, socketServer) {
+export default async function registerGameEventHandlers (roomId:string, gameManager:GMType, socketServer:Server) {
 
   try {
+    let socket;
     const socketsInRoom = await socketServer.in(roomId).fetchSockets();
-    for (let socket of socketsInRoom) {
+    for ( socket of socketsInRoom) {
 
       socket.on(GAME.GAMESTATE_GET, () => {
         console.log('EVENT RECEIVED: ', GAME.GAMESTATE_GET);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.PLANNING.PLAY_CARD, (card, position) => {
+      socket.on(GAME.PLANNING.PLAY_CARD, (card:Card, position:number) => {
         console.log('EVENT RECEIVED: ', GAME.PLANNING.PLAY_CARD);
         gameManager.cardWasPlayed(card, position);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.RESOLUTION.QUEUE.NO_REVEAL, (qri) => {
+      socket.on(GAME.RESOLUTION.QUEUE.NO_REVEAL, (qri:number) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.NO_REVEAL);
         gameManager.cardWasNotRevealed(qri);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.RESOLUTION.QUEUE.REVEAL, (qri) => {
+      socket.on(GAME.RESOLUTION.QUEUE.REVEAL, (qri:number) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.REVEAL);
         gameManager.cardWasRevealed(qri);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, (targetIndex) => {
+      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_TARGET, (targetIndex:number) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_TARGET);
         gameManager.targetWasConfirmed(targetIndex);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
@@ -54,7 +58,7 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
       });
 
-      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD, (discardIndex) => {
+      socket.on(GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD, (discardIndex:number) => {
         console.log('EVENT RECEIVED: ', GAME.RESOLUTION.QUEUE.CONFIRM_DISCARD);
         gameManager.discardWasConfirmed(discardIndex);
         socketServer.to(roomId).emit(GAME.GAMESTATE_CHANGED, gameManager.getGameState());
@@ -64,7 +68,7 @@ module.exports = async function registerGameEventHandlers (roomId, gameManager, 
       //----------------------------------------------------------------
 
 
-      socket.on(MESSAGE.CREATE, (message) => {
+      socket.on(MESSAGE.CREATE, (message:string) => {
         console.log('EVENT RECEIVED: ', MESSAGE.CREATE);
         console.log(message);
       });

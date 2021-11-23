@@ -2,12 +2,11 @@ import { Server, Socket } from "socket.io";
 import { Player } from "../types/player";
 import { Room } from "../types/index";
 import  { Room as RoomModel } from '../models/room.model';
+import { GameManager as GMType } from "../types/index";
 const { v1: uuidv1 } = require('uuid');
 
 const registerGameEventHandlers = require('../sockets/game.socket');
 const GameManager = require('./game-manager.controller');
-
-
 
 type RoomData={
   roomName: string,
@@ -18,12 +17,15 @@ type RoomData={
 interface Rooms{
  [id:string]: Room
 }
+interface GameManagers{
+ [id:string]:GMType
+}
 
 
 export default function LobbyManager(){
 
   const _rooms:Rooms = {};
-  const _gameManagers = {};
+  const _gameManagers:GameManagers = {};
 
   // "METHODS"
 

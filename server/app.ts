@@ -1,7 +1,7 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
-const io = require('socket.io').Server;
+import { Server} from "socket.io";
 const router = require('./routes');
 import registerConnectionEventHandlers from './sockets/connection.socket';
 import { Request, Response, NextFunction } from 'express';
@@ -23,7 +23,7 @@ expressApp.use('/', router);
 // 2. create Node HTTP server and pass it the Express instance
 const httpServer = http.createServer(expressApp);
 // 3.create socket.io server, and pass it the HTTP server
-const socketServer = new io(httpServer, {
+const socketServer = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000",
     methods: "*"
