@@ -39,7 +39,7 @@ export default function Game () {
 		// set to null to deselect if same card clicked
 		let val = card;
 		if (selectedPlayerCard) {
-			val = selectedPlayerCard.id === card.id ? cardMocks.fake : val;
+			val = selectedPlayerCard.id === card.id ? cardMocks.placeholder : val;
 		}
 		setSelectedPlayerCard(val);
 	};
@@ -47,11 +47,11 @@ export default function Game () {
 	// STATE, CONTEXT etc
 
 	const [ loading, setLoading ] = useState(true);
-	const [ gameState, setGameState ] = useState(gameStateMocks);
+	const [ gameState, setGameState ] = useState(gameStateMocks.placeholder);
 	// TODO: review this, implement messages
 	const [ messages, setMessages ] = useState([]);
 	const [ selectedPlayerCard, setSelectedPlayerCard ] = useState(
-		cardMocks.fake
+		cardMocks.placeholder
 	);
 
 	const socket = useContext(SocketContext);

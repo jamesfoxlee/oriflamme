@@ -5,7 +5,7 @@ type CardMocks = {
 }
 
 export const cardMocks: CardMocks = {
-	fake: {
+	placeholder: {
 		id: 'john',
 		name: 'John',
 		text:

@@ -18,7 +18,7 @@ export type Props = {
 
 export default function Queue(props: Props) {
   const handleCardPlayed = (position: number) => {
-    setSelectedPlayerCard(cardMocks.fake);
+    setSelectedPlayerCard(cardMocks.placeholder);
     let color = playerColor;
 
     if (!playerColor) {
