@@ -5,12 +5,16 @@ const { LOBBY } = SOCKET_EVENTS;
 const LobbyManager = require('./controllers/lobby-manager.controller');
 import { Server, Socket} from "socket.io";
 describe("Oriflamme backend", () => {
-  let io:Server, serverSocket:Socket, clientSocket:Socket;
+  let io:Server, serverSocket:Socket, clientSocket:Server;
   type MockRoom={
     ownerId:string;
     ownerName: string;
     roomName: string;
   }
+  
+
+
+
   const mockRoom= {
       ownerId: "test",
       ownerName:"Testingo Testy",
