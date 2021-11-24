@@ -1,14 +1,16 @@
 const { CARD_EFFECTS } = require('../config/game.constants');
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const assassination = {
+export const assassination: CardDetail = {
   id: 'assassination',
   name: 'Assassination',
   text: "Elimate any card in the Queue. Discard Assassination.",
-  getInfluenceGainOnReveal: (assassinationCard) => {
+  getInfluenceGainOnReveal: (assassinationCard: Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return assassinationCard.influence;
   },
-  getTargets: (assassinationCard, queue, qri) => {
+  getTargets: (assassinationCard: Card, queue: Card[][], qri: number) => {
     // return an empty array if no targets or "self-target" e.g. such as Heir, Lord
     // this enables card highlighting in UI etc
     const allIndices = queue.map((_, idx) => idx);
@@ -29,5 +31,3 @@ const assassination = {
   getDiscardAfterResolution: () => true,
   getActionOnElimination: () => null,
 };
-
-module.exports = assassination;

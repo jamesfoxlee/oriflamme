@@ -1,4 +1,4 @@
-const INITIAL_GAMESTATE = {
+export const INITIAL_GAMESTATE = {
   abilityInterrupted: false,
   activePlayerId: null,
   numPlayers: 0,
@@ -13,13 +13,12 @@ const INITIAL_GAMESTATE = {
   targets: [],
   targetsNoneValid: false,
   targettedIndex: null,
-  targetsNoneValid: false,
   targetsSelf: false,
   turnOrder: [],
   turnOrderIndex: 0
 }
 
-const INITIAL_PLAYERSTATE = {
+export const INITIAL_PLAYERSTATE = {
   id: null,
   color: null,
   discardPile: [],
@@ -29,12 +28,12 @@ const INITIAL_PLAYERSTATE = {
   name: null,
 }
 
-const PHASES = {
+export const PHASES = {
   PLANNING: 'planning',
   RESOLUTION: 'resolution',
 };
 
-const PLAYER_IMAGES = [
+export const PLAYER_IMAGES = [
   'https://i.pinimg.com/originals/7a/ae/c8/7aaec855ca19276f3884f6b7655fdc33.jpg',  // dude crouching with sword
   'https://i.pinimg.com/originals/9f/0f/b8/9f0fb83b052da2fe53003f26ce1bf0b1.jpg',  // redhead lady
   'https://i.pinimg.com/736x/b1/28/02/b1280264c265c556d55368bb29204987.jpg',       // brunette in armor
@@ -46,7 +45,7 @@ const PLAYER_IMAGES = [
   'https://i.pinimg.com/736x/cd/0a/48/cd0a4811395c05bf10170e7e15fc3c9b.jpg',       // lady in black
 ];
 
-const PLAYER_COLORS = [
+export const PLAYER_COLORS = [
   'red',
   'blue',
   'black',
@@ -54,7 +53,7 @@ const PLAYER_COLORS = [
   'green',
 ];
 
-const STARTING_HAND_FULL = [
+export const STARTING_HAND_FULL = [
   'ambush',
   'archer',
   'assassination',
@@ -67,7 +66,7 @@ const STARTING_HAND_FULL = [
   'spy'
 ];
 
-const STARTING_HAND_SIMPLE = [
+export const STARTING_HAND_SIMPLE = [
   'archer',
   'assassination',
   'conspiracy',
@@ -77,22 +76,14 @@ const STARTING_HAND_SIMPLE = [
   'spy'
 ];
 
-const CARD_EFFECTS = {
+export const CARD_EFFECTS = {
   NONE: 'none',
   GAIN_INFLUENCE: 'gain_influence',
   STEAL: 'steal',
   ELIMINATE: 'eliminate',
   MOVE: 'move',
-  COPY_ABILITY: 'copy_ability'
+  COPY_ABILITY: 'copy_ability',
+  ELIMINATE_ATTACKER: 'eliminate_attacker',
 };
 
-module.exports = {
-  CARD_EFFECTS,
-  INITIAL_GAMESTATE,
-  INITIAL_PLAYERSTATE,
-  PHASES,
-  PLAYER_IMAGES,
-  PLAYER_COLORS,
-  STARTING_HAND_FULL,
-  STARTING_HAND_SIMPLE,
-}
+

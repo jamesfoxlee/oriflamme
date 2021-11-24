@@ -11,7 +11,6 @@ type Props={
   onClick: ()=>void
 }
 export default function Button (props:Props) {
-  console.log(props)
   const handleClick = () => {
     if (!props.disabled) {
       props.onClick();

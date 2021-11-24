@@ -1,10 +1,12 @@
 const { CARD_EFFECTS } = require('../config/game.constants');
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const conspiracy = {
+export const conspiracy: CardDetail = {
   id: 'conspiracy',
   name: 'Conspiracy',
   text: "Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.",
-  getInfluenceGainOnReveal: (conspiracyCard) => {
+  getInfluenceGainOnReveal: (conspiracyCard: Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return conspiracyCard.influence * 2;
   },
@@ -26,5 +28,3 @@ const conspiracy = {
   getDiscardAfterResolution: () => true,
   getActionOnElimination: () => null,
 };
-
-module.exports = conspiracy;

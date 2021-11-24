@@ -1,30 +1,60 @@
-const { v1: uuidv1 } = require('uuid');
-
-const { Room } = require('../models/room.model');
-const CardHelper = require('../helpers/card.helper');
-const { CARD_EFFECTS } = require('../config/game.constants');
-
-const {
+//  const { v1: uuidv1 } = require('uuid');
+import { Room } from "../types/index";
+import { Player } from "../types/index";
+// import  { Room as RoomModel } from '../models/room.model';
+import  CardHelper from '../helpers/card.helper';
+import  { CARD_EFFECTS } from '../config/game.constants';
+import { Card } from "../types/index";
+import {
   INITIAL_GAMESTATE,
   INITIAL_PLAYERSTATE,
   STARTING_HAND_SIMPLE,
   PHASES,
   PLAYER_IMAGES,
   PLAYER_COLORS
-} = require('../config/game.constants');
+} from '../config/game.constants';
+
+interface Players{
+    [id:string]: Player
+   
+}
+
+
+type GameState = {
+  abilityInterrupted: boolean;
+  activePlayerId?: string;
+  numPlayers: number;
+  phase: string;
+  planningPhasePlayed:number;
+  players: Players;
+  queue: Card[][];
+  queueResolutionIndex:number;
+  queueTargets?: any[];
+  roomId?: string|null;
+  round: number;
+  targets?: any[];
+  targetsNoneValid: boolean;
+  targettedIndex?: number|null;
+  targetsSelf: boolean;
+  turnOrder: any[];
+  turnOrderIndex:number;
+  resolvingCardToBeDiscarded?: boolean;
+}
 
 const cardHelper = CardHelper();
 
-function GameManager () {
+export default function GameManager () {
 
-  let _gameState = null;
+  let _gameState:GameState;
   const _history = [];
 
   //----------------------------------------------------------------
   // GETTERS
   //----------------------------------------------------------------
 
-  const _getTopCardInStack = (queue, qri) => {
+  const _getTopCardInStack = (queue:Card[][], qri:number) => {
+    console.log("QUEUE",queue,qri)
+    console.log("QRIIIII",qri)
     const stack = queue[qri];
     return stack && stack[stack.length - 1];
   };
@@ -37,7 +67,7 @@ function GameManager () {
 
   // should call _returnToPlayer() if need to "break out" of game loop
 
-  const _checkForAdvanceToResolutionPhase = (prevState) => {
+  const _checkForAdvanceToResolutionPhase = (prevState:GameState) => {
     console.log('GameManager._checkForAdvanceToResolutionPhase()');
     const nextState = {...prevState};
     if (nextState.planningPhasePlayed === nextState.numPlayers) {
@@ -51,7 +81,7 @@ function GameManager () {
     }
   }
 
-  const _checkForAdvanceToNextRound = (prevState) => {
+  const _checkForAdvanceToNextRound = (prevState:GameState) => {
     console.log('GameManager._checkForAdvanceToNextRound()');
     const nextState = {
       ...prevState,
@@ -81,7 +111,7 @@ function GameManager () {
     }
   }
 
-  const _resolveNextCard = (prevState) => {
+  const _resolveNextCard = (prevState:GameState) => {
     const nextState = {...prevState};
     const { queue, queueResolutionIndex: qri } = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
@@ -95,7 +125,7 @@ function GameManager () {
     }
   };
 
-  const _requestTargets = (prevState) => {
+  const _requestTargets = (prevState:GameState) => {
     const nextState = {...prevState};
     const {queue, queueResolutionIndex: qri} = nextState;
     const resolvingCard = _getTopCardInStack(queue, qri);
@@ -118,12 +148,13 @@ function GameManager () {
     }
   }
 
-  const _applyAbility = (prevState) => {
+  const _applyAbility = (prevState:GameState) => {
     const { queue, queueResolutionIndex: qri, targettedIndex } = prevState;
     const resolvingCard = _getTopCardInStack(queue, qri);
     console.log('resolvingCard: ', resolvingCard.name);
     const action = cardHelper.getAction(resolvingCard, queue, qri);
     let nextState;
+    if(action.influenceChange){
     switch (action.type) {
       case CARD_EFFECTS.NONE:
         nextState = {...prevState};
@@ -149,9 +180,10 @@ function GameManager () {
         nextState = {...prevState};
     }
     _checkForDiscardAfterResolution(nextState);
+    }
   }
 
-  const _checkForDiscardAfterResolution = (prevState) => {
+  const _checkForDiscardAfterResolution = (prevState:GameState) => {
     let nextState = {
       ...prevState,
       targets: [],
@@ -175,7 +207,7 @@ function GameManager () {
     }
   }
 
-  const _returnToPlayer = (prevState) => {
+  const _returnToPlayer = (prevState:GameState) => {
     // TODO: save old gameState in history / DB
     _gameState = prevState;
     // by not calling another function, we "drop out of the loop" and control returns
@@ -188,10 +220,11 @@ function GameManager () {
 
   // all of these should return an updated nextState to the caller
 
-  const _eliminate = (targettedIndex, resolvingCard, influenceChange, prevState) => {
+  const _eliminate = (targettedIndex:number|null|undefined, resolvingCard:Card, influenceChange:number, prevState:GameState) => {
     console.log('GameManager._eliminate()');
     const nextState = {...prevState};
     const { players, queue, queueResolutionIndex:qri } = nextState;
+    if(targettedIndex){
     const targetStack = queue[targettedIndex];
     const targetCard = targetStack.pop();
     // if we now have an empty stack, remove it completely
@@ -202,15 +235,19 @@ function GameManager () {
         nextState.queueResolutionIndex -= 1;
       }
     }
+  
     // STAYS SAME EVEN IF AMBUSH IS TARGET CARD
+    if(targetCard){
     const targetCardOwner = players[targetCard.ownerId];
     targetCardOwner.discardPile.push(targetCard.id);
     const resolvingCardOwner = players[resolvingCard.ownerId];
-    resolvingCardOwner.influence += influenceChange;
+    resolvingCardOwner.influence += influenceChange;  
+    }
+  }
     return nextState;
   }
 
-  const _gainInfluence = (resolvingCard, influenceChange, prevState) => {
+  const _gainInfluence = (resolvingCard:Card, influenceChange:number, prevState:GameState) => {
     console.log('GameManager._gainInfluence() gaining: ', influenceChange);
     const nextState = {...prevState};
     const { players } = nextState;
@@ -219,19 +256,21 @@ function GameManager () {
     return nextState;
   }
 
-  const _steal = (targettedIndex, resolvingCard, influenceToSteal, prevState) => {
+  const _steal = (targettedIndex: number|null|undefined, resolvingCard:Card, influenceToSteal:number, prevState:GameState) => {
     console.log('GameManager._steal() stealing: ', influenceToSteal);
     const nextState = {...prevState};
     const { players, queue } = nextState;
+    if(targettedIndex){
     const targetCard = _getTopCardInStack(queue, targettedIndex);
     const targetCardOwner = players[targetCard.ownerId];
     const resolvingCardOwner = players[resolvingCard.ownerId];
     targetCardOwner.influence -= influenceToSteal;
     resolvingCardOwner.influence += influenceToSteal;
+    }
     return nextState;
   }
 
-  const _discardCard = (prevState) => {
+  const _discardCard = (prevState:GameState) => {
     console.log('GameManager._discardCard()');
     const nextState = {
       ...prevState,
@@ -245,8 +284,10 @@ function GameManager () {
       // need to compensate or next card would not get to resolve
       nextState.queueResolutionIndex -= 1;
     }
+    if(discardedCard){
     const discardedCardOwner = players[discardedCard.ownerId];
     discardedCardOwner.discardPile.push(discardedCard.id);
+    }
     return nextState;
   }
 
@@ -255,7 +296,7 @@ function GameManager () {
   // INITIALISE
   //----------------------------------------------------------------
 
-  const initialise = (room) => {
+  const initialise = (room:Room) => {
 
     // TODO: card randomisation
     // TODO: extract into helper
@@ -269,8 +310,11 @@ function GameManager () {
     // create a turn order
     // TODO: first player randomisation of turn order
     // convert array of players into an object ref'd by playerId
-    const turnOrder = [];
-    const playersObj = {};
+    interface PlayersObj{
+      [id:string]:Player
+    }
+    const turnOrder:string[] = [];
+    const playersObj:PlayersObj = {};
     players.forEach((player, idx) => {
       turnOrder.push(player.id);
       playersObj[player.id] = {
@@ -300,13 +344,13 @@ function GameManager () {
   // TRIGGERED BY EVENTS FROM PLAYER
   //----------------------------------------------------------------
 
-  const cardWasPlayed = (cardPlayed, position) => {
+  const cardWasPlayed = (cardPlayed:Card, position:number) => {
     console.log('GameManager.cardWasPlayed()');
     // update hand of player that played card
     const nextState = {..._gameState};
     const playerId = cardPlayed.ownerId;
     const player = nextState.players[playerId];
-    const updatedHand = player.hand.filter(handCardId => handCardId !== cardPlayed.id);
+    const updatedHand = player.hand.filter((handCardId:string) => handCardId !== cardPlayed.id);
     player.hand = updatedHand;
     // NB must add card to queue inside an array - queue is nested arrays!
     // TODO: implement adding to stack here
@@ -315,7 +359,7 @@ function GameManager () {
     _checkForAdvanceToResolutionPhase(nextState);
   };
 
-  const cardWasNotRevealed = (qri) => {
+  const cardWasNotRevealed = (qri:number) => {
     console.log('GameManager.cardWasNotRevealed() at queue index: ', qri);
     let nextState = {..._gameState};
     const card = _getTopCardInStack(nextState.queue, qri);
@@ -323,7 +367,7 @@ function GameManager () {
     _checkForAdvanceToNextRound(nextState);
   }
 
-  const cardWasRevealed = (qri) => {
+  const cardWasRevealed = (qri:number) => {
     console.log('GameManager.cardWasRevealed() at queue index: ', qri);
     const nextState = {..._gameState};
     const { queue } = nextState;
@@ -339,7 +383,7 @@ function GameManager () {
     _requestTargets(nextState);
   }
 
-  const targetWasConfirmed = (targettedIndex) => {
+  const targetWasConfirmed = (targettedIndex:number|null|undefined) => {
     console.log('GameManager.targetWasConfirmed() at queue index: ', targettedIndex);
     // TODO: Royal Decree - needs further prompt from user, should do anyway
     // to alert other players of final choice
@@ -361,7 +405,7 @@ function GameManager () {
     _checkForAdvanceToNextRound(_gameState);
   };
 
-  const discardWasConfirmed = (discardIndex) => {
+  const discardWasConfirmed = (discardIndex:number) => {
     console.log('GameManager.discardWasConfirmed() at queue index: ', discardIndex);
     const nextState = _discardCard(_gameState);
     _checkForAdvanceToNextRound(nextState);
@@ -380,4 +424,4 @@ function GameManager () {
   }
 }
 
-module.exports = GameManager;
+// module.exports = GameManager;

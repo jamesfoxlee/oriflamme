@@ -1,10 +1,12 @@
-const { CARD_EFFECTS } = require('../config/game.constants');
+import { CARD_EFFECTS } from '../config/game.constants';
+import { CardDetail } from "../types/index";
+import { Card } from '../types/index';
 
-const ambush = {
+export const ambush: CardDetail = {
   id: 'ambush',
   name: 'Ambush',
   text: 'If eliminated by an opponent\'s character, discard the attacker and gain 4 influence. If you reveal it yourself, gain 1 influence. Discard Ambush.',
-  getInfluenceGainOnReveal: (ambushCard) => {
+  getInfluenceGainOnReveal: () => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return 1;
   },
@@ -23,7 +25,7 @@ const ambush = {
     }
   },
   getDiscardAfterResolution: () => true,
-  getActionOnElimination: (ambushCard, queue, qri) => {
+  getActionOnElimination: (ambushCard: Card, queue: Card[][], qri: number) => {
     const eliminatingCard = queue[qri][0];
     if (eliminatingCard.id === 'assassination') {
       return null;
@@ -36,5 +38,3 @@ const ambush = {
     }
   },
 };
-
-module.exports = ambush;

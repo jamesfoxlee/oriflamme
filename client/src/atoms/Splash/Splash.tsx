@@ -9,30 +9,26 @@ type Props={
   dismiss: ()=>void
 }
 
-export default function Splash (props:Props) {
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#app');
-    ReactModal.setAppElement('#root');
-  });
+type SplashModalStyles = {
+  overlay: {
+    zIndex: 100,
+    padding: 0,
+    backgroundColor: 'var(--color-blue-midnight)',
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    margin: '0 auto',
+    border: 'none',
+    backgroundColor: 'var(--color-blue-midnight)',
+  }
+};
 
-console.log(props);
+export default function Splash (props:Props) {
   const { show, dismiss } = props;
 
-  type SplashModalStyles = {
-    overlay: {
-      zIndex: 100,
-      padding: 0,
-      backgroundColor: 'var(--color-blue-midnight)',
-    },
-    content: {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      margin: '0 auto',
-      border: 'none',
-      backgroundColor: 'var(--color-blue-midnight)',
-    }
-  };
+ 
 
  const splashModalStyles: SplashModalStyles={
   overlay: {

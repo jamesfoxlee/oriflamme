@@ -20,18 +20,18 @@ export let socket: SocketFunctionTypes;
 function App() {
   // "METHODS"
 
-  const joinRoom = (roomId: null, player: PlayerType) => {
+  const joinRoom = (roomId: string, player: PlayerType) => {
     socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
     socket.joinRoom(roomId, player);
     setActiveRoomId(roomId);
   };
 
-  const leaveRoom = (roomId: null, player: PlayerType) => {
+  const leaveRoom = (roomId: string, player: PlayerType) => {
     socket.leaveRoom(roomId, player);
-    setActiveRoomId(null);
+    setActiveRoomId("");
   };
 
-  const startGame = (roomId: null) => {
+  const startGame = (roomId: string) => {
     socket.startGame(roomId);
   };
 
@@ -42,7 +42,7 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>({ id: "", name: "" });
-  const [activeRoomId, setActiveRoomId] = useState(null);
+  const [activeRoomId, setActiveRoomId] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function App() {
               startGame={startGame}
             />
           ) : null}
-          {!loading && gameStarted ? <Game /> : null}
+
         </UserProvider>
       </SocketProvider>
     </div>
