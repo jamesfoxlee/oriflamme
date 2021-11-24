@@ -1,7 +1,6 @@
 //  const { v1: uuidv1 } = require('uuid');
 import { Room } from "../types/index";
-import { Player } from "../types/index";
-// import  { Room as RoomModel } from '../models/room.model';
+import { Player, GameManager } from "../types/index";
 import  CardHelper from '../helpers/card.helper';
 import  { CARD_EFFECTS } from '../config/game.constants';
 import { Card } from "../types/index";
@@ -43,7 +42,7 @@ type GameState = {
 
 const cardHelper = CardHelper();
 
-export default function GameManager () {
+export default function GameManager (): GameManager {
 
   let _gameState:GameState;
   const _history = [];
@@ -411,8 +410,13 @@ export default function GameManager () {
     _checkForAdvanceToNextRound(nextState);
   };
 
+  const interruptWasConfirmed = () => {
+    // TODO implement
+  }
+
   return {
     initialise,
+    interruptWasConfirmed,
     getGameState,
     cardWasPlayed,
     cardWasNotRevealed,
