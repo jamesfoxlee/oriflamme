@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Card } from "../../types/index";
 import "./PlayerCard.css";
-
 import { CardsContext } from "../../context/cards.context";
 import { getUrlCardFront } from "../../services/card-image.service";
 
@@ -12,13 +11,10 @@ export type Props = {
 };
 
 export default function PlayerCard({ canPlayCard, cardColor, cardId }: Props) {
-  // "METHODS"
 
   const handleCardClicked = (card: Card) => {
     if (canPlayCard) handlePlayerCardClicked(card);
   };
-
-  // STATE, CONTEXT etc
 
   const { cards, selectedPlayerCard, handlePlayerCardClicked } =
     useContext(CardsContext);
@@ -28,8 +24,6 @@ export default function PlayerCard({ canPlayCard, cardColor, cardId }: Props) {
     throw new Error("Invalid card has been clicked.");
   }
   const cardImgUrl = getUrlCardFront(cardId, cardColor);
-
-  // DYNAMIC STYLE
 
   const selectedCardStyle = {
     height: "150%",

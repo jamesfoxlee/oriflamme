@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import "./App.css";
 import Game from "./views/Game/Game";
 import Rooms from "./organisms/Rooms/Rooms";
@@ -18,32 +17,6 @@ const { LOBBY } = SOCKET_EVENTS;
 const storageService = StorageService();
 export let socket: SocketFunctionTypes;
 function App() {
-  // "METHODS"
-
-  const joinRoom = (roomId: string, player: PlayerType) => {
-    socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
-    socket.joinRoom(roomId, player);
-    setActiveRoomId(roomId);
-  };
-
-  const leaveRoom = (roomId: string, player: PlayerType) => {
-    socket.leaveRoom(roomId, player);
-    setActiveRoomId("");
-  };
-
-  const startGame = (roomId: string) => {
-    socket.startGame(roomId);
-  };
-
-  const handleGameStarting = () => {
-    setGameStarted(true);
-  };
-
-  const [showSplash, setShowSplash] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User>({ id: "", name: "" });
-  const [activeRoomId, setActiveRoomId] = useState("");
-  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     Socket()
@@ -64,6 +37,32 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const [showSplash, setShowSplash] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User>({ id: "", name: "" });
+  const [activeRoomId, setActiveRoomId] = useState("");
+  const [gameStarted, setGameStarted] = useState(false);
+
+  const joinRoom = (roomId: string, player: PlayerType) => {
+    socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
+    socket.joinRoom(roomId, player);
+    setActiveRoomId(roomId);
+  };
+
+  const leaveRoom = (roomId: string, player: PlayerType) => {
+    socket.leaveRoom(roomId, player);
+    setActiveRoomId("");
+  };
+
+  const startGame = (roomId: string) => {
+    socket.startGame(roomId);
+  };
+
+  const handleGameStarting = () => {
+    setGameStarted(true);
+  };
+
   return (
     <div className="app" id="app">
       {showSplash ? (

@@ -1,6 +1,5 @@
 import { MessageType, Players } from '../../types/index'
 import React, { useState } from 'react';
-
 import './Messages.css';
 import Message from '../../atoms/Message/Message';
 
@@ -18,7 +17,6 @@ export default function Messages({ messages, players }: Props) {
   const handleMessageSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     if (message.length) {
-      // socket.postMessage(message);
       setMessage('');
     }
   }

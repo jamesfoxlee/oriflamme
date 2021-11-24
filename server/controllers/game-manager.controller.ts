@@ -1,4 +1,3 @@
-//  const { v1: uuidv1 } = require('uuid');
 import { Room } from "../types/index";
 import { Player, GameManager } from "../types/index";
 import  CardHelper from '../helpers/card.helper';
@@ -17,8 +16,6 @@ interface Players{
     [id:string]: Player
    
 }
-
-
 type GameState = {
   abilityInterrupted: boolean;
   activePlayerId?: string;
@@ -45,11 +42,6 @@ const cardHelper = CardHelper();
 export default function GameManager (): GameManager {
 
   let _gameState:GameState;
-  const _history = [];
-
-  //----------------------------------------------------------------
-  // GETTERS
-  //----------------------------------------------------------------
 
   const _getTopCardInStack = (queue:Card[][], qri:number) => {
     console.log("QUEUE",queue,qri)
@@ -289,8 +281,6 @@ export default function GameManager (): GameManager {
     }
     return nextState;
   }
-
-
   //----------------------------------------------------------------
   // INITIALISE
   //----------------------------------------------------------------
@@ -338,11 +328,9 @@ export default function GameManager (): GameManager {
       turnOrder: turnOrder
     }
   };
-
   //----------------------------------------------------------------
   // TRIGGERED BY EVENTS FROM PLAYER
   //----------------------------------------------------------------
-
   const cardWasPlayed = (cardPlayed:Card, position:number) => {
     console.log('GameManager.cardWasPlayed()');
     // update hand of player that played card
@@ -427,5 +415,3 @@ export default function GameManager (): GameManager {
     discardWasConfirmed,
   }
 }
-
-// module.exports = GameManager;

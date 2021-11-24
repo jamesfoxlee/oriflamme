@@ -26,8 +26,6 @@ export default function LobbyManager(): LobbyManagerType {
 
   // "METHODS"
 
-  // const _getNumberOfRooms = () => Object.keys(_rooms).length;
-
   const getRooms = () => {
     return Object.values(_rooms).map((room: Room) => {
       const { roomId, ownerId, ownerName, roomName, players, started } = room;
@@ -140,5 +138,3 @@ export default function LobbyManager(): LobbyManagerType {
     startGame,
   };
 }
-
-// module.exports = LobbyManager;

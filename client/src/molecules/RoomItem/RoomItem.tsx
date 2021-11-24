@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './RoomItem.css';
 import Button from '../../atoms/Button/Button';
 
@@ -26,8 +25,8 @@ type Props={
 
 }
 
-export default function RoomItem (props:Props) {
-  const { activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame } = props;
+export default function RoomItem ({ activeRoomId, joinRoom, leaveRoom, playerIsOwner, room, startGame }:Props) {
+ 
 
   const { roomId, ownerName, roomName, players, started } = room;
   const numPlayers = Object.keys(players).length;
@@ -56,7 +55,7 @@ export default function RoomItem (props:Props) {
           null
         }
         {
-          // isActiveRoom && playerIsOwner && players.length > 1 ?
+
           activeRoomId === roomId && playerIsOwner ?
             <Button
               buttonStyle="positive"

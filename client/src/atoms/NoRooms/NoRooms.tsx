@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './NoRooms.css';
 
 export default function NoRooms () {

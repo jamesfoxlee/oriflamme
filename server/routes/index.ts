@@ -1,4 +1,4 @@
-const router = require('express').Router();
+export  const router = require('express').Router();
 
 // const messagesController = require('../controllers/messages.controller');
 
@@ -6,4 +6,3 @@ const router = require('express').Router();
 //   .get(messagesController.getMessages)
 //   .post(messagesController.postMessage);
 
-module.exports = router;
