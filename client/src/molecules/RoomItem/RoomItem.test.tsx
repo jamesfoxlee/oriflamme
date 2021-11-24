@@ -56,7 +56,10 @@ describe('RoomItem component', ()=>{
              expect(testButton).toBeNull();
          })
          test('Should  show the Join button if !activeRoomId && !room.started', async ()=>{
-           const {getByText}= render(<RoomItem activeRoomId={prop.activeRoomId} joinRoom={prop.joinRoom} leaveRoom={prop.leaveRoom} playerIsOwner={false} room={prop.room} startGame={prop.startGame}/>)
-             expect(getByText("Join")).toBeTruthy();
+          //  const {getByText}= 
+          render(<RoomItem activeRoomId={""} joinRoom={prop.joinRoom} leaveRoom={prop.leaveRoom} playerIsOwner={false} room={prop.room} startGame={prop.startGame}/>)
+          //    expect(getByText("Join")).toBeTruthy();
+          const testButton=  screen.queryByRole("button",{name:/join/i});
+          expect(testButton).toBeTruthy();
          })    
     })
