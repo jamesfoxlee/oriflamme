@@ -7,9 +7,9 @@ type CardMocks = {
 export const cardMocks: CardMocks = {
 	placeholder: {
 		id: 'placeholder',
-		name: 'Placeholder',
+		name: 'Conspiracy',
 		text:
-			'Just a fake card to use as default.'
+			'Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.'
 	},
 	simple: {
 		id: 'conspiracy',

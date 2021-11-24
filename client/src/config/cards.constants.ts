@@ -1,6 +1,6 @@
 import { Card } from '../types/index';
 
-type CardConstants = {
+export type CardConstants = {
 	[key: string]: Card;
 }
 

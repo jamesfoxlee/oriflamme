@@ -7,11 +7,12 @@ type QCardMocks = {
 export const qCardMocks: QCardMocks = {
 	placeholder: {
 		id: 'placeholder',
-		name: 'Placeholder',
-		text: 'Just a fake card to use as default.',
+		name: 'Conspiracy',
+		text:
+			'Gain double the influence accumulated on Conspiracy when it is revealed. Discard Conspiracy.',
 		influence: 0,
 		ownerId: '',
-		ownerColor: ''
+		ownerColor: 'red'
 	},
 	simple: {
 		id: 'conspiracy',
@@ -27,8 +28,8 @@ export const qCardMocks: QCardMocks = {
 		name: 'Assassination',
 		text: 'Eliminate any card in the Queue. Discard Assassination.',
 		revealed: false,
-    influence: 0,
-    ownerId: '',
-    ownerColor: 'red'
+		influence: 0,
+		ownerId: '',
+		ownerColor: 'red'
 	}
 };

@@ -12,7 +12,7 @@ const boxStyles = {
 
 export type Props = {
 	gameState: GameState;
-	selectedPlayerCard?: Card;
+	selectedPlayerCard: Card | null;
 	user: User;
 };
 
@@ -31,7 +31,7 @@ export default function Status (props: Props) {
 	const activePlayer = players[activePlayerId];
 	const playerIsActive = activePlayerId === user.id;
 	const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
-	const playerName = playerIsActive ? 'you' : activePlayer.name;
+	const playerName = playerIsActive || activePlayer === undefined ? 'you' : activePlayer.name;
 
 	let resolvingCard;
 	try {

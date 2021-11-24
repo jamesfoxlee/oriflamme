@@ -63,45 +63,46 @@ describe('renders the home page', () => {
         /* ==== End Cypress Studio ==== */
         /* ==== Generated with Cypress Studio ==== */
         cy.get('.room-item__buttons > .button--positive').click();
-        cy.get(':nth-child(3) > [data-testid=player-card__card]').click();
+        cy.get(':nth-child(4) > [data-testid=player-card__card]').click();
         cy.get('.queue__endzone--left > .queue__arrow').click();
         cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get('.qc-buttons__button-icon').click();
-        /* ==== End Cypress Studio ==== */
-        /* ==== Generated with Cypress Studio ==== */
-        cy.get(':nth-child(3) > [data-testid=player-card__card]').click();
-        cy.get('.queue__endzone--left > .queue__arrow').click();
-        cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
-        cy.get('.qc-buttons__button-icon').click();
-        cy.get(':nth-child(3) > [data-testid=player-card__card]').click();
+        cy.get('div[style=""] > [data-testid=player-card__card]').click();
         cy.get('.queue__endzone--right > .queue__arrow').click();
-        /* ==== Generated with Cypress Studio ==== */
+        cy.get('.qc-buttons__button-icon').click();
+        cy.get('[data-testid=onNo-button] > .qc-buttons__button-icon').click();
+        cy.get(':nth-child(3) > [data-testid=player-card__card]').click();
         cy.get('.queue__endzone--right > .queue__arrow').click();
         cy.get('.qc-buttons__button-icon').click();
         cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get('.qc-buttons__button-icon').click();
-        /* ==== End Cypress Studio ==== */
-        /* ==== Generated with Cypress Studio ==== */
+        cy.get('[data-testid=onNo-button] > .qc-buttons__button-icon').click();
         cy.get(':nth-child(3) > [data-testid=player-card__card]').click();
-        cy.get('.queue__endzone--left > .queue__arrow').click();
+        cy.get('.queue__endzone--right > .queue__arrow').click();
+        cy.get('.qc-buttons__button-icon').click();
+        cy.get('.qc-buttons__button-icon').click();
         cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get('.qc-buttons__button-icon').click();
+        cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get('.qc-buttons__button-icon').click();
-        /* ==== End Cypress Studio ==== */
-        /* ==== Generated with Cypress Studio ==== */
         cy.get(':nth-child(1) > [data-testid=player-card__card]').click();
         cy.get('.queue__endzone--right > .queue__arrow').click();
         cy.get('.qc-buttons__button-icon').click();
+        cy.get(':nth-child(1) > .qc-buttons__prompt > .qc-buttons__buttons > [data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get(':nth-child(1) > .qc-buttons__prompt > .qc-buttons__buttons > [data-testid=onYes-button] > .qc-buttons__button-icon').click();
-        /* ==== End Cypress Studio ==== */
-        /* ==== Generated with Cypress Studio ==== */
-        cy.get(':nth-child(2) > [data-testid=player-card__card]').click();
+        cy.get('div[style=""] > [data-testid=player-card__card]').click();
         cy.get('.queue__endzone--right > .queue__arrow').click();
+        cy.get('.qc-buttons__button-icon').click();
+        cy.get(':nth-child(3) > .qc-buttons__prompt > .qc-buttons__buttons > [data-testid=onYes-button] > .qc-buttons__button-icon').click();
+        cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
         cy.get(':nth-child(2) > .qc-buttons__prompt > .qc-buttons__buttons > [data-testid=onYes-button] > .qc-buttons__button-icon').click();
+        cy.get('.qc-buttons__button-icon').click();
         cy.get('[data-testid=player-card__card]').click();
         cy.get('.queue__endzone--right > .queue__arrow').click();
-        cy.get(':nth-child(2) > .qc-buttons__prompt > .qc-buttons__buttons > [data-testid=onYes-button] > .qc-buttons__button-icon').click();
+        cy.get('.qc-buttons__button-icon').click();
+        cy.get('[data-testid=onYes-button] > .qc-buttons__button-icon').click();
+        cy.get('.qc-buttons__button-icon').click();
         /* ==== End Cypress Studio ==== */
     });
 
