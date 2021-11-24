@@ -1,8 +1,8 @@
-const path = require('path');
-const http = require('http');
-const express = require('express');
+import path from 'path';
+import http from 'http';
+import express from 'express';
 import { Server} from "socket.io";
-const router = require('./routes');
+import {router} from './routes';
 import registerConnectionEventHandlers from './sockets/connection.socket';
 import { Request, Response, NextFunction } from 'express';
 
@@ -15,9 +15,6 @@ interface ServerToClientEvents {  noArg: () => void;  basicEmit: (a: number, b: 
 interface ClientToServerEvents {  hello: () => void;}
 interface InterServerEvents {  ping: () => void;}
 interface SocketData {  name: string;  age: number;}
-
-
-
 
 // 1. create Express app instance, configure static assets & routes
 const expressApp = express();

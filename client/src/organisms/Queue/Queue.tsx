@@ -1,10 +1,7 @@
 import React, { useState, useContext, SetStateAction, Dispatch } from "react";
-
 import "./Queue.css";
-import { cardMocks } from '../../mocks/cards.mocks';
 import QueueCard from "../QueueCard/QueueCard";
 import EmptyQueue from "../../atoms/EmptyQueue/EmptyQueue";
-
 import { SocketContext } from "../../context/socket.context";
 import { UserContext } from "../../context/user.context";
 import { PHASES } from "../../config/game.constants";
@@ -16,30 +13,8 @@ export type Props = {
   setSelectedPlayerCard: Dispatch<SetStateAction<Card | null>>;
 };
 
-export default function Queue(props: Props) {
-  const handleCardPlayed = (position: number) => {
-    setSelectedPlayerCard((_: Card | null) => null);
-    let color = playerColor;
+export default function Queue({gameState,selectedPlayerCard,setSelectedPlayerCard}: Props) {
 
-    if (!playerColor) {
-      const player = players[user.id];
-      color = player.color;
-      setPlayerColor(player.color);
-    }
-
-    const card = {
-      ...selectedPlayerCard,
-      influence: 0,
-      ownerColor: color,
-      ownerId: user.id,
-      revealed: false,
-    };
-    socket.playCard(card, position);
-  };
-
-  // STATE, CONTEXT etc
-
-  const { gameState, selectedPlayerCard, setSelectedPlayerCard } = props;
   const {
     abilityInterrupted,
     activePlayerId,
@@ -54,12 +29,30 @@ export default function Queue(props: Props) {
   } = gameState;
 
   const filteredQueue = queue.map((stack) => stack.filter((card) => card.id !== 'placeholder')).filter((stack) => stack.length);
-  console.log(filteredQueue, queue);
   const [playerColor, setPlayerColor] = useState<string>("");
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
-
   const isPlayerTurn = activePlayerId === user.id;
+
+  const handleCardPlayed = (position: number) => {
+    setSelectedPlayerCard((_: Card | null) => null);
+    let color = playerColor;
+
+    if (!playerColor) {
+      const player = players[user.id];
+      color = player.color;
+      setPlayerColor(player.color);
+    }
+    const card = {
+      ...selectedPlayerCard,
+      influence: 0,
+      ownerColor: color,
+      ownerId: user.id,
+      revealed: false,
+    };
+    socket.playCard(card, position);
+  };
+
   return (
     <div className="queue">
       <div className="queue__endzone queue__endzone--left">

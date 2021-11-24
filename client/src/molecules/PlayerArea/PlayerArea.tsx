@@ -3,7 +3,6 @@ import { Players } from '../../types/index';
 import './PlayerArea.css';
 import PlayerHand from '../../organisms/PlayerHand/PlayerHand';
 import Player from '../Player/Player';
-
 import { UserContext } from '../../context/user.context';
 
 export type Props = {
@@ -12,11 +11,10 @@ export type Props = {
 	players: Players;
 };
 
-export default function PlayerArea (props: Props) {
-	const { activePlayerId, phase, players } = props;
+export default function PlayerArea ({ activePlayerId, phase, players }: Props) {
+
 	const [ user ] = useContext(UserContext);
 	const player = players[user.id];
-
 	const isActivePlayer = user.id === activePlayerId;
 	const isHandActive = isActivePlayer && phase === 'planning';
 

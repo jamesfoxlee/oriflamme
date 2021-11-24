@@ -2,12 +2,6 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-<<<<<<< HEAD
-import "@testing-library/jest-dom";
-import "@testing-library/jest-dom/extend-expect";
-import "regenerator-runtime/runtime";
-=======
 import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect'
-import 'regenerator-runtime/runtime'
->>>>>>> 0e46ef68244994f884b63bcb04c04a486ca03248
+import '@testing-library/jest-dom/extend-expect';
+import 'regenerator-runtime/runtime';

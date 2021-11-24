@@ -1,7 +1,6 @@
 import React from "react";
 import { GameState, Card, User } from "../../types";
 import "./Status.css";
-
 import { PHASES } from "../../config/game.constants";
 
 const boxStyles = {
@@ -11,14 +10,12 @@ const boxStyles = {
 };
 
 export type Props = {
-
 	gameState: GameState;
 	selectedPlayerCard: Card | null;
 	user: User;
 };
 
-export default function Status (props: Props) {
-	const { gameState, selectedPlayerCard, user } = props;
+export default function Status ({ gameState, selectedPlayerCard, user }: Props) {
 	const {
 		abilityInterrupted,
 		activePlayerId,
@@ -29,11 +26,11 @@ export default function Status (props: Props) {
 		resolvingCardToBeDiscarded,
 		targetsNoneValid
 	} = gameState;
+
 	const activePlayer = players[activePlayerId];
 	const playerIsActive = activePlayerId === user.id;
 	const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
 	const playerName = playerIsActive || activePlayer === undefined ? 'you' : activePlayer.name;
-
 
   let resolvingCard;
   try {
@@ -45,6 +42,7 @@ export default function Status (props: Props) {
 
   let statusMessage;
   if (phase === PHASES.PLANNING) {
+
     // OTHER PLAYER'S TURN
 
     if (!playerIsActive) {
@@ -60,6 +58,7 @@ export default function Status (props: Props) {
       statusMessage = `Play ${selectedPlayerCard.name} to either end of the Queue, or select another card.`;
     }
   } else if (phase === PHASES.RESOLUTION) {
+
     // OTHER PLAYER'S TURN
 
     if (!playerIsActive && resolvingCard && !resolvingCard.revealed) {
@@ -90,7 +89,6 @@ export default function Status (props: Props) {
       }
     }
   }
-
   return (
     <div className="status">
       <div className="status__inner">

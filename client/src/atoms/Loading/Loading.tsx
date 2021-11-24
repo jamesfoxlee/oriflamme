@@ -1,7 +1,5 @@
 import React from "react";
-
 import "./Loading.css";
-
 export type Message = { message: string };
 
 export default function Loading({ message }: { message: string }) {

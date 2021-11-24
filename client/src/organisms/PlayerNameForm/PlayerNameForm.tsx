@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactModal from 'react-modal';
-
 import './PlayerNameForm.css';
 import Button from '../../atoms/Button/Button';
 import modalStyles from '../../styles/modal';
-
-// import { UserContext } from '../../context/user.context';
 
 const FORM_INITIAL_STATE = {
 	roomName   : '',
@@ -25,29 +22,24 @@ export default function PlayerNameForm ({ onSubmit, show, toggleModal }:Props) {
 		if (process.env.NODE_ENV !== 'test') ReactModal.setAppElement('#app');
 		ReactModal.setAppElement('#root');
 	  });
-
-	const formIsValid = () => !!formData.playerName;
-
+	
 	const [ formData, setFormData ] = useState({ ...FORM_INITIAL_STATE });
-	const [ submitEnabled, setSubmitEnabled ] = useState(formIsValid());
+	const formIsValid = !!formData.playerName;
+	const [ submitEnabled, setSubmitEnabled ] = useState(formIsValid);
+	
 	const handleInputChanged = (event:{target:HTMLInputElement}, field:string) => {
 		console.log(event);
 		console.log(field,"string");
 		const val = event.target.value;
 		const newFormData = { ...formData, [field]: val };
 		setFormData(newFormData);
-		setSubmitEnabled(formIsValid());
+		setSubmitEnabled(formIsValid);
 	};
-
-
-
 	const handleSubmit = () => {
 		onSubmit(formData.playerName);
 		setFormData({ ...FORM_INITIAL_STATE });
 	};
 
-
-	// const [user] = useContext(UserContext);
 	return (
 		<ReactModal
 			isOpen={show}

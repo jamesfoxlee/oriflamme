@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactModal from 'react-modal';
-
 import './Splash.css';
 import Button from '../Button/Button';
 
@@ -25,11 +24,8 @@ type SplashModalStyles = {
   }
 };
 
-export default function Splash (props:Props) {
-  const { show, dismiss } = props;
-
- 
-
+export default function Splash ({ show, dismiss }:Props) {
+  
  const splashModalStyles: SplashModalStyles={
   overlay: {
     zIndex: 100,
