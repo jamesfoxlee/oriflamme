@@ -6,12 +6,13 @@ import { render } from '@testing-library/react';
 
 let props: Props;
 beforeEach(() => {
-	props = {
-		cardColor: 'red',
-		hand: [ 'assassination', 'conspiracy' ],
-		isActive: false
-	};
+  props = {
+    cardColor: "red",
+    hand: ["assassination", "conspiracy"],
+    isActive: false,
+  };
 });
+
 
 test('PlayerHand instantiates PlayerCard elements', () => {
 	const { getAllByTestId } = render(<PlayerHand {...props} />);
