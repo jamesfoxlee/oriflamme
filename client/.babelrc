@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "presets": [
     [
       "@babel/preset-env",
@@ -11,4 +12,16 @@
     "@babel/preset-react"
   ],
   "plugins": [["@babel/plugin-transform-runtime"]]
+=======
+  "presets": [["@babel/preset-env",{
+    "targets": {
+      "node": "current"
+    }
+  }],"@babel/preset-react"],
+  "plugins": [
+    ["@babel/plugin-transform-runtime"
+     
+    ]
+  ]
+>>>>>>> 0e46ef68244994f884b63bcb04c04a486ca03248
 }

@@ -2,7 +2,7 @@ import {render, screen} from '@testing-library/react'
 import Button from './Button'
 import userEvent from '@testing-library/user-event';
 import * as React from 'react'
-
+import 'regenerator-runtime/runtime';
 
 describe('Button component', ()=>{
     const btnFunc= jest.fn();
