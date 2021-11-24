@@ -3,6 +3,7 @@ import RoomItem from "./RoomItem";
 import * as React from "react";
 import userEvent from "@testing-library/user-event";
 
+
 describe('RoomItem component', ()=>{
     const btnFunc= jest.fn();
     const prop=
@@ -61,3 +62,4 @@ describe('RoomItem component', ()=>{
           expect(testButton).toBeTruthy();
          })    
     })
+
