@@ -11,7 +11,6 @@ export type Props = {
 };
 
 export default function PlayerCard({ canPlayCard, cardColor, cardId }: Props) {
-
   const handleCardClicked = (card: Card) => {
     if (canPlayCard) handlePlayerCardClicked(card);
   };
@@ -39,6 +38,7 @@ export default function PlayerCard({ canPlayCard, cardColor, cardId }: Props) {
     return (
       <div className="player-card__wrapper" style={selectedWrapperStyle}>
         <img
+          alt="player-card"
           data-testid="player-card__card"
           className="player-card__card"
           src={`${process.env.PUBLIC_URL}/${cardImgUrl}`}
@@ -51,6 +51,7 @@ export default function PlayerCard({ canPlayCard, cardColor, cardId }: Props) {
   return (
     <div className="player-card__wrapper">
       <img
+        alt="player-card"
         data-testid="player-card__card"
         className="player-card__card"
         src={`${process.env.PUBLIC_URL}/${cardImgUrl}`}

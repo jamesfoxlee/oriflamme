@@ -11,4 +11,4 @@ export type GameManager = {
   noValidTargetWasConfirmed: () => void;
   discardWasConfirmed: (index: number) => void;
   interruptWasConfirmed: () => void;
-}
+};

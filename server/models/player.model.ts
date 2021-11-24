@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require("./db");
 const { Schema } = db;
 
 const PlayerSchema = mongoose.Schema({
@@ -8,12 +8,12 @@ const PlayerSchema = mongoose.Schema({
   hand: { type: [String], default: [] },
   imageUrl: String,
   influence: { type: Number, default: 0 },
-  name: String
+  name: String,
 });
 
-const Player = db.model('Player', PlayerSchema);
+const Player = db.model("Player", PlayerSchema);
 
 module.exports = {
   Player,
-  PlayerSchema
-}
+  PlayerSchema,
+};

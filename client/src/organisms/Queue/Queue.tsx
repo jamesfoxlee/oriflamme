@@ -13,8 +13,11 @@ export type Props = {
   setSelectedPlayerCard: Dispatch<SetStateAction<Card | null>>;
 };
 
-export default function Queue({gameState,selectedPlayerCard,setSelectedPlayerCard}: Props) {
-
+export default function Queue({
+  gameState,
+  selectedPlayerCard,
+  setSelectedPlayerCard,
+}: Props) {
   const {
     abilityInterrupted,
     activePlayerId,
@@ -28,7 +31,9 @@ export default function Queue({gameState,selectedPlayerCard,setSelectedPlayerCar
     targetsSelf,
   } = gameState;
 
-  const filteredQueue = queue.map((stack) => stack.filter((card) => card.id !== 'placeholder')).filter((stack) => stack.length);
+  const filteredQueue = queue
+    .map((stack) => stack.filter((card) => card.id !== "placeholder"))
+    .filter((stack) => stack.length);
   const [playerColor, setPlayerColor] = useState<string>("");
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);

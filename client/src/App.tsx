@@ -17,7 +17,6 @@ const { LOBBY } = SOCKET_EVENTS;
 const storageService = StorageService();
 export let socket: SocketFunctionTypes;
 function App() {
-
   useEffect(() => {
     Socket()
       .then((wrappedSocket) => {

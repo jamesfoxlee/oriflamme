@@ -1,6 +1,5 @@
 import Status from "./Status";
 import { playerMocks } from "../../mocks/players.mocks";
-import { cardMocks } from "../../mocks/cards.mocks";
 import { qCardMocks } from "../../mocks/qcards.mocks";
 import { Props } from "./Status";
 import "@testing-library/jest-dom";
@@ -84,10 +83,7 @@ test("displays status message", async () => {
   );
 
   act(() => {
-    render(
-      <Status {...{ ...props, selectedPlayerCard: undefined }} />,
-      container
-    );
+    render(<Status {...{ ...props, selectedPlayerCard: null }} />, container);
   });
   expect(container.querySelector(".status__message")!.textContent).toBe(
     "Select a card to play to either end of the Queue."

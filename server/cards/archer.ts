@@ -1,12 +1,12 @@
-import  { CARD_EFFECTS } from '../config/game.constants';
+import { CARD_EFFECTS } from "../config/game.constants";
 import { CardDetail } from "../types/index";
-import { Card } from '../types/index';
+import { Card } from "../types/index";
 
 export const archer: CardDetail = {
-  id: 'archer',
-  name: 'Archer',
-  text: 'Eliminate the first or last card from the Queue.',
-  getInfluenceGainOnReveal: (archerCard:Card) => {
+  id: "archer",
+  name: "Archer",
+  text: "Eliminate the first or last card from the Queue.",
+  getInfluenceGainOnReveal: (archerCard: Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
     return archerCard.influence;
   },
@@ -20,15 +20,15 @@ export const archer: CardDetail = {
     return {
       targets,
       targetsNoneValid: false, // will always be himself to kill
-    }
+    };
   },
   getAction: () => {
     // cards like Heir and Lord will need the queue to determine influence gain
     // return influenceChange prop if this occurs
     return {
       type: CARD_EFFECTS.ELIMINATE,
-      influenceChange: 1
-    }
+      influenceChange: 1,
+    };
   },
   getDiscardAfterResolution: () => false,
   getActionOnElimination: () => null,

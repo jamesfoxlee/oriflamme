@@ -1,4 +1,4 @@
-@import url('./reset.css');
+@import url("./reset.css");
 
 :root {
   --color-black: hsla(0, 0%, 0%, 1);
@@ -7,7 +7,6 @@
   --color-grey-light: hsla(0, 0%, 90%, 1);
   --color-white: hsla(0, 0%, 100%, 1);
   --font-size-main: 1.6rem;
-
 }
 
 .wrapper {
@@ -25,10 +24,6 @@
   display: none; /* Safari and Chrome browsers */
 }
 
-.messages {
-
-}
-
 .message {
   display: inline-block;
   padding: 1rem;
@@ -37,15 +32,6 @@
   color: var(--color-white);
   font-size: var(--font-size-main);
 }
-
-.message--mine {
-
-}
-
-.message--theirs {
-
-}
-
 
 .compose {
   height: 10vh;

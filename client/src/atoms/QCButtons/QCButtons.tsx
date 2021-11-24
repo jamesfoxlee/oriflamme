@@ -7,7 +7,6 @@ export type Props = {
   onNo?: () => void;
 };
 export default function QCButtons({ text, onYes, onNo }: Props) {
-
   return (
     <div className="qc-buttons__prompt">
       {text}
