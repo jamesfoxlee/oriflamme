@@ -20,20 +20,20 @@ export let socket: SocketFunctionTypes;
 function App () {
 	// "METHODS"
 
-	const joinRoom = (roomId: null, player: PlayerType) => {
-		socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
-		socket.joinRoom(roomId, player);
-		setActiveRoomId(roomId);
-	};
+  const joinRoom = (roomId: string, player: PlayerType) => {
+    socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
+    socket.joinRoom(roomId, player);
+    setActiveRoomId(roomId);
+  };
 
-	const leaveRoom = (roomId: null, player: PlayerType) => {
-		socket.leaveRoom(roomId, player);
-		setActiveRoomId(null);
-	};
+  const leaveRoom = (roomId: string, player: PlayerType) => {
+    socket.leaveRoom(roomId, player);
+    setActiveRoomId('');
+  };
 
-	const startGame = (roomId: null) => {
-		socket.startGame(roomId);
-	};
+  const startGame = (roomId: string) => {
+    socket.startGame(roomId);
+  };
 
 	const handleGameStarting = () => {
 		setGameStarted(true);
@@ -42,7 +42,7 @@ function App () {
 	const [ showSplash, setShowSplash ] = useState(true);
 	const [ loading, setLoading ] = useState(true);
 	const [ user, setUser ] = useState<User>({ id: '', name: '' });
-	const [ activeRoomId, setActiveRoomId ] = useState(null);
+  const [ activeRoomId, setActiveRoomId ] = useState('');
 	const [ gameStarted, setGameStarted ] = useState(false);
 
 	useEffect(() => {
@@ -58,7 +58,7 @@ function App () {
 				}
 				setUser({
 					id: userId || socketId,
-					name: userName
+					name: userName,
 				});
 				setLoading(false);
 			})

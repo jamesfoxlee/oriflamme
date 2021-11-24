@@ -10,11 +10,11 @@ mongoose.connect(DB_URL, { dbName: DB_NAME })
   .then(() => {
     console.log(`Connected to MongoDB (database: ${DB_NAME})`)
   })
-  .catch(err => {
+  .catch((err:any) => {
     console.log(err);
   })
 
-mongoose.connection.on('error', (err) => {
+mongoose.connection.on('error', (err:any) => {
   console.log(err);
 })
 
