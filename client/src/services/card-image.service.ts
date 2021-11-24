@@ -38,7 +38,7 @@ export function getUrlCardFront (cardId: string, color: string) {
 		);
 		return `cards/oriflamme-cards_${cardNum}.gif`;	
 	} else {
-		throw new Error('Card id or color is invalid.');
+		throw new Error(`Card id or color is invalid. Card id: ${cardId}; color: ${color}.`);
 	}
 }
 

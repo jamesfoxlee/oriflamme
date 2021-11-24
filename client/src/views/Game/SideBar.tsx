@@ -6,7 +6,7 @@ import Status from "../../atoms/Status/Status";
 type Props = {
   gameState: GameState,
   messages: MessageType[],
-  selectedPlayerCard: Card,
+  selectedPlayerCard: Card | null,
   user: User
 }
 
