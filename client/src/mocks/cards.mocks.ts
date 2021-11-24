@@ -1,10 +1,11 @@
-import { Card } from '../types/index';
+import { Card } from "../types/index";
 
 type CardMocks = {
-	[key: string]: Card;
-}
+  [key: string]: Card;
+};
 
 export const cardMocks: CardMocks = {
+
 	placeholder: {
 		id: 'placeholder',
 		name: 'Conspiracy',
@@ -23,4 +24,5 @@ export const cardMocks: CardMocks = {
 		text: 'Eliminate any card in the Queue. Discard Assassination.',
 		revealed: false
 	}
+
 };

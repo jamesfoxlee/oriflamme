@@ -1,10 +1,11 @@
-import { QCard } from '../types/index';
+import { QCard } from "../types/index";
 
 type QCardMocks = {
-	[key: string]: QCard;
+  [key: string]: QCard;
 };
 
 export const qCardMocks: QCardMocks = {
+
 	placeholder: {
 		id: 'placeholder',
 		name: 'Conspiracy',
@@ -32,4 +33,5 @@ export const qCardMocks: QCardMocks = {
 		ownerId: '',
 		ownerColor: 'red'
 	}
+
 };
