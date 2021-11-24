@@ -4,8 +4,8 @@ import { Room as RoomModel } from "../models/room.model";
 import { GameManager as GMType } from "../types/index";
 const { v1: uuidv1 } = require("uuid");
 
-const registerGameEventHandlers = require("../sockets/game.socket");
-const GameManager = require("./game-manager.controller");
+import registerGameEventHandlers from "../sockets/game.socket";
+import GameManager from './game-manager.controller';
 
 type RoomData = {
   roomName: string;
