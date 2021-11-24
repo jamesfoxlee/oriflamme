@@ -1,0 +1,24 @@
+/* LINK https://stackoverflow.com/questions/43919067/make-flex-items-overlap */
+.player-card__wrapper {
+  height: 100%;
+  width: 14.33%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  &:last-child, &:hover {
+    overflow: visible;
+  }
+}
+
+.player-card__card {
+  height: 100%;
+  border-radius: 5px;
+
+  &:hover {
+    height: 150%;
+    z-index: var(--layer-4);
+    box-shadow: 0 0 1rem 1rem white;
+  }
+}
