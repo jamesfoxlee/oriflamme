@@ -12,13 +12,13 @@ import { GameState, Card } from "../../types";
 
 export type Props = {
   gameState: GameState;
-  selectedPlayerCard: Card;
-  setSelectedPlayerCard: Dispatch<SetStateAction<Card>>;
+  selectedPlayerCard: Card | null;
+  setSelectedPlayerCard: Dispatch<SetStateAction<Card | null>>;
 };
 
 export default function Queue(props: Props) {
   const handleCardPlayed = (position: number) => {
-    setSelectedPlayerCard(cardMocks.placeholder);
+    setSelectedPlayerCard((_: Card | null) => null);
     let color = playerColor;
 
     if (!playerColor) {
@@ -53,6 +53,8 @@ export default function Queue(props: Props) {
     targetsSelf,
   } = gameState;
 
+  const filteredQueue = queue.map((stack) => stack.filter((card) => card.id !== 'placeholder')).filter((stack) => stack.length);
+  console.log(filteredQueue, queue);
   const [playerColor, setPlayerColor] = useState<string>("");
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
@@ -69,9 +71,9 @@ export default function Queue(props: Props) {
         ) : null}
       </div>
       <div className="queue__centrezone">
-        {queue.length ? (
+        {filteredQueue.length ? (
           <div className="queue__cards">
-            {queue.map((stack, idx) => {
+            {filteredQueue.map((stack, idx) => {
               const topCard = stack[stack.length - 1];
               const isResolving = phase === PHASES.RESOLUTION && qri === idx;
               const isTarget = targets && targets.includes(idx);
