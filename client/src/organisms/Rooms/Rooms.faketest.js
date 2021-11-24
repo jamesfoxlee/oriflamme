@@ -1,3 +1,5 @@
+//Unit test not working due to modal acting weird, test it with Cypress.
+
 // import {getByText, render, screen} from '@testing-library/react'
 // import Rooms from './Rooms'
 // import * as React from 'react'

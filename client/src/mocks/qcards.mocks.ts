@@ -11,7 +11,7 @@ export const qCardMocks: QCardMocks = {
 		text: 'Just a fake card to use as default.',
 		influence: 0,
 		ownerId: '',
-		ownerColor: ''
+		ownerColor: 'red'
 	},
 	simple: {
 		id: 'conspiracy',
