@@ -10,27 +10,28 @@ const boxStyles = {
 };
 
 export type Props = {
-	gameState: GameState;
-	selectedPlayerCard: Card | null;
-	user: User;
+  gameState: GameState;
+  selectedPlayerCard: Card | null;
+  user: User;
 };
 
-export default function Status ({ gameState, selectedPlayerCard, user }: Props) {
-	const {
-		abilityInterrupted,
-		activePlayerId,
-		phase,
-		players,
-		queue,
-		queueResolutionIndex: qri,
-		resolvingCardToBeDiscarded,
-		targetsNoneValid
-	} = gameState;
+export default function Status({ gameState, selectedPlayerCard, user }: Props) {
+  const {
+    abilityInterrupted,
+    activePlayerId,
+    phase,
+    players,
+    queue,
+    queueResolutionIndex: qri,
+    resolvingCardToBeDiscarded,
+    targetsNoneValid,
+  } = gameState;
 
-	const activePlayer = players[activePlayerId];
-	const playerIsActive = activePlayerId === user.id;
-	const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
-	const playerName = playerIsActive || activePlayer === undefined ? 'you' : activePlayer.name;
+  const activePlayer = players[activePlayerId];
+  const playerIsActive = activePlayerId === user.id;
+  const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
+  const playerName =
+    playerIsActive || activePlayer === undefined ? "you" : activePlayer.name;
 
   let resolvingCard;
   try {
@@ -42,7 +43,6 @@ export default function Status ({ gameState, selectedPlayerCard, user }: Props) 
 
   let statusMessage;
   if (phase === PHASES.PLANNING) {
-
     // OTHER PLAYER'S TURN
 
     if (!playerIsActive) {
@@ -58,7 +58,6 @@ export default function Status ({ gameState, selectedPlayerCard, user }: Props) 
       statusMessage = `Play ${selectedPlayerCard.name} to either end of the Queue, or select another card.`;
     }
   } else if (phase === PHASES.RESOLUTION) {
-
     // OTHER PLAYER'S TURN
 
     if (!playerIsActive && resolvingCard && !resolvingCard.revealed) {

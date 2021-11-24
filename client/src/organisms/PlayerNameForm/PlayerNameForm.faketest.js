@@ -7,11 +7,9 @@
 // import * as Modal from 'react-modal';
 // jest.spyOn(Modal, "setAppElement").mockImplementation(param => console.log(`setAppElement:'${param}'`));
 
-
-
 // describe('PlayerNameForm component', ()=>{
 //     const testFoo= jest.fn()
-  
+
 //     test('should match the snapshot',()=>{
 //        const {container}=  render(<PlayerNameForm  onSubmit={testFoo} show={testFoo} toogleModal={testFoo} />)
 //         expect(container.firstChild).toMatchSnapshot();

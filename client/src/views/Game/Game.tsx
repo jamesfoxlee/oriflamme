@@ -1,13 +1,6 @@
-import React, {
-	useState,
-	useEffect,
-	useContext,
-	Dispatch,
-	SetStateAction
-} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 
 import { GameState, Card } from "../../types/index";
-import { cardMocks } from "../../mocks/cards.mocks";
 import { gameStateMocks } from "../../mocks/gameState.mocks";
 import "./Game.css";
 import OpponentArea from "../../molecules/OpponentArea/OpponentArea";
@@ -41,21 +34,23 @@ export default function Game() {
     }
   };
 
-	const handlePlayerCardClicked = (card: Card) => {
-		// set to null to deselect if same card clicked
-		let val: Card | null = card;
-		val = selectedPlayerCard && selectedPlayerCard.id === card.id ? null : val;
-		
-		if (val) setSelectedPlayerCard(val);
-	};
+  const handlePlayerCardClicked = (card: Card) => {
+    // set to null to deselect if same card clicked
+    let val: Card | null = card;
+    val = selectedPlayerCard && selectedPlayerCard.id === card.id ? null : val;
+
+    if (val) setSelectedPlayerCard(val);
+  };
 
   // STATE, CONTEXT etc
 
-	const [ loading, setLoading ] = useState(true);
-	const [ gameState, setGameState ] = useState(gameStateMocks.placeholder);
-	// TODO: review this, implement messages
-	const [ messages, setMessages ] = useState([]);
-	const [ selectedPlayerCard, setSelectedPlayerCard ] = useState<Card | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [gameState, setGameState] = useState(gameStateMocks.placeholder);
+  // TODO: review this, implement messages
+  const [messages, setMessages] = useState([]);
+  const [selectedPlayerCard, setSelectedPlayerCard] = useState<Card | null>(
+    null
+  );
 
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);

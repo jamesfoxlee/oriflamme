@@ -1,5 +1,4 @@
 .game {
-  /* display: flex; */
   height: 100%;
 }
 
@@ -33,16 +32,12 @@
   position: absolute;
   right: 0;
   top: var(--size-navbar-height);
-  /* flex: 1 0 0; */
-  /* border: 1px solid red; */
 }
 
 .game__status {
   height: calc((100vh - var(--size-navbar-height)) * 0.25);
-  /* border: 1px solid red; */
 }
 
 .game__messages {
   height: calc((100vh - var(--size-navbar-height)) * 0.75);
-  /* border: 1px solid red; */
 }

@@ -11,7 +11,7 @@
 .splash__image {
   height: 20vh;
   width: 20vh;
-  background-image: url('../../assets/wax-seal.png');
+  background-image: url("../../assets/wax-seal.png");
   background-size: cover;
 }
 

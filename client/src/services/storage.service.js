@@ -1,5 +1,4 @@
-export default function StorageService () {
-
+export default function StorageService() {
   return {
     get: (key) => {
       return localStorage.getItem(key);
@@ -8,6 +7,6 @@ export default function StorageService () {
       if (val !== undefined) {
         localStorage.setItem(key, val);
       }
-    }
-  }
+    },
+  };
 }

@@ -13,10 +13,6 @@
   text-align: center;
 }
 
-.messages__list {
-
-}
-
 .messages__compose {
   display: flex;
   justify-content: space-between;

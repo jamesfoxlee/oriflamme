@@ -1,12 +1,14 @@
-console.log('initialising socket manager');
+console.log("initialising socket manager");
 const socket = io();
 
-socket.on('connect', () => {
+socket.on("connect", () => {
   console.log(`connected to server, socket.id: ${socket.id}`);
 });
 
-socket.on('disconnect', () => {
-  console.log(`disconnected from server, socket.id (should be undefined): ${socket.id}`);
+socket.on("disconnect", () => {
+  console.log(
+    `disconnected from server, socket.id (should be undefined): ${socket.id}`
+  );
 });
 
 export { socket };

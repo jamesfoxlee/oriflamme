@@ -1,4 +1,4 @@
 export const PHASES = {
-  PLANNING: 'planning',
-  RESOLUTION: 'resolution',
+  PLANNING: "planning",
+  RESOLUTION: "resolution",
 };

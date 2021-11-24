@@ -17,8 +17,8 @@
   --color-positive: hsla(210, 96%, 40%, 1);
   --color-cancel: hsla(222, 11%, 54%, 1);
   --color-destructive: hsla(291, 87%, 32%, 1);
-  --font-family-gothic: 'UnifrakturMaguntia', cursive;
-  --font-family-regular: 'EB Garamond', sans-serif;
+  --font-family-gothic: "UnifrakturMaguntia", cursive;
+  --font-family-regular: "EB Garamond", sans-serif;
   --font-size-arrows: 4.2rem;
   --font-size-biggest: 3.2rem;
   --font-size-bigger: 2.4rem;
@@ -35,7 +35,6 @@
   --layer-5: 5;
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -44,26 +43,25 @@
 }
 
 html {
-  font-family: var( --font-family-regular);
+  font-family: var(--font-family-regular);
   font-size: 62.5%;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'EB Garamond', 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "EB Garamond", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-
-input[type='text'] {
+input[type="text"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-box-shadow: none;
@@ -75,11 +73,11 @@ input[type='text'] {
 }
 
 input:focus {
-  outline:none;
+  outline: none;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
+input[type="checkbox"],
+input[type="radio"] {
   -webkit-appearance: none;
   -moz-appearance: none;
 }

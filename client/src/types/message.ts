@@ -1,5 +1,5 @@
 export type MessageType = {
-  from: string,
-  content: string,
-  timestamp: string
-}
+  from: string;
+  content: string;
+  timestamp: string;
+};

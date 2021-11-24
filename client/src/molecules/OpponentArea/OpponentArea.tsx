@@ -10,8 +10,11 @@ export type Props = {
   turnOrder: string[];
 };
 
-export default function OpponentArea({ activePlayerId, players, turnOrder }: Props) {
-
+export default function OpponentArea({
+  activePlayerId,
+  players,
+  turnOrder,
+}: Props) {
   const [user] = useContext(UserContext);
 
   const userIdx = turnOrder.indexOf(user.id);

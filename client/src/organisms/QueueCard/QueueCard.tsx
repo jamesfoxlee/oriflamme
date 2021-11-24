@@ -34,7 +34,6 @@ export default function QueueCard({
   targetsSelf,
   qri,
 }: Props) {
-
   const [hovered, setHovered] = useState(false);
   const socket = useContext(SocketContext);
   const [user] = useContext(UserContext);
@@ -53,7 +52,6 @@ export default function QueueCard({
   const handleConfirmDiscard = () => socket.queueConfirmDiscard(indexInQueue);
   const handleConfirmInterrupt = () => socket.queueConfirmInterrupt();
 
-
   return (
     <div data-testid="queue-card" className="queue-card">
       <div
@@ -63,6 +61,7 @@ export default function QueueCard({
       >
         <div className="queue-card__card-wrapper">
           <img
+            alt="queue-card"
             className="queue-card__card-img"
             src={revealed ? cardFrontUrl : cardBackUrl}
           />

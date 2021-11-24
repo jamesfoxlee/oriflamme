@@ -1,21 +1,27 @@
-import React from 'react';
-import './Button.css';
+import React from "react";
+import "./Button.css";
 
-type Props={
+type Props = {
   buttonStyle?: string;
   disabled?: boolean;
   extraStyles?: {};
   text: string;
-  children?:string;
-  onClick: ()=>void
-}
-export default function Button ({ buttonStyle, disabled,extraStyles,text,children,onClick}:Props) {
-
+  children?: string;
+  onClick: () => void;
+};
+export default function Button({
+  buttonStyle,
+  disabled,
+  extraStyles,
+  text,
+  children,
+  onClick,
+}: Props) {
   const handleClick = () => {
     if (!disabled) {
       onClick();
     }
-  }
+  };
 
   const buttonClass = `button button--${buttonStyle}`;
 
@@ -32,4 +38,3 @@ export default function Button ({ buttonStyle, disabled,extraStyles,text,childre
     </button>
   );
 }
-
