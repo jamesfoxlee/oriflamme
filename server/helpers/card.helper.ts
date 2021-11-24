@@ -1,6 +1,5 @@
 import { CardDetail } from "../types/index";
 import { Card } from "../types/index";
-
 import { ambush } from "../cards/ambush";
 import { archer } from "../cards/archer";
 import { assassination } from "../cards/assassination";

@@ -1,11 +1,8 @@
 import { Card } from "../types/index";
 
-
 export type CardConstants = {
 	[key: string]: Card;
 }
-
-
 export const CARDS: CardConstants = {
   ambush: {
     id: "ambush",

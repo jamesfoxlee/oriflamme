@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import { Players } from "../../types/index";
-
 import "./OpponentArea.css";
 import Player from "../Player/Player";
-
 import { UserContext } from "../../context/user.context";
 
 export type Props = {
@@ -12,8 +10,8 @@ export type Props = {
   turnOrder: string[];
 };
 
-export default function OpponentArea(props: Props) {
-  const { activePlayerId, players, turnOrder } = props;
+export default function OpponentArea({ activePlayerId, players, turnOrder }: Props) {
+
   const [user] = useContext(UserContext);
 
   const userIdx = turnOrder.indexOf(user.id);

@@ -7,10 +7,9 @@ export type Props = {
 	player: PlayerType;
 };
 
-export default function Player (props: Props) {
-	const { isActivePlayer, player } = props;
+export default function Player ({ isActivePlayer, player }: Props) {
+	
 	const { name, influence, imageUrl, discardPile, color } = player;
-
 	const playerStyle = 'player' + (isActivePlayer ? ' player--active' : '');
 	const imageStyles = {
 		backgroundImage: `url(${imageUrl})`

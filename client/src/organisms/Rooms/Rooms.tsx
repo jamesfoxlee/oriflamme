@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-
 import './Rooms.css';
 import PlayerNameForm from '../PlayerNameForm/PlayerNameForm';
 import RoomItem from '../../molecules/RoomItem/RoomItem';
 import Loading from '../../atoms/Loading/Loading';
 import NoRooms from '../../atoms/NoRooms/NoRooms';
 import Button from '../../atoms/Button/Button';
-
 import StorageService from '../../services/storage.service';
 import { SocketContext } from '../../context/socket.context';
 import { UserContext } from '../../context/user.context';
 import { SOCKET_EVENTS } from '../../config/socket.constants';
 import { PlayerType } from '../../types';
+
 const { LOBBY } = SOCKET_EVENTS;
 
 const storageService = StorageService();
@@ -38,15 +37,13 @@ type Room={
 }
 
 
-export default function Rooms(props:Props) {
-  const {
-    activeRoomId,
-    joinRoom,
-    leaveRoom,
-    setActiveRoomId,
-    startGame
-  } = props;
-  // STATE, CONTEXT etc
+export default function Rooms({
+  activeRoomId,
+  joinRoom,
+  leaveRoom,
+  setActiveRoomId,
+  startGame
+}:Props) {
 
   useEffect(() => {
     socket.registerListener(LOBBY.ROOMS_CHANGED, handleRoomsChanged);
@@ -62,9 +59,6 @@ export default function Rooms(props:Props) {
   const [showPlayerNameForm, setShowPlayerNameForm] = useState(false);
   const socket = useContext(SocketContext);
   const [user, setUser] = useContext(UserContext);
-
-
-  // "METHODS"
 
   const handleAddPlayerName = (playerName:string) => {
     storageService.set('user.name', playerName);
@@ -120,11 +114,8 @@ export default function Rooms(props:Props) {
     setShowPlayerNameForm(!showPlayerNameForm);
   }
 
-
-
   // TODO: New Room button stays disabled after server reconnect / reflash of rooms if
   // user had previously created one
-
   return (
     <div className="rooms">
       {

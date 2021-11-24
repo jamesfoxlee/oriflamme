@@ -1,5 +1,4 @@
 import React from "react";
-
 import "./EmptyQueue.css";
 import { QUEUE_CARD } from "../../config/ui.constants";
 
