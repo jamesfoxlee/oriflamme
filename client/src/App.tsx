@@ -82,7 +82,7 @@ function App() {
               startGame={startGame}
             />
           ) : null}
-
+          {!loading && gameStarted ? <Game /> : null}
         </UserProvider>
       </SocketProvider>
     </div>
