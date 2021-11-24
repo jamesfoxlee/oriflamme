@@ -83,7 +83,7 @@ function App() {
             />
           ) : null}
           {!loading && gameStarted ? (
-            <Game activeRoomId={activeRoomId} leaveRoom={leaveRoom} />
+            <Game />
           ) : null}
         </UserProvider>
       </SocketProvider>
