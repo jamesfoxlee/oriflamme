@@ -28,7 +28,7 @@ function App() {
 
   const leaveRoom = (roomId: string, player: PlayerType) => {
     socket.leaveRoom(roomId, player);
-    setActiveRoomId("");
+    setActiveRoomId('');
   };
 
   const startGame = (roomId: string) => {
@@ -42,7 +42,11 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User>({ id: "", name: "" });
+<<<<<<< Updated upstream
   const [activeRoomId, setActiveRoomId] = useState("");
+=======
+  const [activeRoomId, setActiveRoomId] = useState('');
+>>>>>>> Stashed changes
   const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
@@ -83,7 +87,11 @@ function App() {
             />
           ) : null}
           {!loading && gameStarted ? (
+<<<<<<< Updated upstream
             <Game  />
+=======
+            <Game />
+>>>>>>> Stashed changes
           ) : null}
         </UserProvider>
       </SocketProvider>
