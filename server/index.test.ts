@@ -1,15 +1,16 @@
 const { createServer } = require("http");
-const { Server } = require("socket.io");
 const Client = require("socket.io-client");
 const SOCKET_EVENTS = require('./config/socket.constants');
 const { LOBBY } = SOCKET_EVENTS;
-const registerLobbyEventHandlers = require('./sockets/lobby.socket')
 const LobbyManager = require('./controllers/lobby-manager.controller');
-const { v1: uuidv1 } = require('uuid');
-
+import { Server, Socket} from "socket.io";
 describe("Oriflamme backend", () => {
-  let io, serverSocket, clientSocket;
-
+  let io:Server, serverSocket:Socket, clientSocket:Socket;
+  type MockRoom={
+    ownerId:string;
+    ownerName: string;
+    roomName: string;
+  }
   const mockRoom= {
       ownerId: "test",
       ownerName:"Testingo Testy",
@@ -35,7 +36,7 @@ describe("Oriflamme backend", () => {
   });
 
   test("Checking socket conection", (done) => {
-    serverSocket.on(LOBBY.ROOM_CREATE, (arg) => {
+    serverSocket.on(LOBBY.ROOM_CREATE, (arg:MockRoom) => {
       expect(arg).toEqual(mockRoom);
       done();
     });
