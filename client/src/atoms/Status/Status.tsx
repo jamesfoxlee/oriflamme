@@ -11,27 +11,29 @@ const boxStyles = {
 };
 
 export type Props = {
-  gameState: GameState;
-  selectedPlayerCard?: Card;
-  user: User;
+
+	gameState: GameState;
+	selectedPlayerCard: Card | null;
+	user: User;
 };
 
-export default function Status(props: Props) {
-  const { gameState, selectedPlayerCard, user } = props;
-  const {
-    abilityInterrupted,
-    activePlayerId,
-    phase,
-    players,
-    queue,
-    queueResolutionIndex: qri,
-    resolvingCardToBeDiscarded,
-    targetsNoneValid,
-  } = gameState;
-  const activePlayer = players[activePlayerId];
-  const playerIsActive = activePlayerId === user.id;
-  const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
-  const playerName = playerIsActive ? "you" : activePlayer.name;
+export default function Status (props: Props) {
+	const { gameState, selectedPlayerCard, user } = props;
+	const {
+		abilityInterrupted,
+		activePlayerId,
+		phase,
+		players,
+		queue,
+		queueResolutionIndex: qri,
+		resolvingCardToBeDiscarded,
+		targetsNoneValid
+	} = gameState;
+	const activePlayer = players[activePlayerId];
+	const playerIsActive = activePlayerId === user.id;
+	const phaseText = `${phase.charAt(0).toUpperCase() + phase.slice(1)} Phase `;
+	const playerName = playerIsActive || activePlayer === undefined ? 'you' : activePlayer.name;
+
 
   let resolvingCard;
   try {

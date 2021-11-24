@@ -4,11 +4,13 @@ import Messages from "../../organisms/Messages/Messages";
 import Status from "../../atoms/Status/Status";
 
 type Props = {
-  gameState: GameState;
-  messages: MessageType[];
-  selectedPlayerCard: Card;
-  user: User;
-};
+
+  gameState: GameState,
+  messages: MessageType[],
+  selectedPlayerCard: Card | null,
+  user: User
+}
+
 
 export default function SideBar({
   gameState,
