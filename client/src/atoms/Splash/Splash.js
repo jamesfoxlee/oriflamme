@@ -36,7 +36,7 @@ export default function Splash (props) {
         <div className="splash__title">Oriflamme</div>
         <div className="splash__headline">The King is dead. Long live the King!</div>
         <div className="splash__text">In this game for 3 - 5 players you play a powerful French family with a claim to the throne. Make it yours by laying careful plans and don't be afraid to cheat, stab, and poison your rivals to get to where you need.</div>
-        <div className="splash__text">Oriflamme is produced by Studio H Games and rightly won Game of the Year in France in 2020. This is in no way endorsed by them, in fact I didn't even ask. Sorry.</div>
+        <div className="splash__text">Oriflamme is produced by Studio H Games and rightly won Game of the Year in France in 2020. This project is not endorsed by them.</div>
         <div className="splash__buttons">
           <Button
             onClick={dismiss}
