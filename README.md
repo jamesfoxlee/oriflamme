@@ -1,4 +1,4 @@
-# oriflamme
+# Oriflamme
 
 This is the solo project I wrote whilst on the intensive and brilliant Codeworks Software Engineering Immersive program. I really enjoy modern boardgames and wanted to learn about WebSockets so a game was the obvious choice.
 
@@ -74,7 +74,14 @@ npm install
 ```
 npm start
 ```
+* Open a couple of different browsers and point them to http://localhost:3000. You can also run one or more browsers in incognito mode to try the game with 2+ players.
 
-* Once complete, run the React development server with
+
+ # Tech Stack
+ 
+ * React
+ * NodeJS / Express server with Socket.io
+ * MongoDB with Mongoose ORM
+
 
 
