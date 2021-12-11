@@ -84,11 +84,24 @@ npm start
 * Open a couple of different browsers and point them to http://localhost:3000. You can also run one or more browsers in incognito mode to try the game with 2+ players.
 
 
+
+ # Testing
+ * Unit and integration testing (JEST, react-testing-library) , as well as e2e testing (Cypress), were added to the project to check the robustness of the code, and      to help with development of new features.
+
+# Refactoring
+* The server, and the client, were refactored to TypeScript.
+
  # Tech Stack
  
  * React
  * NodeJS / Express server with Socket.io
  * MongoDB with Mongoose ORM
 
+# Contributors
+
+* [James Foxlee](https://github.com/cortexlock)
+* [Anastasia Papaioannou](https://github.com/Natasa410)
+* [Eloy Robillard](https://github.com/eloyrobillard)
+* [David Longaron](https://github.com/MrDfu)
 
 
