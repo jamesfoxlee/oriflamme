@@ -1,20 +1,34 @@
 const { createServer } = require("http");
-const { Server } = require("socket.io");
 const Client = require("socket.io-client");
-const SOCKET_EVENTS = require('./config/socket.constants');
-const { LOBBY } = SOCKET_EVENTS;
-const registerLobbyEventHandlers = require('./sockets/lobby.socket')
-const LobbyManager = require('./controllers/lobby-manager.controller');
-const { v1: uuidv1 } = require('uuid');
+import { SOCKET_EVENTS } from "./config/socket.constants";
+import LobbyManager from "./controllers/lobby-manager.controller";
+import { Server, Socket } from "socket.io";
+import { Room } from "./types/index";
 
 describe("Oriflamme backend", () => {
-  let io, serverSocket, clientSocket;
+  const { LOBBY } = SOCKET_EVENTS;
+  let io: Server, serverSocket: Socket, clientSocket: Server;
 
-  const mockRoom= {
-      ownerId: "test",
-      ownerName:"Testingo Testy",
-      roomName: "Testingo Testy's game"  
-    }
+  const mockRoom = {
+    roomId: "1",
+    started: false,
+    ownerId: "test",
+    ownerName: "Testingo Testy",
+    roomName: "Testingo Testy's game",
+    players: [
+      {
+        color: "red",
+        discardPile: ["test"],
+        hand: ["card"],
+        id: "1",
+        imageUrl: "img",
+        influence: 0,
+        name: "test",
+        roomId: "1",
+        socketId: "1",
+      },
+    ],
+  };
   const lobbyManager = LobbyManager();
   beforeAll((done) => {
     const httpServer = createServer();
@@ -35,7 +49,7 @@ describe("Oriflamme backend", () => {
   });
 
   test("Checking socket conection", (done) => {
-    serverSocket.on(LOBBY.ROOM_CREATE, (arg) => {
+    serverSocket.on(LOBBY.ROOM_CREATE, (arg: Room) => {
       expect(arg).toEqual(mockRoom);
       done();
     });
@@ -43,11 +57,9 @@ describe("Oriflamme backend", () => {
   });
 
   test("should create a Room and be able to check it)", async () => {
-
-   const newRoom= await lobbyManager.createRoom(mockRoom);
-   const allRooms= lobbyManager.getRooms();
+    const newRoom = await lobbyManager.createRoom(mockRoom);
+    const allRooms = lobbyManager.getRooms();
 
     expect(allRooms[0].roomId).toBe(newRoom);
-
   });
 });

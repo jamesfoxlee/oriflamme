@@ -1,11 +1,8 @@
 import React from "react";
-
 import "./Loading.css";
-
 export type Message = { message: string };
 
 export default function Loading({ message }: { message: string }) {
-
   return (
     <div className="loading">
       <div className="loading__image">

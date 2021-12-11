@@ -8,14 +8,14 @@
   font-family: var(--font-family-regular);
   font-size: var(--font-size-bigger);
   text-align: center;
-  text-decoration:none;
+  text-decoration: none;
   box-shadow: none;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .button:active {
-  position:relative;
-  top:1px;
+  position: relative;
+  top: 1px;
 }
 
 .button:disabled {
@@ -35,9 +35,9 @@
 }
 
 .button--cancel {
-  background-color:  var(--color-cancel);
+  background-color: var(--color-cancel);
 }
 
 .button--destructive {
-  background-color:  var(--color-destructive);
+  background-color: var(--color-destructive);
 }

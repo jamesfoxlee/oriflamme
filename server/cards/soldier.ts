@@ -1,10 +1,10 @@
-const { CARD_EFFECTS } = require('../config/game.constants');
+const { CARD_EFFECTS } = require("../config/game.constants");
 import { CardDetail } from "../types/index";
-import { Card } from '../types/index';
+import { Card } from "../types/index";
 
 export const soldier: CardDetail = {
-  id: 'soldier',
-  name: 'Soldier',
+  id: "soldier",
+  name: "Soldier",
   text: "Eliminate an adjacent card.",
   getInfluenceGainOnReveal: (soldierCard: Card) => {
     // usually influence stored on card, but cater for exceptions here e.g. Conspiracy / Ambush
@@ -22,11 +22,11 @@ export const soldier: CardDetail = {
     rightIdx !== leftIdx && indices.push(rightIdx);
     // must kill own family if no valid target, but won't kill himself
     // TODO: Check the rule!!
-    const targets = indices.filter(target => target !== qri);
+    const targets = indices.filter((target) => target !== qri);
     return {
       targets,
       targetsNoneValid: targets.length === 0,
-    }
+    };
   },
   getAction: (heirCard: Card, queue: Card[][], qri: number) => {
     // cards like Heir and Lord will need the queue to determine influence gain
@@ -34,7 +34,7 @@ export const soldier: CardDetail = {
     return {
       type: CARD_EFFECTS.ELIMINATE,
       influenceChange: 1,
-    }
+    };
   },
   getDiscardAfterResolution: () => false,
   getActionOnElimination: () => null,

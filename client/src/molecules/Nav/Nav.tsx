@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-
 import "./Nav.css";
-
 import { UserContext } from "../../context/user.context";
 
 export default function Nav() {

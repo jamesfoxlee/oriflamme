@@ -1,3 +1,5 @@
+//Unit test not working due to modal acting weird, test it with Cypress.
+
 // import {getByText, render, screen} from '@testing-library/react'
 // import Rooms from './Rooms'
 // import * as React from 'react'
@@ -15,7 +17,7 @@
 //     const btnFunc= jest.fn();
 //     const prop=
 //         {  activeRoomId: null,
-//             joinRoom: (roomId, player) => {    
+//             joinRoom: (roomId, player) => {
 //                 socket.registerOneShotListener(LOBBY.GAME_STARTING, handleGameStarting);
 //                 socket.joinRoom(roomId, player);
 //                 setActiveRoomId(roomId);},
@@ -30,9 +32,7 @@
 //         test('Should render the modal form',()=>{
 //              render(<Rooms activeRoomId={prop.activeRoomId} joinRoom={prop.joinRoom} leaveRoom={prop.leaveRoom} setActiveRoomId={prop.setActiveRoomId} startGame={prop.startGame} />)
 //              screen.getByRole("button", {name:"New Room"})
-             
-     
+
 //          })
 
-     
 //     })

@@ -5,7 +5,7 @@ import { GameManager as GMType } from "../types/index";
 const { v1: uuidv1 } = require("uuid");
 
 import registerGameEventHandlers from "../sockets/game.socket";
-import GameManager from './game-manager.controller';
+import GameManager from "./game-manager.controller";
 
 type RoomData = {
   roomName: string;
@@ -25,8 +25,6 @@ export default function LobbyManager(): LobbyManagerType {
   const _gameManagers: GameManagers = {};
 
   // "METHODS"
-
-  // const _getNumberOfRooms = () => Object.keys(_rooms).length;
 
   const getRooms = () => {
     return Object.values(_rooms).map((room: Room) => {
@@ -140,5 +138,3 @@ export default function LobbyManager(): LobbyManagerType {
     startGame,
   };
 }
-
-// module.exports = LobbyManager;

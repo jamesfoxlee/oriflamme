@@ -1,15 +1,12 @@
 import React, { useState, useContext } from "react";
-
 import "./QueueCard.css";
 import QCButtons from "../../atoms/QCButtons/QCButtons";
-
 import { SocketContext } from "../../context/socket.context";
 import { UserContext } from "../../context/user.context";
 import {
   getUrlCardFront,
   getUrlCardBack,
 } from "../../services/card-image.service";
-// import { QUEUE_CARD as QC } from "../../config/ui.constants";
 import { QCard } from "../../types/queueCard";
 
 export type Props = {
@@ -24,10 +21,29 @@ export type Props = {
   targetsSelf: boolean;
   qri: number;
 };
-export default function QueueCard(props: Props) {
+
+export default function QueueCard({
+  abilityInterrupted,
+  card,
+  indexInQueue,
+  isPlayerTurn,
+  isResolving,
+  isTarget,
+  resolvingCardToBeDiscarded,
+  targetsNoneValid,
+  targetsSelf,
+  qri,
+}: Props) {
+  const [hovered, setHovered] = useState(false);
+  const socket = useContext(SocketContext);
+  const [user] = useContext(UserContext);
+  const { revealed } = card;
+  const isOwned = card.ownerId === user.id;
+  const cardFrontUrl = getUrlCardFront(card.id, card.ownerColor);
+  const cardBackUrl = getUrlCardBack(card.ownerColor);
+
   const handleMouseEnter = () => setHovered(true);
   const handleMouseLeave = () => setHovered(false);
-
   const handleNoReveal = () => socket.queueNoReveal(qri);
   const handleReveal = () => socket.queueReveal(qri);
   const handleConfirmTarget = () => socket.queueConfirmTarget(indexInQueue);
@@ -35,31 +51,6 @@ export default function QueueCard(props: Props) {
   const handleConfirmTargetSelf = () => socket.queueConfirmTargetSelf();
   const handleConfirmDiscard = () => socket.queueConfirmDiscard(indexInQueue);
   const handleConfirmInterrupt = () => socket.queueConfirmInterrupt();
-
-  // PROPS, STATE, CONTEXT etc
-
-  const {
-    abilityInterrupted,
-    card,
-    indexInQueue,
-    isPlayerTurn,
-    isResolving,
-    isTarget,
-    resolvingCardToBeDiscarded,
-    targetsNoneValid,
-    targetsSelf,
-    qri,
-  } = props;
-
-  const [hovered, setHovered] = useState(false);
-  const socket = useContext(SocketContext);
-  const [user] = useContext(UserContext);
-
-  const { revealed } = card;
-  const isOwned = card.ownerId === user.id;
-
-  const cardFrontUrl = getUrlCardFront(card.id, card.ownerColor);
-  const cardBackUrl = getUrlCardBack(card.ownerColor);
 
   return (
     <div data-testid="queue-card" className="queue-card">
@@ -70,6 +61,7 @@ export default function QueueCard(props: Props) {
       >
         <div className="queue-card__card-wrapper">
           <img
+            alt="queue-card"
             className="queue-card__card-img"
             src={revealed ? cardFrontUrl : cardBackUrl}
           />

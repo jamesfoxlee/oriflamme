@@ -6,9 +6,7 @@ export type Props = {
   onYes?: () => void;
   onNo?: () => void;
 };
-export default function QCButtons(props: Props) {
-  const { text, onYes, onNo } = props;
-
+export default function QCButtons({ text, onYes, onNo }: Props) {
   return (
     <div className="qc-buttons__prompt">
       {text}
