@@ -17,7 +17,7 @@ export default function RoomItem (props) {
     <div className="room-item">
       <div className="room-item__info">
         <div className="room-item__">
-          {roomName} <span className="room-item__smallprint">{roomId}</span>
+          {roomName}
         </div>
         <div className="room-item__player-count">{playersString}</div>
         <div className="room-item__smallprint">Created by {ownerName}</div>
@@ -34,7 +34,6 @@ export default function RoomItem (props) {
           null
         }
         {
-          // isActiveRoom && playerIsOwner && players.length > 1 ?
           activeRoomId === roomId && playerIsOwner ?
             <Button
               buttonStyle="positive"

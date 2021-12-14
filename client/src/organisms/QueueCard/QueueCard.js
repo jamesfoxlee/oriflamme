@@ -55,14 +55,14 @@ export default function QueueCard(props) {
 
   const notRevealedStyles = {
     backgroundPosition: hovered ?
-                        `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px` :
-                        `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
+      `bottom ${backHoverDims.bottomOffset}px right ${backHoverDims.rightOffset}px` :
+      `bottom ${backDims.bottomOffset}px right ${backDims.rightOffset}px`,
   };
 
   const revealedStyles = {
     backgroundPosition: hovered ?
-                        `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px` :
-                        `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
+      `bottom ${hoverDims.bottomOffset}px right ${hoverDims.rightOffset}px` :
+      `bottom ${baseDims.bottomOffset}px right ${baseDims.rightOffset}px`,
   };
 
   const noHoverStyles = {
@@ -109,30 +109,30 @@ export default function QueueCard(props) {
         }
         {
           card.influence ?
-          <span className="queue-card__influence">{card.influence}</span> :
+            <span className="queue-card__influence">{card.influence}</span> :
             null
-          }
+        }
       </div>
       {
         isPlayerTurn && isResolving && isOwned && !revealed ?
           <QCButtons
-          onYes={handleReveal}
-          onNo={handleNoReveal}
-          text="Reveal?"
+            onYes={handleReveal}
+            onNo={handleNoReveal}
+            text="Reveal?"
           /> :
           null
-        }
-        {
-          isPlayerTurn && isTarget ?
-            <QCButtons
-              onYes={handleConfirmTarget}
-              text="Target?"
-            /> :
-            null
-        }
+      }
+      {
+        isPlayerTurn && isTarget ?
+          <QCButtons
+            onYes={handleConfirmTarget}
+            text="Target?"
+          /> :
+          null
+      }
       {
         isPlayerTurn && isResolving && isOwned && revealed && targetsNoneValid ?
-        <QCButtons
+          <QCButtons
             onYes={handleConfirmNoTarget}
             text="Confirm"
           /> :
